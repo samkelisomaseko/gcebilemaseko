@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gcebile Maseko - Official Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #0f0;
+            --secondary-color: #00f;
+            --background-color: #000;
+            --text-color: #fff;
+            --accent-color: #f0f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .parallax-container {
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            perspective: 10px;
+        }
+
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            transform-style: preserve-3d;
+            z-index: -1;
+        }
+
+        .background, .foreground {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .background {
+            transform: translateZ(-10px) scale(2);
+        }
+
+        .foreground {
+            transform: translateZ(-5px) scale(1.5);
+        }
+
+        .title {
+            font-size: clamp(3rem, 10vw, 7rem);
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+            transform: translateZ(-1px) scale(1.1);
+            text-align: center;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 3px 0;
+            transition: 0.4s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .content {
+            background-color: var(--background-color);
+            padding: 2rem;
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .section h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .grass {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230f0" fill-opacity="1" d="M0,32L48,37.3C96,43,192,53,288,80C384,107,480,149,576,154.7C672,160,768,128,864,112C960,96,1056,96,1152,106.7C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            animation: wave 10s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1440px; }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            border: none;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn:hover {
+            background-color: var(--text-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        .music-player {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-player img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .song-details {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .song-details h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .song-details p {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+        }
+
+        .music-controls {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .music-controls button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .music-controls button:hover {
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-top: 1rem;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress {
+            width: 0;
+            height: 100%;
+            background-color: var(--primary-color);
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: width 0.1s linear;
+        }
+
+        .visualizer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0 1rem;
+        }
+
+        .visualizer-bar {
+            width: 3px;
+            background-color: var(--primary-color);
+            transition: height 0.1s ease;
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 2rem;
+        }
+
+        .album-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .album-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .album-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .album-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .album-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 1rem;
+            display: none;
+            z-index: 1000;
+        }
+
+        .album-player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .album-player-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .album-player-controls button,
+        .album-player-header button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+        }
+
+        .album-player-header button {
+            font-size: 1.8rem;
+            margin-left: 0.5rem;
+        }
+
+        .album-player-controls button:hover,
+        .album-player-header button:hover {
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .tour-dates {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 2rem;
+        }
+
+        .tour-date {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 2rem;
+        }
+
+        .merch-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .merch-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: none;
+            border-bottom: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-bottom-color: var(--accent-color);
+        }
+
+        .form-group input:focus + label,
+        .form-group textarea:focus + label,
+        .form-group input:not(:placeholder-shown) + label,
+        .form-group textarea:not(:placeholder-shown) + label {
+            transform: translateY(-1.5rem) scale(0.8);
+            color: var(--accent-color);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            text-align: center;
+            position: sticky;
+            bottom: 0;
+            width: 100%;
+            transition: transform 0.3s ease-in-out;
+        }
+    footer p{
+     font-size: .7rem;   
+    }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                justify-content: space-between;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .tour-date {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .tour-date .btn {
+                margin-top: 1rem;
+            }
+
+            .album-player {
+                width: 100%;
+                left: 0;
+                bottom: 0;
+                border-radius: 10px 10px 0 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); }
+            to { transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="parallax-container">
+        <header>
+            <img src="Gce.jpg" alt="Background" class="background">
+            <img src="Gcebile.jpg" alt="Foreground" class="foreground">
+            <h1 class="title">Gcebile Maseko</h1>
+        </header>
+        <nav id="main-nav">
+            <a href="#home" class="logo">GM</a>
+            <div class="nav-links" id="nav-links">
+                <a href="#home">Home</a>
+                <a href="#music">Music</a>
+                <a href="#tour">Tour</a>
+                <a href="#merch">Merch</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="hamburger" onclick="toggleNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+        <div class="content">
+            <section id="home" class="section">
+                <h2 class="fade-in">Welcome to the Future of Sound</h2>
+                <p class="slide-in">Experience the electrifying music of Gcebile Maseko</p>
+                <a href="#music" class="btn slide-in">Explore Now</a>
+            </section>
+            <section id="music" class="section">
+                <h2 class="fade-in">Latest Releases</h2>
+                <div class="music-player slide-in">
+                    <img src="banner.jpg" alt="Album Cover" id="album-cover">
+                    <div class="song-details">
+                        <h3 id="song-title">Cosmic Rhythm</h3>
+                        <p id="song-artist">Gcebile Maseko</p>
+                    </div>
+                    <audio id="audio-player"></audio>
+                    <div class="progress-bar" id="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+                    <div class="music-controls">
+                        <button id="prev-btn"><i class="fas fa-step-backward"></i></button>
+                        <button id="play-btn"><i class="fas fa-play"></i></button>
+                        <button id="next-btn"><i class="fas fa-step-forward"></i></button>
+                    </div>
+                    <div class="visualizer" id="visualizer"></div>
+                </div>
+                <h3 class="fade-in" style="margin-top: 2rem;">Featured Albums</h3>
+                <div class="album-grid">
+                    <div class="album-card slide-in" onclick="openAlbumPlayer('Neon Dreams', 'Nomanini_lizovela.mp3', 1)">
+                        <img src="banner.jpg" alt="Neon Dreams Album">
+                        <h3>Nomanini Lizovela</h3>
+                        <button class="btn">Listen <i class="fas fa-headphones"></i></button>
+                    </div>
+                    <div class="album-card slide-in" onclick="openAlbumPlayer('Cyber Serenade', 'https://source.unsplash.com/random/300x300?cyber', 2)">
+                        <img src="banner.jpg" alt="Cyber Serenade Album">
+                        <h3>Cyber Serenade</h3>
+                        <button class="btn">Listen <i class="fas fa-headphones"></i></button>
+                    </div>
+                    <div class="album-card slide-in" onclick="openAlbumPlayer('Quantum Beats', 'https://source.unsplash.com/random/300x300?quantum', 3)">
+                        <img src="banner.jpg" alt="Quantum Beats Album">
+                        <h3>Quantum Beats</h3>
+                        <button class="btn">Listen <i class="fas fa-headphones"></i></button>
+                    </div>
+                    <div class="album-card slide-in" onclick="openAlbumPlayer('Digital Horizon', 'https://source.unsplash.com/random/300x300?digital', 4)">
+                        <img src="banner.jpg" alt="Digital Horizon Album">
+                        <h3>Digital Horizon</h3>
+                        <button class="btn">Listen <i class="fas fa-headphones"></i></button>
+                    </div>
+                </div>
+            </section>
+            <section id="tour" class="section">
+                <h2 class="fade-in">Upcoming Shows</h2>
+                <div class="tour-dates">
+                    <div class="tour-date slide-in">
+                        <div>
+                            <h3>Cosmic Arena, New York</h3>
+                            <p>July 15, 2024</p>
+                        </div>
+                        <a href="#" class="btn">Get Tickets</a>
+                    </div>
+                    <div class="tour-date slide-in">
+                        <div>
+                            <h3>Neon Stadium, Tokyo</h3>
+                            <p>August 3, 2024</p>
+                        </div>
+                        <a href="#" class="btn">Get Tickets</a>
+                    </div>
+                    <div class="tour-date slide-in">
+                        <div>
+                            <h3>Hologram Hall, London</h3>
+                            <p>September 22, 2024</p>
+                        </div>
+                        <a href="#" class="btn">Get Tickets</a>
+                    </div>
+                </div>
+            </section>
+            <section id="merch" class="section">
+                <h2 class="fade-in">Official Merchandise</h2>
+                <div class="merch-grid">
+                    <div class="merch-item slide-in">
+                        <img src="Merch.jpg" alt="T-Shirt">
+                        <h3>Futuristic T-Shirt</h3>
+                        <p>$29.99</p>
+                        <a href="#" class="btn">Buy Now</a>
+                    </div>
+                    <div class="merch-item slide-in">
+                        <img src="Merch.jpg" alt="Cap">
+                        <h3>Neon Cap</h3>
+                        <p>$24.99</p>
+                        <a href="#" class="btn">Buy Now</a>
+                    </div>
+                    <div class="merch-item slide-in">
+                        <img src="Merch.jpg" alt="Poster">
+                        <h3>Holographic Poster</h3>
+                        <p>$19.99</p>
+                        <a href="#" class="btn">Buy Now</a>
+                    </div>
+                </div>
+            </section>
+            <section id="contact" class="section">
+                <h2 class="fade-in">Get in Touch</h2>
+                <form class="contact-form slide-in">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder=" " required>
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder=" " required>
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder=" " rows="4" required></textarea>
+                        <label for="message">Message</label>
+                    </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </section>
+        </div>
+    </div>
+    <div class="grass"></div>
+    <footer>
+        <div class="social-links">
+            <a href="#" target="_blank"><i class="fab fa-spotify"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p>&copy; 2024 Gcebile Maseko. All rights reserved.</p>
+        <p>Web Developed Shamase</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">Cookie Policy</a>
+        </div>
+    </footer>
+
+    <div class="album-player" id="album-player">
+        <div class="album-player-header">
+            <h3 id="album-title">Album Title</h3>
+            <div>
+                <button onclick="minimizeAlbumPlayer()"><i class="fas fa-window-minimize"></i></button>
+                <button onclick="closeAlbumPlayer()"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <img id="album-cover" src="banner.jpg" alt="Album Cover" style="width: 100%; margin-bottom: 1rem;">
+        <audio id="album-audio"></audio>
+        <div class="progress-bar" id="album-progress-bar">
+            <div class="progress" id="album-progress"></div>
+        </div>
+        <div class="album-player-controls">
+            <button onclick="albumPrev()"><i class="fas fa-step-backward"></i></button>
+            <button onclick="albumPlayPause()"><i class="fas fa-play" id="album-play-icon"></i></button>
+            <button onclick="albumNext()"><i class="fas fa-step-forward"></i></button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const parallaxContainer = document.querySelector('.parallax-container');
+            const title = document.querySelector('.title');
+            const grass = document.querySelector('.grass');
+            const audioPlayer = document.getElementById('audio-player');
+            const playBtn = document.getElementById('play-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const progressBar = document.getElementById('progress-bar');
+            const progress = document.getElementById('progress');
+            const visualizer = document.getElementById('visualizer');
+            const footer = document.querySelector('footer');
+            const nav = document.getElementById('main-nav');
+            const hamburger = document.querySelector('.hamburger');
+            const songTitle = document.getElementById('song-title');
+            const songArtist = document.getElementById('song-artist');
+            const albumCover = document.getElementById('album-cover');
+            let lastScrollTop = 0;
+            let isNavVisible = true;
+
+            const playlist = [
+                { title: "Cosmic Rhythm", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "https://source.unsplash.com/random/400x400?cosmic" },
+                { title: "Neon Dreams", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "https://source.unsplash.com/random/400x400?neon" },
+                { title: "Cyber Serenade", artist: "Gcebile Maseko", src: "/assets/audio/cyber_serenade.mp3", cover: "https://source.unsplash.com/random/400x400?cyber" },
+                { title: "Quantum Beats", artist: "Gcebile Maseko", src: "/assets/audio/quantum_beats.mp3", cover: "https://source.unsplash.com/random/400x400?quantum" },
+                { title: "Digital Horizon", artist: "Gcebile Maseko", src: "/assets/audio/digital_horizon.mp3", cover: "https://source.unsplash.com/random/400x400?digital" },
+                { title: "Synth Wave", artist: "Gcebile Maseko", src: "/assets/audio/synth_wave.mp3", cover: "https://source.unsplash.com/random/400x400?synth" }
+            ];
+
+            let currentTrack = 0;
+
+            function loadTrack(trackIndex) {
+                if (trackIndex >= 0 && trackIndex < playlist.length) {
+                    currentTrack = trackIndex;
+                    audioPlayer.src = playlist[currentTrack].src;
+                    songTitle.textContent = playlist[currentTrack].title;
+                    songArtist.textContent = playlist[currentTrack].artist;
+                    albumCover.src = playlist[currentTrack].cover;
+                }
+            }
+
+            function playPause() {
+                if (audioPlayer.paused) {
+                    audioPlayer.play();
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    audioPlayer.pause();
+                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+            }
+
+            function nextTrack() {
+                loadTrack((currentTrack + 1) % playlist.length);
+                if (!audioPlayer.paused) {
+                    audioPlayer.play();
+                }
+            }
+
+            function prevTrack() {
+                loadTrack((currentTrack - 1 + playlist.length) % playlist.length);
+                if (!audioPlayer.paused) {
+                    audioPlayer.play();
+                }
+            }
+
+            playBtn.addEventListener('click', playPause);
+            nextBtn.addEventListener('click', nextTrack);
+            prevBtn.addEventListener('click', prevTrack);
+
+            audio
+
+Player.addEventListener('ended', nextTrack);
+
+            // Parallax effect and scroll-based nav visibility
+            parallaxContainer.addEventListener('scroll', () => {
+                const scrollY = parallaxContainer.scrollTop;
+                title.style.transform = `translateY(${scrollY * 0.7}px) scale(${1 - scrollY * 0.001})`;
+                grass.style.transform = `translateY(${scrollY * 0.1}px)`;
+
+                // Footer visibility
+                if (scrollY > lastScrollTop) {
+                    footer.style.transform = 'translateY(100%)';
+                } else {
+                    footer.style.transform = 'translateY(0)';
+                }
+
+                // Nav and hamburger visibility
+                if (scrollY > lastScrollTop && isNavVisible && scrollY > 100) {
+                    nav.style.transform = 'translateY(-100%)';
+                    hamburger.style.transform = 'translateY(100%)';
+                    isNavVisible = false;
+                } else if (scrollY < lastScrollTop && !isNavVisible) {
+                    nav.style.transform = 'translateY(0)';
+                    hamburger.style.transform = 'translateY(0)';
+                    isNavVisible = true;
+                }
+
+                lastScrollTop = scrollY <= 0 ? 0 : scrollY;
+            });
+
+            // Grass morph animation
+            const morphGrass = () => {
+                const path = document.querySelector('.grass path');
+                const newPath = generateRandomPath();
+                path.setAttribute('d', newPath);
+            };
+
+            const generateRandomPath = () => {
+                let path = 'M0,32';
+                for (let i = 0; i <= 30; i++) {
+                    const x = (i / 30) * 1440;
+                    const y = Math.random() * 100 + 220;
+                    path += `L${x},${y}`;
+                }
+                path += 'L1440,320L1440,320L0,320Z';
+                return path;
+            };
+
+            setInterval(morphGrass, 5000);
+
+            // Futuristic text animation
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            let interval = null;
+
+            document.querySelectorAll("h2").forEach(h2 => {
+                h2.dataset.value = h2.innerText;
+                h2.onmouseover = event => {  
+                    let iteration = 0;
+                    
+                    clearInterval(interval);
+                    
+                    interval = setInterval(() => {
+                        event.target.innerText = event.target.innerText
+                            .split("")
+                            .map((letter, index) => {
+                                if(index < iteration) {
+                                    return event.target.dataset.value[index];
+                                }
+                            
+                                return letters[Math.floor(Math.random() * 26)]
+                            })
+                            .join("");
+                        
+                        if(iteration >= event.target.dataset.value.length){ 
+                            clearInterval(interval);
+                        }
+                        
+                        iteration += 1 / 3;
+                    }, 30);
+                }
+            });
+
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            audioPlayer.addEventListener('timeupdate', () => {
+                const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progress.style.width = `${progressPercent}%`;
+            });
+
+            progressBar.addEventListener('click', (e) => {
+                const progressWidth = progressBar.clientWidth;
+                const clickX = e.offsetX;
+                const duration = audioPlayer.duration;
+
+                audioPlayer.currentTime = (clickX / progressWidth) * duration;
+            });
+
+            // Audio visualizer
+            const createVisualizer = () => {
+                const context = new (window.AudioContext || window.webkitAudioContext)();
+                const analyser = context.createAnalyser();
+                const source = context.createMediaElementSource(audioPlayer);
+                source.connect(analyser);
+                analyser.connect(context.destination);
+
+                analyser.fftSize = 256;
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+
+                const bars = 20;
+                for (let i = 0; i < bars; i++) {
+                    const bar = document.createElement('div');
+                    bar.className = 'visualizer-bar';
+                    visualizer.appendChild(bar);
+                }
+
+                function renderFrame() {
+                    requestAnimationFrame(renderFrame);
+                    analyser.getByteFrequencyData(dataArray);
+
+                    const visualizerBars = document.querySelectorAll('.visualizer-bar');
+                    visualizerBars.forEach((bar, index) => {
+                        const barIndex = Math.floor(index * (bufferLength / bars));
+                        const barHeight = (dataArray[barIndex] / 255) * 50;
+                        bar.style.height = `${barHeight}px`;
+                    });
+                }
+
+                renderFrame();
+            };
+
+            audioPlayer.addEventListener('play', createVisualizer, { once: true });
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in, .slide-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Load the first track
+            loadTrack(0);
+        });
+
+        // Hamburger menu functionality
+        function toggleNav() {
+            const nav = document.getElementById('nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            nav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // Album player functionality
+        const albumPlayer = document.getElementById('album-player');
+        const albumAudio = document.getElementById('album-audio');
+        const albumTitle = document.getElementById('album-title');
+        const albumCover = document.getElementById('album-cover');
+        const albumPlayIcon = document.getElementById('album-play-icon');
+        const albumProgressBar = document.getElementById('album-progress-bar');
+        const albumProgress = document.getElementById('album-progress');
+
+        let albumPlaylist = [];
+        let currentAlbumTrack = 0;
+
+        function openAlbumPlayer(title, cover, albumIndex) {
+            albumTitle.textContent = title;
+            albumCover.src = cover;
+            albumPlayer.style.display = 'block';
+
+            // Set album playlist based on the clicked album
+            switch(albumIndex) {
+                case 1:
+                    albumPlaylist = [
+                        { title: "Neon Dreams 1", src: "Nomanini_lizovela.mp3" },
+                        { title: "Neon Dreams 2", src: "Nomanini_lizovela.mp3" },
+                        { title: "Neon Dreams 3", src: "Nomanini_lizovela.mp3" }
+                    ];
+                    break;
+                case 2:
+                    albumPlaylist = [
+                        { title: "Cyber Serenade 1", src: "/assets/audio/cyber_serenade_1.mp3" },
+                        { title: "Cyber Serenade 2", src: "/assets/audio/cyber_serenade_2.mp3" },
+                        { title: "Cyber Serenade 3", src: "/assets/audio/cyber_serenade_3.mp3" }
+                    ];
+                    break;
+                case 3:
+                    albumPlaylist = [
+                        { title: "Quantum Beats 1", src: "/assets/audio/quantum_beats_1.mp3" },
+                        { title: "Quantum Beats 2", src: "/assets/audio/quantum_beats_2.mp3" },
+                        { title: "Quantum Beats 3", src: "/assets/audio/quantum_beats_3.mp3" }
+                    ];
+                    break;
+                case 4:
+                    albumPlaylist = [
+                        { title: "Digital Horizon 1", src: "/assets/audio/digital_horizon_1.mp3" },
+                        { title: "Digital Horizon 2", src: "/assets/audio/digital_horizon_2.mp3" },
+                        { title: "Digital Horizon 3", src: "/assets/audio/digital_horizon_3.mp3" }
+                    ];
+                    break;
+            }
+
+            currentAlbumTrack = 0;
+            loadAlbumTrack(currentAlbumTrack);
+        }
+
+        function loadAlbumTrack(trackIndex) {
+            if (trackIndex >= 0 && trackIndex < albumPlaylist.length) {
+                currentAlbumTrack = trackIndex;
+                albumAudio.src = albumPlaylist[currentAlbumTrack].src;
+                albumTitle.textContent = albumPlaylist[currentAlbumTrack].title;
+            }
+        }
+
+        function minimizeAlbumPlayer() {
+            albumPlayer.style.height = '60px';
+            albumPlayer.style.overflow = 'hidden';
+        }
+
+        function closeAlbumPlayer() {
+            albumPlayer.style.display = 'none';
+            albumPlayer.style.height = 'auto';
+            albumPlayer.style.overflow = 'visible';
+            albumAudio.pause();
+            albumPlayIcon.className = 'fas fa-play';
+        }
+
+        function albumPlayPause() {
+            if (albumAudio.paused) {
+                albumAudio.play();
+                albumPlayIcon.className = 'fas fa-pause';
+            } else {
+                albumAudio.pause();
+                albumPlayIcon.className = 'fas fa-play';
+            }
+        }
+
+        function albumPrev() {
+            loadAlbumTrack((currentAlbumTrack - 1 + albumPlaylist.length) % albumPlaylist.length);
+            if (!albumAudio.paused) {
+                albumAudio.play();
+            }
+        }
+
+        function albumNext() {
+            loadAlbumTrack((currentAlbumTrack + 1) % albumPlaylist.length);
+            if (!albumAudio.paused) {
+                albumAudio.play();
+            }
+        }
+
+        albumAudio.addEventListener('timeupdate', () => {
+            const progressPercent = (albumAudio.currentTime / albumAudio.duration) * 100;
+            albumProgress.style.width = `${progressPercent}%`;
+        });
+
+        albumProgressBar.addEventListener('click', (e) => {
+            const progressWidth = albumProgressBar.clientWidth;
+            const clickX = e.offsetX;
+            const duration = albumAudio.duration;
+
+            albumAudio.currentTime = (clickX / progressWidth) * duration;
+        });
+
+        albumAudio.addEventListener('ended', albumNext);
+    </script>
+</body>
+  </html>
