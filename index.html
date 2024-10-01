@@ -667,21 +667,22 @@
                             <h3>Manzini Mavuso Trade Fair</h3>
                             <p>July 15, 2025</p>
                         </div>
-                        <a href="#" class="btn">Get Tickets</a>
+                        <a href="#" class="btn" id="getTicketsBtn">Get Tickets</a>
                     </div>
                     <div class="tour-date slide-in">
                         <div>
                             <h3>Matsapha, Light of Christ </h3>
                             <p>August 3, 2024</p>
                         </div>
-                        <a href="#" class="btn">Get Tickets</a>
+                        <a href="#" class="btn" id="getTicketsBtn2">Get Tickets</a>
+                        
                     </div>
                     <div class="tour-date slide-in">
                         <div>
                             <h3>Zulwini ,</h3>
                             <p>September 22, 2024</p>
                         </div>
-                        <a href="#" class="btn">Get Tickets</a>
+                        <a href="#" class="btn" id="getTicketsBtn3">Get Tickets</a>
                     </div>
                 </div>
             </section>
@@ -1141,239 +1142,767 @@
             lastScrollTop = scrollTop;
         });
     </script>
-    <script>
+   <script>
     (function() {
-    const WIDGET_ID = 'music_player_widget_' + Math.random().toString(36).substr(2, 9);
+        const WIDGET_ID = 'music_player_widget_' + Math.random().toString(36).substr(2, 9);
+        
+        window[WIDGET_ID] = {
+            init: function(config = {}) {
+                this.config = {
+                    albumArt: config.albumArt || 'Gce.jpg',
+                    songTitle: config.songTitle || 'season Of grace',
+                    services: config.services || [
+                        { name: 'Amazon Music', icon: this.amazonIcon(), url: '#' },
+                        { name: 'Spotify', icon: this.spotifyIcon(), url: '#' },
+                        { name: 'Apple Music', icon: this.appleMusicIcon(), url: '#' },
+                        { name: 'YouTube', icon: this.youtubeIcon(), url: '#' },
+                        { name: 'Tidal', icon: this.tidalIcon(), url: '#' },
+                        { name: 'SoundCloud', icon: this.soundcloudIcon(), url: '#' }
+                    ]
+                };
+                this.injectStyles();
+                this.createMarkup();
+                this.attachEventListeners();
+            },
+
+            injectStyles: function() {
+                if (document.getElementById(`${WIDGET_ID}-styles`)) return;
+                
+                const styleSheet = document.createElement("style");
+                styleSheet.id = `${WIDGET_ID}-styles`;
+                styleSheet.textContent = `
+                    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
     
-    window[WIDGET_ID] = {
-        init: function(config = {}) {
-            this.config = {
-                albumArt: config.albumArt || 'Gce.jpg',
-                songTitle: config.songTitle || 'season Of grace',
-                services: config.services || [
-                    { name: 'Amazon Music', icon: 'amazon', url: '#' },
-                    { name: 'Spotify', icon: 'spotify', url: '#' },
-                    { name: 'Apple Music', icon: 'apple', url: '#' },
-                    { name: 'YouTube', icon: 'youtube', url: '#' },
-                    { name: 'Tidal', icon: 'music', url: '#' },
-                    { name: 'SoundCloud', icon: 'soundcloud', url: '#' }
-                ]
-            };
-            this.injectStyles();
-            this.createMarkup();
-            this.attachEventListeners();
-        },
+                    #${WIDGET_ID}-popup {
+                        display: none;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100% !important;
+                        height: 100% !important;
+                        background: rgba(0, 0, 0, 0.8) !important;
+                        backdrop-filter: blur(10px);
+                        z-index: 2147483647 !important;
+                        opacity: 0;
+                        transition: opacity 0.5s ease;
+                    }
+    
+                    #${WIDGET_ID}-popup.active {
+                        opacity: 1 !important;
+                    }
+    
+                    #${WIDGET_ID}-popup * {
+                        all: revert;
+                        box-sizing: border-box !important;
+                        font-family: 'Orbitron', sans-serif !important;
+                    }
+    
+                    #${WIDGET_ID}-content {
+                        background: rgba(255, 255, 255, 0.1) !important;
+                        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                        border-radius: 20px !important;
+                        width: 340px !important;
+                        position: absolute !important;
+                        top: 50% !important;
+                        left: 50% !important;
+                        transform: translate(-50%, -50%) !important;
+                        padding: 20px !important;
+                        color: white !important;
+                        text-align: center !important;
+                        backdrop-filter: blur(10px);
+                        box-shadow: 0 0 40px rgba(0, 255, 136, 0.3) !important;
+                    }
+    
+                    #${WIDGET_ID}-album-art {
+                        width: 180px !important;
+                        height: 180px !important;
+                        border-radius: 12px !important;
+                        margin: 0 auto 15px !important;
+                        display: block !important;
+                        box-shadow: 0 0 30px rgba(102, 0, 255, 0.5) !important;
+                    }
+    
+                    #${WIDGET_ID}-title {
+                        font-size: 20px !important;
+                        margin: 10px 0 !important;
+                        background: linear-gradient(45deg, #00ff88, #6600ff);
+                        -webkit-background-clip: text !important;
+                        -webkit-text-fill-color: transparent !important;
+                        text-transform: uppercase !important;
+                    }
+    
+                    #${WIDGET_ID}-subtitle {
+                        font-size: 14px !important;
+                        margin-bottom: 15px !important;
+                        color: rgba(255, 255, 255, 0.8) !important;
+                    }
+    
+                    #${WIDGET_ID}-service-list {
+                        display: grid !important;
+                        grid-template-columns: 1fr 1fr !important;
+                        gap: 10px !important;
+                    }
+    
+                    .${WIDGET_ID}-service-btn {
+                        background: rgba(255, 255, 255, 0.1) !important;
+                        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                        color: white !important;
+                        padding: 8px 12px !important;
+                        border-radius: 8px !important;
+                        cursor: pointer !important;
+                        transition: all 0.3s ease !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        gap: 8px !important;
+                        font-size: 14px !important;
+                    }
+    
+                    .${WIDGET_ID}-service-btn:hover {
+                        background: rgba(255, 255, 255, 0.2) !important;
+                        transform: translateY(-2px) !important;
+                        box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3) !important;
+                    }
+    
+                    #${WIDGET_ID}-close {
+                        position: absolute !important;
+                        top: 10px !important;
+                        right: 10px !important;
+                        background: rgba(255, 0, 0, 0.3) !important;
+                        border: none !important;
+                        color: white !important;
+                        width: 30px !important;
+                        height: 30px !important;
+                        border-radius: 50% !important;
+                        cursor: pointer !important;
+                        transition: all 0.3s ease !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        padding: 0 !important;
+                        font-size: 14px !important;
+                    }
+    
+                    #${WIDGET_ID}-close:hover {
+                        background: rgba(255, 0, 0, 0.5) !important;
+                        transform: rotate(90deg) !important;
+                    }
+    
+                    @media (max-width: 380px) {
+                        #${WIDGET_ID}-content {
+                            width: 90% !important;
+                            padding: 15px !important;
+                        }
+    
+                        #${WIDGET_ID}-album-art {
+                            width: 140px !important;
+                            height: 140px !important;
+                        }
+    
+                        #${WIDGET_ID}-service-list {
+                            grid-template-columns: 1fr !important;
+                        }
+                    }
+                `;
+                document.head.appendChild(styleSheet);
+            },
 
-        injectStyles: function() {
-            if (document.getElementById(`${WIDGET_ID}-styles`)) return;
+            createMarkup: function() {
+                if (document.getElementById(`${WIDGET_ID}-popup`)) return;
+                
+                const popup = document.createElement('div');
+                popup.id = `${WIDGET_ID}-popup`;
+                
+                const serviceButtons = this.config.services.map(service => `
+                    <button class="${WIDGET_ID}-service-btn" onclick="window.open('${service.url}', '_blank')">
+                        ${service.icon} ${service.name}
+                    </button>
+                `).join('');
+    
+                popup.innerHTML = `
+                    <div id="${WIDGET_ID}-content">
+                        <img src="${this.config.albumArt}" alt="Album Art" id="${WIDGET_ID}-album-art">
+                        <h2 id="${WIDGET_ID}-title">${this.config.songTitle}</h2>
+                        <p id="${WIDGET_ID}-subtitle">Choose your music service</p>
+                        <div id="${WIDGET_ID}-service-list">
+                            ${serviceButtons}
+                        </div>
+                        <button id="${WIDGET_ID}-close">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" fill="white">
+    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.707 13.707a1 1 0 01-1.414 0L12 13.414l-2.293 2.293a1 1 0 01-1.414-1.414L10.586 12 8.293 9.707a1 1 0 011.414-1.414L12 10.586l2.293-2.293a1 1 0 111.414 1.414L13.414 12l2.293 2.293a1 1 0 010 1.414z"/>
+</svg>
+
+                        </button>
+                    </div>
+                `;
+                
+                document.body.appendChild(popup);
+            },
+
+            attachEventListeners: function() {
+                const popup = document.getElementById(`${WIDGET_ID}-popup`);
+                const closeBtn = document.getElementById(`${WIDGET_ID}-close`);
+                
+                popup.addEventListener('click', (e) => {
+                    if (e.target === popup) {
+                        this.close();
+                    }
+                });
+                
+                closeBtn.addEventListener('click', () => this.close());
+            },
+
+            open: function() {
+                const popup = document.getElementById(`${WIDGET_ID}-popup`);
+                popup.style.display = 'block';
+                setTimeout(() => popup.classList.add('active'), 10);
+            },
+
+            close: function() {
+                const popup = document.getElementById(`${WIDGET_ID}-popup`);
+                popup.classList.remove('active');
+                setTimeout(() => popup.style.display = 'none', 500);
+            },
+
+            amazonIcon: function() {
+                return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" fill="white">
+    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1.69 14.652c-2.006 0-3.717-.714-5.205-2.004a.938.938 0 011.312-1.335 5.567 5.567 0 004.004 1.55c.81 0 1.385-.343 1.385-.924 0-.343-.203-.596-.688-.837l-.723-.333c-.965-.438-1.63-.987-1.63-2.063 0-1.273 1.07-2.207 2.56-2.207 1.588 0 2.634.842 3.016 1.755a.936.936 0 01-1.76.71c-.206-.51-.724-.844-1.306-.844-.623 0-1.09.36-1.09.857 0 .364.203.577.743.844l.58.275c1.192.56 1.844 1.204 1.844 2.312 0 1.355-1.18 2.292-2.945 2.292z"/>
+</svg>
+`;
+            },
+
+            spotifyIcon: function() {
+                return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" fill="white">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.41 14.68c-.19.3-.56.4-.86.22-2.36-1.43-5.34-1.76-8.85-.98a.667.667 0 11-.29-1.31c3.83-.85 7.13-.49 9.71 1.1.3.18.39.57.21.87zm1.11-2.78c-.23.36-.7.48-1.07.25-2.7-1.66-6.82-2.14-10-.99a.75.75 0 01-.53-1.41c3.56-1.18 7.21-.62 10.25 1.14.36.22.48.69.25 1.01zM17 10.5c-.26.42-.81.56-1.25.31-3.06-1.87-8.19-2.03-11.05-.94a.87.87 0 01-1.11-.54c-.18-.48.07-1.02.55-1.19 3.27-1.2 8.91-1.03 12.41 1.15.43.25.56.8.31 1.21z"/>
+</svg>
+`;
+            },
+
+            appleMusicIcon: function() {
+                return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" fill="white">
+    <path d="M16.76 13.73c-.19-.01-.43.1-.73.31-.26.18-.44.27-.51.27-.13 0-.33-.09-.61-.26a.582.582 0 00-.55 0c-.19.12-.3.31-.3.58v1.95c0 .35.11.64.33.88.24.23.53.35.86.35.35 0 .64-.13.87-.4.23-.27.35-.62.35-1.03v-1.92c.01-.3-.05-.53-.17-.7a.496.496 0 00-.37-.33zm-5.26-2.65c-.56 0-1.02.19-1.36.57-.34.39-.51.89-.51 1.52v1.92c0 .35.11.65.32.88.22.24.51.36.88.36.36 0 .65-.13.87-.4.23-.27.35-.62.35-1.04v-1.92c0-.62-.16-1.11-.48-1.48-.33-.36-.77-.54-1.37-.54z"/>
+</svg>
+`;
+            },
+
+            youtubeIcon: function() {
+                return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" fill="white">
+    <path d="M19.8 8.001c-.147-.55-.577-.982-1.126-1.132-1.025-.271-5.13-.271-5.13-.271s-4.106 0-5.13.271a1.358 1.358 0 00-1.126 1.132C7 9.025 7 12 7 12s0 2.975.289 3.999c.147.55.577.982 1.126 1.132 1.025.271 5.13.271 5.13.271s4.106 0 5.13-.271a1.358 1.358 0 001.126-1.132C21 14.975 21 12 21 12s0-2.975-.289-3.999zM10 14.605V9.395L14.83 12 10 14.605z"/>
+</svg>
+`;
+            },
+
+            tidalIcon: function() {
+                return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" fill="white">
+    <path d="M12 8.768L15.466 12 12 15.232 8.534 12 12 8.768zm-8.534 3.232L0 8.768 3.466 12 0 15.232l3.466 3.232 3.534-3.232L3.466 12zm16 0L16 8.768l3.466 3.232L16 15.232l3.466 3.232L23 15.232 19.466 12z"/>
+</svg>
+`;
+            },
+
+            soundcloudIcon: function() {
+                return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" fill="white">
+    <path d="M20.872 13.111c-.472 0-.936.052-1.387.151-.364-2.835-2.567-5.031-5.43-5.235-.167-.324-.477-.529-.835-.529-.53 0-.96.429-.96.958V19h8.612c1.178 0 2.136-.958 2.136-2.136s-.958-2.137-2.136-2.137zm-10.87-4.682c-.53 0-.96.429-.96.96V19h1.919V9.388c0-.53-.429-.959-.96-.959zm-3.837 2.401c-.53 0-.959.429-.959.96V19h1.918v-7.822c0-.53-.429-.96-.959-.96zm-3.835 2.404c-.53 0-.96.429-.96.96V19h1.918v-4.293c0-.53-.429-.961-.96-.961zm-3.838 2.408c-.529 0-.959.43-.959.96V19h1.918v-1.408c0-.53-.429-.96-.959-.96z"/>
+</svg>
+`;
+            }
+        };
+
+        // Create a global function to open the widget
+        window.openMusicPlayer = function(config) {
+            if (config) {
+                window[WIDGET_ID].init(config);
+            }
+            window[WIDGET_ID].open();
+        };
+
+        // Initialize widget when script loads
+        window[WIDGET_ID].init();
+    })();
+</script>
+
+<script>
+    (function() {
+        // Add a unique prefix to ensure no conflict with other elements
+        const uniqueId = 'ticketWidget_';
+    
+        // Create the popup container dynamically
+        const popupHtml = `
+            <div class="${uniqueId}popup-container" id="${uniqueId}popup" style="display: none;">
+                <div class="${uniqueId}popup">
+                    <button class="${uniqueId}close-btn" id="${uniqueId}closePopup">X</button>
+                    <h3>Get Your Tickets</h3>
+                    <div id="${uniqueId}form">
+                        <input type="text" id="${uniqueId}name" placeholder="First and Last Name" required>
+                        <input type="email" id="${uniqueId}email" placeholder="Email" required>
+                        <input type="tel" id="${uniqueId}phone" placeholder="Phone Number" required>
+                        <input type="number" id="${uniqueId}ticketQty" placeholder="Ticket Quantity" required>
+                        <select id="${uniqueId}ticketType" required>
+                            <option value="">Select Ticket Type</option>
+                            <option value="general">General Admission</option>
+                            <option value="vip">VIP</option>
+                        </select>
+                        <button id="${uniqueId}continueBtn">Continue</button>
+                    </div>
+                    <div id="${uniqueId}paymentForm" style="display:none;">
+                        <input type="text" id="${uniqueId}cardNumber" placeholder="Card Number" required>
+                        <input type="text" id="${uniqueId}expiration" placeholder="Expiration Date (MM/YY)" required>
+                        <input type="text" id="${uniqueId}cvv" placeholder="CVV" required>
+                        <input type="text" id="${uniqueId}billingAddress" placeholder="Billing Address" required>
+                        <button id="${uniqueId}finishBtn">Finish</button>
+                    </div>
+                    <div id="${uniqueId}message"></div>
+                </div>
+            </div>
+        `;
+        
+        // Append popup to the body
+        document.body.insertAdjacentHTML('beforeend', popupHtml);
+    
+        // Add the styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .${uniqueId}popup-container {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+            }
             
-            const styleSheet = document.createElement("style");
-            styleSheet.id = `${WIDGET_ID}-styles`;
-            styleSheet.textContent = `
-                @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
-                @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
-
-                #${WIDGET_ID}-popup {
+            .${uniqueId}popup {
+                background: rgba(255, 255, 255, 0.1);
+                padding: 20px;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 400px;
+                text-align: center;
+                color: white;
+                box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            }
+    
+            .${uniqueId}popup input, .${uniqueId}popup select {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                background: black;
+                color: white;
+                border: 2px solid green;
+                border-radius: 5px;
+                font-family: 'Orbitron', sans-serif;
+            }
+    
+            .${uniqueId}popup button {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                background: green;
+                color: black;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: 1000;
+                font-family: 'Orbitron', sans-serif;
+                transition: background 0.3s ease;
+            }
+    
+            .${uniqueId}popup button:hover {
+                background: lime;
+            }
+    
+            .${uniqueId}popup .${uniqueId}close-btn {
+                background: red;
+                color: white;
+                padding: 5px;
+                border: none;
+                border-radius: 5px;
+                float: right;
+                cursor: pointer;
+            }
+        `;
+        document.head.appendChild(style);
+    
+        // Widget functionality
+        const popup = document.getElementById(`${uniqueId}popup`);
+        const closePopup = document.getElementById(`${uniqueId}closePopup`);
+        const continueBtn = document.getElementById(`${uniqueId}continueBtn`);
+        const finishBtn = document.getElementById(`${uniqueId}finishBtn`);
+        const form = document.getElementById(`${uniqueId}form`);
+        const paymentForm = document.getElementById(`${uniqueId}paymentForm`);
+        const messageDiv = document.getElementById(`${uniqueId}message`);
+    
+        // Open popup
+        const getTicketsBtn = document.getElementById('getTicketsBtn');
+        getTicketsBtn.addEventListener('click', () => {
+            popup.style.display = 'flex';
+        });
+    
+        // Close popup
+        closePopup.addEventListener('click', () => {
+            popup.style.display = 'none';
+            resetForm();
+        });
+    
+        // Continue to payment section
+        continueBtn.addEventListener('click', () => {
+            form.style.display = 'none';
+            paymentForm.style.display = 'block';
+        });
+    
+        // Finish and show result
+        finishBtn.addEventListener('click', () => {
+            const isValid = validatePayment();
+            if (isValid) {
+                messageDiv.innerHTML = `<p class="success">Payment Successful! Thank you for your purchase.</p>`;
+            } else {
+                messageDiv.innerHTML = `<p class="error">Payment Failed. Please try again.</p>`;
+            }
+        });
+    
+        // Reset form
+        function resetForm() {
+            form.style.display = 'block';
+            paymentForm.style.display = 'none';
+            messageDiv.innerHTML = '';
+        }
+    
+        // Simulated payment validation
+        function validatePayment() {
+            const cardNumber = document.getElementById(`${uniqueId}cardNumber`).value;
+            const expiration = document.getElementById(`${uniqueId}expiration`).value;
+            const cvv = document.getElementById(`${uniqueId}cvv`).value;
+            const billingAddress = document.getElementById(`${uniqueId}billingAddress`).value;
+            return cardNumber && expiration && cvv && billingAddress;
+        }
+    })();
+    </script>
+    
+    <script>
+        (function() {
+            // Add a unique prefix to ensure no conflict with other elements
+            const uniqueId = 'ticketWidget_';
+        
+            // Create the popup container dynamically
+            const popupHtml = `
+                <div class="${uniqueId}popup-container" id="${uniqueId}popup" style="display: none;">
+                    <div class="${uniqueId}popup">
+                        <button class="${uniqueId}close-btn" id="${uniqueId}closePopup">X</button>
+                        <h3>Get Your Tickets</h3>
+                        <div id="${uniqueId}form">
+                            <input type="text" id="${uniqueId}name" placeholder="First and Last Name" required>
+                            <input type="email" id="${uniqueId}email" placeholder="Email" required>
+                            <input type="tel" id="${uniqueId}phone" placeholder="Phone Number" required>
+                            <input type="number" id="${uniqueId}ticketQty" placeholder="Ticket Quantity" required>
+                            <select id="${uniqueId}ticketType" required>
+                                <option value="">Select Ticket Type</option>
+                                <option value="general">General Admission</option>
+                                <option value="vip">VIP</option>
+                            </select>
+                            <button id="${uniqueId}continueBtn">Continue</button>
+                        </div>
+                        <div id="${uniqueId}paymentForm" style="display:none;">
+                            <input type="text" id="${uniqueId}cardNumber" placeholder="Card Number" required>
+                            <input type="text" id="${uniqueId}expiration" placeholder="Expiration Date (MM/YY)" required>
+                            <input type="text" id="${uniqueId}cvv" placeholder="CVV" required>
+                            <input type="text" id="${uniqueId}billingAddress" placeholder="Billing Address" required>
+                            <button id="${uniqueId}finishBtn">Finish</button>
+                        </div>
+                        <div id="${uniqueId}message"></div>
+                    </div>
+                </div>
+            `;
+            
+            // Append popup to the body
+            document.body.insertAdjacentHTML('beforeend', popupHtml);
+        
+            // Add the styles
+            const style = document.createElement('style');
+            style.textContent = `
+                .${uniqueId}popup-container {
                     display: none;
                     position: fixed;
                     top: 0;
                     left: 0;
-                    width: 100% !important;
-                    height: 100% !important;
-                    background: rgba(0, 0, 0, 0.8) !important;
-                    backdrop-filter: blur(10px);
-                    z-index: 2147483647 !important;
-                    opacity: 0;
-                    transition: opacity 0.5s ease;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 10000;
                 }
-
-                #${WIDGET_ID}-popup.active {
-                    opacity: 1 !important;
+                
+                .${uniqueId}popup {
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 20px;
+                    border-radius: 10px;
+                    width: 90%;
+                    max-width: 400px;
+                    text-align: center;
+                    color: white;
+                    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
                 }
-
-                #${WIDGET_ID}-popup * {
-                    all: revert;
-                    box-sizing: border-box !important;
-                    font-family: 'Orbitron', sans-serif !important;
+        
+                .${uniqueId}popup input, .${uniqueId}popup select {
+                    width: 100%;
+                    padding: 10px;
+                    margin: 10px 0;
+                    background: black;
+                    color: white;
+                    border: 2px solid green;
+                    border-radius: 5px;
+                    font-family: 'Orbitron', sans-serif;
                 }
-
-                #${WIDGET_ID}-content {
-                    background: rgba(255, 255, 255, 0.1) !important;
-                    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-                    border-radius: 20px !important;
-                    width: 340px !important;
-                    position: absolute !important;
-                    top: 50% !important;
-                    left: 50% !important;
-                    transform: translate(-50%, -50%) !important;
-                    padding: 20px !important;
-                    color: white !important;
-                    text-align: center !important;
-                    backdrop-filter: blur(10px);
-                    box-shadow: 0 0 40px rgba(0, 255, 136, 0.3) !important;
+        
+                .${uniqueId}popup button {
+                    width: 100%;
+                    padding: 10px;
+                    margin: 10px 0;
+                    background: green;
+                    color: black;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-weight: 1000;
+                    font-family: 'Orbitron', sans-serif;
+                    transition: background 0.3s ease;
                 }
-
-                #${WIDGET_ID}-album-art {
-                    width: 180px !important;
-                    height: 180px !important;
-                    border-radius: 12px !important;
-                    margin: 0 auto 15px !important;
-                    display: block !important;
-                    box-shadow: 0 0 30px rgba(102, 0, 255, 0.5) !important;
+        
+                .${uniqueId}popup button:hover {
+                    background: lime;
                 }
-
-                #${WIDGET_ID}-title {
-                    font-size: 20px !important;
-                    margin: 10px 0 !important;
-                    background: linear-gradient(45deg, #00ff88, #6600ff);
-                    -webkit-background-clip: text !important;
-                    -webkit-text-fill-color: transparent !important;
-                    text-transform: uppercase !important;
-                }
-
-                #${WIDGET_ID}-subtitle {
-                    font-size: 14px !important;
-                    margin-bottom: 15px !important;
-                    color: rgba(255, 255, 255, 0.8) !important;
-                }
-
-                #${WIDGET_ID}-service-list {
-                    display: grid !important;
-                    grid-template-columns: 1fr 1fr !important;
-                    gap: 10px !important;
-                }
-
-                .${WIDGET_ID}-service-btn {
-                    background: rgba(255, 255, 255, 0.1) !important;
-                    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-                    color: white !important;
-                    padding: 8px 12px !important;
-                    border-radius: 8px !important;
-                    cursor: pointer !important;
-                    transition: all 0.3s ease !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                    gap: 8px !important;
-                    font-size: 14px !important;
-                }
-
-                .${WIDGET_ID}-service-btn:hover {
-                    background: rgba(255, 255, 255, 0.2) !important;
-                    transform: translateY(-2px) !important;
-                    box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3) !important;
-                }
-
-                #${WIDGET_ID}-close {
-                    position: absolute !important;
-                    top: 10px !important;
-                    right: 10px !important;
-                    background: rgba(255, 0, 0, 0.3) !important;
-                    border: none !important;
-                    color: white !important;
-                    width: 30px !important;
-                    height: 30px !important;
-                    border-radius: 50% !important;
-                    cursor: pointer !important;
-                    transition: all 0.3s ease !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                    padding: 0 !important;
-                    font-size: 14px !important;
-                }
-
-                #${WIDGET_ID}-close:hover {
-                    background: rgba(255, 0, 0, 0.5) !important;
-                    transform: rotate(90deg) !important;
-                }
-
-                @media (max-width: 380px) {
-                    #${WIDGET_ID}-content {
-                        width: 90% !important;
-                        padding: 15px !important;
-                    }
-
-                    #${WIDGET_ID}-album-art {
-                        width: 140px !important;
-                        height: 140px !important;
-                    }
-
-                    #${WIDGET_ID}-service-list {
-                        grid-template-columns: 1fr !important;
-                    }
+        
+                .${uniqueId}popup .${uniqueId}close-btn {
+                    background: red;
+                    color: white;
+                    padding: 5px;
+                    border: none;
+                    border-radius: 5px;
+                    float: right;
+                    cursor: pointer;
                 }
             `;
-            document.head.appendChild(styleSheet);
-        },
-
-        createMarkup: function() {
-            if (document.getElementById(`${WIDGET_ID}-popup`)) return;
-            
-            const popup = document.createElement('div');
-            popup.id = `${WIDGET_ID}-popup`;
-            
-            const serviceButtons = this.config.services.map(service => `
-                <button class="${WIDGET_ID}-service-btn" onclick="window.open('${service.url}', '_blank')">
-                    <i class="fab fa-${service.icon}"></i> ${service.name}
-                </button>
-            `).join('');
-
-            popup.innerHTML = `
-                <div id="${WIDGET_ID}-content">
-                    <img src="${this.config.albumArt}" alt="Album Art" id="${WIDGET_ID}-album-art">
-                    <h2 id="${WIDGET_ID}-title">${this.config.songTitle}</h2>
-                    <p id="${WIDGET_ID}-subtitle">Choose your music service</p>
-                    <div id="${WIDGET_ID}-service-list">
-                        ${serviceButtons}
-                    </div>
-                    <button id="${WIDGET_ID}-close">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            `;
-            
-            document.body.appendChild(popup);
-        },
-
-        attachEventListeners: function() {
-            const popup = document.getElementById(`${WIDGET_ID}-popup`);
-            const closeBtn = document.getElementById(`${WIDGET_ID}-close`);
-            
-            popup.addEventListener('click', (e) => {
-                if (e.target === popup) {
-                    this.close();
+            document.head.appendChild(style);
+        
+            // Widget functionality
+            const popup = document.getElementById(`${uniqueId}popup`);
+            const closePopup = document.getElementById(`${uniqueId}closePopup`);
+            const continueBtn = document.getElementById(`${uniqueId}continueBtn`);
+            const finishBtn = document.getElementById(`${uniqueId}finishBtn`);
+            const form = document.getElementById(`${uniqueId}form`);
+            const paymentForm = document.getElementById(`${uniqueId}paymentForm`);
+            const messageDiv = document.getElementById(`${uniqueId}message`);
+        
+            // Open popup
+            const getTicketsBtn = document.getElementById('getTicketsBtn2');
+            getTicketsBtn.addEventListener('click', () => {
+                popup.style.display = 'flex';
+            });
+        
+            // Close popup
+            closePopup.addEventListener('click', () => {
+                popup.style.display = 'none';
+                resetForm();
+            });
+        
+            // Continue to payment section
+            continueBtn.addEventListener('click', () => {
+                form.style.display = 'none';
+                paymentForm.style.display = 'block';
+            });
+        
+            // Finish and show result
+            finishBtn.addEventListener('click', () => {
+                const isValid = validatePayment();
+                if (isValid) {
+                    messageDiv.innerHTML = `<p class="success">Payment Successful! Thank you for your purchase.</p>`;
+                } else {
+                    messageDiv.innerHTML = `<p class="error">Payment Failed. Please try again.</p>`;
                 }
             });
+        
+            // Reset form
+            function resetForm() {
+                form.style.display = 'block';
+                paymentForm.style.display = 'none';
+                messageDiv.innerHTML = '';
+            }
+        
+            // Simulated payment validation
+            function validatePayment() {
+                const cardNumber = document.getElementById(`${uniqueId}cardNumber`).value;
+                const expiration = document.getElementById(`${uniqueId}expiration`).value;
+                const cvv = document.getElementById(`${uniqueId}cvv`).value;
+                const billingAddress = document.getElementById(`${uniqueId}billingAddress`).value;
+                return cardNumber && expiration && cvv && billingAddress;
+            }
+        })();
+        </script>
+        
+        <script>
+            (function() {
+                // Add a unique prefix to ensure no conflict with other elements
+                const uniqueId = 'ticketWidget_';
             
-            closeBtn.addEventListener('click', () => this.close());
-        },
-
-        open: function() {
-            const popup = document.getElementById(`${WIDGET_ID}-popup`);
-            popup.style.display = 'block';
-            setTimeout(() => popup.classList.add('active'), 10);
-        },
-
-        close: function() {
-            const popup = document.getElementById(`${WIDGET_ID}-popup`);
-            popup.classList.remove('active');
-            setTimeout(() => popup.style.display = 'none', 500);
-        }
-    };
-
-    // Create a global function to open the widget
-    window.openMusicPlayer = function(config) {
-        if (config) {
-            window[WIDGET_ID].init(config);
-        }
-        window[WIDGET_ID].open();
-    };
-
-    // Initialize widget when script loads
-    window[WIDGET_ID].init();
-})();
-
-    </script> 
+                // Create the popup container dynamically
+                const popupHtml = `
+                    <div class="${uniqueId}popup-container" id="${uniqueId}popup" style="display: none;">
+                        <div class="${uniqueId}popup">
+                            <button class="${uniqueId}close-btn" id="${uniqueId}closePopup">X</button>
+                            <h3>Get Your Tickets</h3>
+                            <div id="${uniqueId}form">
+                                <input type="text" id="${uniqueId}name" placeholder="First and Last Name" required>
+                                <input type="email" id="${uniqueId}email" placeholder="Email" required>
+                                <input type="tel" id="${uniqueId}phone" placeholder="Phone Number" required>
+                                <input type="number" id="${uniqueId}ticketQty" placeholder="Ticket Quantity" required>
+                                <select id="${uniqueId}ticketType" required>
+                                    <option value="">Select Ticket Type</option>
+                                    <option value="general">General Admission</option>
+                                    <option value="vip">VIP</option>
+                                </select>
+                                <button id="${uniqueId}continueBtn">Continue</button>
+                            </div>
+                            <div id="${uniqueId}paymentForm" style="display:none;">
+                                <input type="text" id="${uniqueId}cardNumber" placeholder="Card Number" required>
+                                <input type="text" id="${uniqueId}expiration" placeholder="Expiration Date (MM/YY)" required>
+                                <input type="text" id="${uniqueId}cvv" placeholder="CVV" required>
+                                <input type="text" id="${uniqueId}billingAddress" placeholder="Billing Address" required>
+                                <button id="${uniqueId}finishBtn">Finish</button>
+                            </div>
+                            <div id="${uniqueId}message"></div>
+                        </div>
+                    </div>
+                `;
+                
+                // Append popup to the body
+                document.body.insertAdjacentHTML('beforeend', popupHtml);
+            
+                // Add the styles
+                const style = document.createElement('style');
+                style.textContent = `
+                    .${uniqueId}popup-container {
+                        display: none;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.8);
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 10000;
+                    }
+                    
+                    .${uniqueId}popup {
+                        background: rgba(255, 255, 255, 0.1);
+                        padding: 20px;
+                        border-radius: 10px;
+                        width: 90%;
+                        max-width: 400px;
+                        text-align: center;
+                        color: white;
+                        box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+                    }
+            
+                    .${uniqueId}popup input, .${uniqueId}popup select {
+                        width: 100%;
+                        padding: 10px;
+                        margin: 10px 0;
+                        background: black;
+                        color: white;
+                        border: 2px solid green;
+                        border-radius: 5px;
+                        font-family: 'Orbitron', sans-serif;
+                    }
+            
+                    .${uniqueId}popup button {
+                        width: 100%;
+                        padding: 10px;
+                        margin: 10px 0;
+                        background: green;
+                        color: black;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-weight: 1000;
+                        font-family: 'Orbitron', sans-serif;
+                        transition: background 0.3s ease;
+                    }
+            
+                    .${uniqueId}popup button:hover {
+                        background: lime;
+                    }
+            
+                    .${uniqueId}popup .${uniqueId}close-btn {
+                        background: red;
+                        color: white;
+                        padding: 5px;
+                        border: none;
+                        border-radius: 5px;
+                        float: right;
+                        cursor: pointer;
+                    }
+                `;
+                document.head.appendChild(style);
+            
+                // Widget functionality
+                const popup = document.getElementById(`${uniqueId}popup`);
+                const closePopup = document.getElementById(`${uniqueId}closePopup`);
+                const continueBtn = document.getElementById(`${uniqueId}continueBtn`);
+                const finishBtn = document.getElementById(`${uniqueId}finishBtn`);
+                const form = document.getElementById(`${uniqueId}form`);
+                const paymentForm = document.getElementById(`${uniqueId}paymentForm`);
+                const messageDiv = document.getElementById(`${uniqueId}message`);
+            
+                // Open popup
+                const getTicketsBtn = document.getElementById('getTicketsBtn3');
+                getTicketsBtn.addEventListener('click', () => {
+                    popup.style.display = 'flex';
+                });
+            
+                // Close popup
+                closePopup.addEventListener('click', () => {
+                    popup.style.display = 'none';
+                    resetForm();
+                });
+            
+                // Continue to payment section
+                continueBtn.addEventListener('click', () => {
+                    form.style.display = 'none';
+                    paymentForm.style.display = 'block';
+                });
+            
+                // Finish and show result
+                finishBtn.addEventListener('click', () => {
+                    const isValid = validatePayment();
+                    if (isValid) {
+                        messageDiv.innerHTML = `<p class="success">Payment Successful! Thank you for your purchase.</p>`;
+                    } else {
+                        messageDiv.innerHTML = `<p class="error">Payment Failed. Please try again.</p>`;
+                    }
+                });
+            
+                // Reset form
+                function resetForm() {
+                    form.style.display = 'block';
+                    paymentForm.style.display = 'none';
+                    messageDiv.innerHTML = '';
+                }
+            
+                // Simulated payment validation
+                function validatePayment() {
+                    const cardNumber = document.getElementById(`${uniqueId}cardNumber`).value;
+                    const expiration = document.getElementById(`${uniqueId}expiration`).value;
+                    const cvv = document.getElementById(`${uniqueId}cvv`).value;
+                    const billingAddress = document.getElementById(`${uniqueId}billingAddress`).value;
+                    return cardNumber && expiration && cvv && billingAddress;
+                }
+            })();
+            </script>
+            
+                 
 </body>
 </html>
