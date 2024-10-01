@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gcebile Maseko - Official Website</title>
-    <meta property="og:image" content="gcace.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta property="og:image" content="gcace.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -160,7 +160,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 2rem;
+            
         }
 
         .section h2 {
@@ -521,6 +521,8 @@
             color: var(--text-color);
             text-shadow: 0 0 10px var(--primary-color);
         }
+    
+
 
         @media (max-width: 768px) {
             nav {
@@ -604,29 +606,33 @@
                 <span></span>
             </div>
         </nav>
+        
+
         <div class="content">
             <section id="home" class="section">
                 <h2 class="fade-in">Welcome to the Season Of Grace</h2>
                 <p class="slide-in">Be Transformed & Renewed by the electrifying music of Gcebile Maseko</p>
                 <a href="#music" class="btn slide-in">Explore Now</a>
             </section>
+            
             <section id="music" class="section">
                 <h2 class="fade-in">Latest Releases</h2>
                 <div class="music-player slide-in">
                     <img src="banner.jpg" alt="Album Cover" id="album-cover">
                     <div class="song-details">
-                        <h3 id="song-title">season of grace</h3>
+                        <h3 id="song-title">Nomanini Lizovela</h3>
                         <p id="song-artist">Gcebile Maseko</p>
+                        <button class="btn"onclick="openMusicPlayer({
+    albumArt: 'path/to/your/album-art.jpg',
+    songTitle: 'Your Song Title',
+    services: [
+        { name: 'Spotify', icon: 'spotify', url: 'your-spotify-url' },
+        { name: 'Apple Music', icon: 'apple', url: 'your-apple-music-url' }
+    ]
+})">Listen <i class="fas fa-headphones"></i></button></button>
                     </div>
-                    <audio id="audio-player"></audio>
-                    <div class="progress-bar" id="progress-bar">
-                        <div class="progress" id="progress"></div>
-                    </div>
-                    <div class="music-controls">
-                        <button id="prev-btn"><i class="fas fa-step-backward"></i></button>
-                        <button id="play-btn"><i class="fas fa-play"></i></button>
-                        <button id="next-btn"><i class="fas fa-step-forward"></i></button>
-                    </div>
+                    
+                    
                     <div class="visualizer" id="visualizer"></div>
                 </div>
                 <h3 class="fade-in" style="margin-top: 2rem;">Featured Albums</h3>
@@ -786,12 +792,12 @@
             let isNavVisible = true;
 
             const playlist = [
-                { title: "Season of grace ", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "banner.jpg" },
-                { title: "Nomaninilizovela", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "banner.jpg" },
-                { title: "Nomaninilizovela", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "banner.jpg" },
-                { title: "Nomaninilizovela", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "banner.jpg" },
-                { title: "Nomaninilizovela", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "banner.jpg" },
-                { title: "Nomaninilizovela", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "banner.jpg" }
+                { title: "Cosmic Rhythm", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "https://source.unsplash.com/random/400x400?cosmic" },
+                { title: "Neon Dreams", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "https://source.unsplash.com/random/400x400?neon" },
+                { title: "Cyber Serenade", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "https://source.unsplash.com/random/400x400?cyber" },
+                { title: "Quantum Beats", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "https://source.unsplash.com/random/400x400?quantum" },
+                { title: "Digital Horizon", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "https://source.unsplash.com/random/400x400?digital" },
+                { title: "Synth Wave", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "https://source.unsplash.com/random/400x400?synth" }
             ];
 
             let currentTrack = 0;
@@ -1135,5 +1141,239 @@
             lastScrollTop = scrollTop;
         });
     </script>
+    <script>
+    (function() {
+    const WIDGET_ID = 'music_player_widget_' + Math.random().toString(36).substr(2, 9);
+    
+    window[WIDGET_ID] = {
+        init: function(config = {}) {
+            this.config = {
+                albumArt: config.albumArt || 'Gce.jpg',
+                songTitle: config.songTitle || 'season Of grace',
+                services: config.services || [
+                    { name: 'Amazon Music', icon: 'amazon', url: '#' },
+                    { name: 'Spotify', icon: 'spotify', url: '#' },
+                    { name: 'Apple Music', icon: 'apple', url: '#' },
+                    { name: 'YouTube', icon: 'youtube', url: '#' },
+                    { name: 'Tidal', icon: 'music', url: '#' },
+                    { name: 'SoundCloud', icon: 'soundcloud', url: '#' }
+                ]
+            };
+            this.injectStyles();
+            this.createMarkup();
+            this.attachEventListeners();
+        },
+
+        injectStyles: function() {
+            if (document.getElementById(`${WIDGET_ID}-styles`)) return;
+            
+            const styleSheet = document.createElement("style");
+            styleSheet.id = `${WIDGET_ID}-styles`;
+            styleSheet.textContent = `
+                @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
+                @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+                #${WIDGET_ID}-popup {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100% !important;
+                    height: 100% !important;
+                    background: rgba(0, 0, 0, 0.8) !important;
+                    backdrop-filter: blur(10px);
+                    z-index: 2147483647 !important;
+                    opacity: 0;
+                    transition: opacity 0.5s ease;
+                }
+
+                #${WIDGET_ID}-popup.active {
+                    opacity: 1 !important;
+                }
+
+                #${WIDGET_ID}-popup * {
+                    all: revert;
+                    box-sizing: border-box !important;
+                    font-family: 'Orbitron', sans-serif !important;
+                }
+
+                #${WIDGET_ID}-content {
+                    background: rgba(255, 255, 255, 0.1) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                    border-radius: 20px !important;
+                    width: 340px !important;
+                    position: absolute !important;
+                    top: 50% !important;
+                    left: 50% !important;
+                    transform: translate(-50%, -50%) !important;
+                    padding: 20px !important;
+                    color: white !important;
+                    text-align: center !important;
+                    backdrop-filter: blur(10px);
+                    box-shadow: 0 0 40px rgba(0, 255, 136, 0.3) !important;
+                }
+
+                #${WIDGET_ID}-album-art {
+                    width: 180px !important;
+                    height: 180px !important;
+                    border-radius: 12px !important;
+                    margin: 0 auto 15px !important;
+                    display: block !important;
+                    box-shadow: 0 0 30px rgba(102, 0, 255, 0.5) !important;
+                }
+
+                #${WIDGET_ID}-title {
+                    font-size: 20px !important;
+                    margin: 10px 0 !important;
+                    background: linear-gradient(45deg, #00ff88, #6600ff);
+                    -webkit-background-clip: text !important;
+                    -webkit-text-fill-color: transparent !important;
+                    text-transform: uppercase !important;
+                }
+
+                #${WIDGET_ID}-subtitle {
+                    font-size: 14px !important;
+                    margin-bottom: 15px !important;
+                    color: rgba(255, 255, 255, 0.8) !important;
+                }
+
+                #${WIDGET_ID}-service-list {
+                    display: grid !important;
+                    grid-template-columns: 1fr 1fr !important;
+                    gap: 10px !important;
+                }
+
+                .${WIDGET_ID}-service-btn {
+                    background: rgba(255, 255, 255, 0.1) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                    color: white !important;
+                    padding: 8px 12px !important;
+                    border-radius: 8px !important;
+                    cursor: pointer !important;
+                    transition: all 0.3s ease !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    gap: 8px !important;
+                    font-size: 14px !important;
+                }
+
+                .${WIDGET_ID}-service-btn:hover {
+                    background: rgba(255, 255, 255, 0.2) !important;
+                    transform: translateY(-2px) !important;
+                    box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3) !important;
+                }
+
+                #${WIDGET_ID}-close {
+                    position: absolute !important;
+                    top: 10px !important;
+                    right: 10px !important;
+                    background: rgba(255, 0, 0, 0.3) !important;
+                    border: none !important;
+                    color: white !important;
+                    width: 30px !important;
+                    height: 30px !important;
+                    border-radius: 50% !important;
+                    cursor: pointer !important;
+                    transition: all 0.3s ease !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    padding: 0 !important;
+                    font-size: 14px !important;
+                }
+
+                #${WIDGET_ID}-close:hover {
+                    background: rgba(255, 0, 0, 0.5) !important;
+                    transform: rotate(90deg) !important;
+                }
+
+                @media (max-width: 380px) {
+                    #${WIDGET_ID}-content {
+                        width: 90% !important;
+                        padding: 15px !important;
+                    }
+
+                    #${WIDGET_ID}-album-art {
+                        width: 140px !important;
+                        height: 140px !important;
+                    }
+
+                    #${WIDGET_ID}-service-list {
+                        grid-template-columns: 1fr !important;
+                    }
+                }
+            `;
+            document.head.appendChild(styleSheet);
+        },
+
+        createMarkup: function() {
+            if (document.getElementById(`${WIDGET_ID}-popup`)) return;
+            
+            const popup = document.createElement('div');
+            popup.id = `${WIDGET_ID}-popup`;
+            
+            const serviceButtons = this.config.services.map(service => `
+                <button class="${WIDGET_ID}-service-btn" onclick="window.open('${service.url}', '_blank')">
+                    <i class="fab fa-${service.icon}"></i> ${service.name}
+                </button>
+            `).join('');
+
+            popup.innerHTML = `
+                <div id="${WIDGET_ID}-content">
+                    <img src="${this.config.albumArt}" alt="Album Art" id="${WIDGET_ID}-album-art">
+                    <h2 id="${WIDGET_ID}-title">${this.config.songTitle}</h2>
+                    <p id="${WIDGET_ID}-subtitle">Choose your music service</p>
+                    <div id="${WIDGET_ID}-service-list">
+                        ${serviceButtons}
+                    </div>
+                    <button id="${WIDGET_ID}-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(popup);
+        },
+
+        attachEventListeners: function() {
+            const popup = document.getElementById(`${WIDGET_ID}-popup`);
+            const closeBtn = document.getElementById(`${WIDGET_ID}-close`);
+            
+            popup.addEventListener('click', (e) => {
+                if (e.target === popup) {
+                    this.close();
+                }
+            });
+            
+            closeBtn.addEventListener('click', () => this.close());
+        },
+
+        open: function() {
+            const popup = document.getElementById(`${WIDGET_ID}-popup`);
+            popup.style.display = 'block';
+            setTimeout(() => popup.classList.add('active'), 10);
+        },
+
+        close: function() {
+            const popup = document.getElementById(`${WIDGET_ID}-popup`);
+            popup.classList.remove('active');
+            setTimeout(() => popup.style.display = 'none', 500);
+        }
+    };
+
+    // Create a global function to open the widget
+    window.openMusicPlayer = function(config) {
+        if (config) {
+            window[WIDGET_ID].init(config);
+        }
+        window[WIDGET_ID].open();
+    };
+
+    // Initialize widget when script loads
+    window[WIDGET_ID].init();
+})();
+
+    </script> 
 </body>
-    </html>
+</html>
