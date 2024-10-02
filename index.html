@@ -667,7 +667,7 @@
                             <h3>Manzini Mavuso Trade Fair</h3>
                             <p>July 15, 2025</p>
                         </div>
-                        <a href="#" class="btn" id="getTicketsBtn">Get Tickets</a>
+                        <a href="#"class="btn" id="getTicketsBtn">Get Tickets</a>
                     </div>
                     <div class="tour-date slide-in">
                         <div>
@@ -682,7 +682,7 @@
                             <h3>Zulwini ,</h3>
                             <p>September 22, 2024</p>
                         </div>
-                        <a href="#" class="btn" id="getTicketsBtn3">Get Tickets</a>
+                        <a href="#"class="btn" id="getTicketsBtn3">Get Tickets</a>
                     </div>
                 </div>
             </section>
@@ -693,19 +693,19 @@
                         <img src="Merch.jpg" alt="T-Shirt">
                         <h3>Season Of Gcace T-Shirt</h3>
                         <p>E109.99</p>
-                        <a href="#" class="btn">Buy Now</a>
+                        <a href="#" class="btn" id="buy-now-btn" >Buy Now</a>
                     </div>
                     <div class="merch-item slide-in">
                         <img src="Merch.jpg" alt="Cap">
                         <h3>Season Of Gcace Cap</h3>
                         <p>E24.99</p>
-                        <a href="#" class="btn">Buy Now</a>
+                        <a href="#" class="btn" id="buy-now-btn2" >Buy Now</a>
                     </div>
                     <div class="merch-item slide-in">
                         <img src="Merch.jpg" alt="Poster">
                         <h3>Season Of Gcace Poster</h3>
                         <p>E19.99</p>
-                        <a href="#" class="btn">Buy Now</a>
+                        <a href="#" class="btn" id="buy-now-btn3" >Buy Now</a>
                     </div>
                 </div>
             </section>
@@ -1903,6 +1903,436 @@
             })();
             </script>
             
-                 
+         
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Create popup structure for Customer Info
+                    const popupHTML = `
+                    <div id="customer-info-popup" class="popup-container" style="display:none;">
+                      <div class="popup-content">
+                        <h3>Customer Information</h3>
+                        <form id="customer-info-form">
+                          <input type="text" id="full-name" placeholder="Full Name" required>
+                          <input type="email" id="email" placeholder="Email Address" required>
+                          <input type="text" id="shipping-address" placeholder="Shipping Address" required>
+                          <input type="text" id="billing-address" placeholder="Billing Address (if different)">
+                          <input type="tel" id="phone-number" placeholder="Phone Number" required>
+                          <button type="button" id="continue-btn" class="btn">Continue</button>
+                        </form>
+                      </div>
+                    </div>
+                    
+                    <div id="payment-info-popup" class="popup-container" style="display:none;">
+                      <div class="popup-content">
+                        <h3>Payment Information</h3>
+                        <form id="payment-info-form">
+                          <select id="payment-method" required>
+                            <option value="visa">Visa</option>
+                            <option value="mastercard">Mastercard</option>
+                            <option value="amex">American Express</option>
+                            <option value="paypal">PayPal</option>
+                          </select>
+                          <input type="text" id="card-number" placeholder="Card Number" required>
+                          <input type="text" id="expiration-date" placeholder="Expiration Date (MM/YY)" required>
+                          <input type="text" id="cvv" placeholder="CVV/CVC" required>
+                          <input type="text" id="billing-zip" placeholder="Billing Zip Code" required>
+                          <button type="button" id="finish-btn" class="btn">Finish</button>
+                        </form>
+                      </div>
+                    </div>
+                    
+                    <div id="payment-status" class="popup-container" style="display:none;">
+                      <div class="popup-content">
+                        <h3 id="status-message"></h3>
+                        <button type="button" id="close-btn" class="btn">Close</button>
+                      </div>
+                    </div>
+                    `;
+                    
+                    document.body.insertAdjacentHTML('beforeend', popupHTML);
+                    
+                    // Add CSS styles for the popups
+                    const style = document.createElement('style');
+                    style.textContent = `
+                      .popup-container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.8);
+                        z-index: 1000;
+                      }
+                
+                      .popup-content {
+                        background: rgba(255, 255, 255, 0.1);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        border-radius: 10px;
+                        padding: 20px;
+                        width: 300px;
+                        text-align: center;
+                        color: white;
+                        font-family: 'Orbitron', sans-serif;
+                      }
+                
+                      input, select {
+                        width: 100%;
+                        padding: 10px;
+                        margin: 10px 0;
+                        background: black;
+                        color: white;
+                        border: 2px solid green;
+                        border-radius: 5px;
+                        font-family: 'Orbitron', sans-serif;
+                
+                      }
+                
+                      .btn {
+                        padding: 10px;
+                        background-color: var(--primary-color);
+            color: var(--background-color);
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-weight: bold;
+                        font-family: 'Orbitron', sans-serif;
+                      }
+                
+                      .btn:hover {
+                       background-color: var(--text-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
+                      }
+                    `;
+                    document.head.appendChild(style);
+                
+                    // Event listener for the "Buy Now" button
+                    document.getElementById('buy-now-btn').addEventListener('click', function() {
+                        document.getElementById('customer-info-popup').style.display = 'flex';
+                    });
+                
+                    // Event listener for the "Continue" button
+                    document.getElementById('continue-btn').addEventListener('click', function() {
+                        document.getElementById('customer-info-popup').style.display = 'none';
+                        document.getElementById('payment-info-popup').style.display = 'flex';
+                    });
+                
+                    // Event listener for the "Finish" button
+                    document.getElementById('finish-btn').addEventListener('click', function() {
+                        let cardNumber = document.getElementById('card-number').value;
+                        let expirationDate = document.getElementById('expiration-date').value;
+                        let cvv = document.getElementById('cvv').value;
+                
+                        if (validatePayment(cardNumber, expirationDate, cvv)) {
+                            document.getElementById('payment-info-popup').style.display = 'none';
+                            document.getElementById('status-message').textContent = 'Payment Successful!';
+                        } else {
+                            document.getElementById('status-message').textContent = 'Payment Failed. Please try again.';
+                        }
+                        document.getElementById('payment-status').style.display = 'flex';
+                    });
+                
+                    // Close status popup
+                    document.getElementById('close-btn').addEventListener('click', function() {
+                        document.getElementById('payment-status').style.display = 'none';
+                    });
+                
+                    // Basic payment validation (can be expanded)
+                    function validatePayment(cardNumber, expirationDate, cvv) {
+                        return cardNumber && expirationDate && cvv;
+                    }
+                });
+                </script>
+     
+     
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create popup structure for Customer Info
+            const popupHTML = `
+            <div id="customer-info-popup" class="popup-container" style="display:none;">
+              <div class="popup-content">
+                <h3>Customer Information</h3>
+                <form id="customer-info-form">
+                  <input type="text" id="full-name" placeholder="Full Name" required>
+                  <input type="email" id="email" placeholder="Email Address" required>
+                  <input type="text" id="shipping-address" placeholder="Shipping Address" required>
+                  <input type="text" id="billing-address" placeholder="Billing Address (if different)">
+                  <input type="tel" id="phone-number" placeholder="Phone Number" required>
+                  <button type="button" id="continue-btn" class="btn">Continue</button>
+                </form>
+              </div>
+            </div>
+            
+            <div id="payment-info-popup" class="popup-container" style="display:none;">
+              <div class="popup-content">
+                <h3>Payment Information</h3>
+                <form id="payment-info-form">
+                  <select id="payment-method" required>
+                    <option value="visa">Visa</option>
+                    <option value="mastercard">Mastercard</option>
+                    <option value="amex">American Express</option>
+                    <option value="paypal">PayPal</option>
+                  </select>
+                  <input type="text" id="card-number" placeholder="Card Number" required>
+                  <input type="text" id="expiration-date" placeholder="Expiration Date (MM/YY)" required>
+                  <input type="text" id="cvv" placeholder="CVV/CVC" required>
+                  <input type="text" id="billing-zip" placeholder="Billing Zip Code" required>
+                  <button type="button" id="finish-btn" class="btn">Finish</button>
+                </form>
+              </div>
+            </div>
+            
+            <div id="payment-status" class="popup-container" style="display:none;">
+              <div class="popup-content">
+                <h3 id="status-message"></h3>
+                <button type="button" id="close-btn" class="btn">Close</button>
+              </div>
+            </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', popupHTML);
+            
+            // Add CSS styles for the popups
+            const style = document.createElement('style');
+            style.textContent = `
+              .popup-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 1000;
+              }
+        
+              .popup-content {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 10px;
+                padding: 20px;
+                width: 300px;
+                text-align: center;
+                color: white;
+                font-family: 'Orbitron', sans-serif;
+              }
+        
+              input, select {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                background: black;
+                color: white;
+                border: 2px solid green;
+                border-radius: 5px;
+                font-family: 'Orbitron', sans-serif;
+        
+              }
+        
+              .btn {
+                padding: 10px;
+                background-color: var(--primary-color);
+            color: var(--background-color);
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                font-family: 'Orbitron', sans-serif;
+              }
+        
+              .btn:hover {
+                background-color: var(--text-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
+              }
+            `;
+            document.head.appendChild(style);
+        
+            // Event listener for the "Buy Now" button
+            document.getElementById('buy-now-btn2').addEventListener('click', function() {
+                document.getElementById('customer-info-popup').style.display = 'flex';
+            });
+        
+            // Event listener for the "Continue" button
+            document.getElementById('continue-btn').addEventListener('click', function() {
+                document.getElementById('customer-info-popup').style.display = 'none';
+                document.getElementById('payment-info-popup').style.display = 'flex';
+            });
+        
+            // Event listener for the "Finish" button
+            document.getElementById('finish-btn').addEventListener('click', function() {
+                let cardNumber = document.getElementById('card-number').value;
+                let expirationDate = document.getElementById('expiration-date').value;
+                let cvv = document.getElementById('cvv').value;
+        
+                if (validatePayment(cardNumber, expirationDate, cvv)) {
+                    document.getElementById('payment-info-popup').style.display = 'none';
+                    document.getElementById('status-message').textContent = 'Payment Successful!';
+                } else {
+                    document.getElementById('status-message').textContent = 'Payment Failed. Please try again.';
+                }
+                document.getElementById('payment-status').style.display = 'flex';
+            });
+        
+            // Close status popup
+            document.getElementById('close-btn').addEventListener('click', function() {
+                document.getElementById('payment-status').style.display = 'none';
+            });
+        
+            // Basic payment validation (can be expanded)
+            function validatePayment(cardNumber, expirationDate, cvv) {
+                return cardNumber && expirationDate && cvv;
+            }
+        });
+        </script>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Create popup structure for Customer Info
+                const popupHTML = `
+                <div id="customer-info-popup" class="popup-container" style="display:none;">
+                  <div class="popup-content">
+                    <h3>Customer Information</h3>
+                    <form id="customer-info-form">
+                      <input type="text" id="full-name" placeholder="Full Name" required>
+                      <input type="email" id="email" placeholder="Email Address" required>
+                      <input type="text" id="shipping-address" placeholder="Shipping Address" required>
+                      <input type="text" id="billing-address" placeholder="Billing Address (if different)">
+                      <input type="tel" id="phone-number" placeholder="Phone Number" required>
+                      <button type="button" id="continue-btn" class="btn">Continue</button>
+                    </form>
+                  </div>
+                </div>
+                
+                <div id="payment-info-popup" class="popup-container" style="display:none;">
+                  <div class="popup-content">
+                    <h3>Payment Information</h3>
+                    <form id="payment-info-form">
+                      <select id="payment-method" required>
+                        <option value="visa">Visa</option>
+                        <option value="mastercard">Mastercard</option>
+                        <option value="amex">American Express</option>
+                        <option value="paypal">PayPal</option>
+                      </select>
+                      <input type="text" id="card-number" placeholder="Card Number" required>
+                      <input type="text" id="expiration-date" placeholder="Expiration Date (MM/YY)" required>
+                      <input type="text" id="cvv" placeholder="CVV/CVC" required>
+                      <input type="text" id="billing-zip" placeholder="Billing Zip Code" required>
+                      <button type="button" id="finish-btn" class="btn">Finish</button>
+                    </form>
+                  </div>
+                </div>
+                
+                <div id="payment-status" class="popup-container" style="display:none;">
+                  <div class="popup-content">
+                    <h3 id="status-message"></h3>
+                    <button type="button" id="close-btn" class="btn">Close</button>
+                  </div>
+                </div>
+                `;
+                
+                document.body.insertAdjacentHTML('beforeend', popupHTML);
+                
+                // Add CSS styles for the popups
+                const style = document.createElement('style');
+                style.textContent = `
+                  .popup-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    z-index: 1000;
+                  }
+            
+                  .popup-content {
+                    background: rgba(255, 255, 255, 0.1);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    border-radius: 10px;
+                    padding: 20px;
+                    width: 300px;
+                    text-align: center;
+                    color: white;
+                    font-family: 'Orbitron', sans-serif;
+                  }
+            
+                  input, select {
+                    width: 100%;
+                    padding: 10px;
+                    margin: 10px 0;
+                    background: black;
+                    color: white;
+                    border: 2px solid green;
+                    border-radius: 5px;
+                    font-family: 'Orbitron', sans-serif;
+            
+                  }
+            
+                  .btn {
+                    padding: 10px;
+                    background-color: var(--primary-color);
+            color: var(--background-color);
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    font-family: 'Orbitron', sans-serif;
+                  }
+            
+                  .btn:hover {
+                    background-color: var(--text-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
+                  }
+                `;
+                document.head.appendChild(style);
+            
+                // Event listener for the "Buy Now" button
+                document.getElementById('buy-now-btn3').addEventListener('click', function() {
+                    document.getElementById('customer-info-popup').style.display = 'flex';
+                });
+            
+                // Event listener for the "Continue" button
+                document.getElementById('continue-btn').addEventListener('click', function() {
+                    document.getElementById('customer-info-popup').style.display = 'none';
+                    document.getElementById('payment-info-popup').style.display = 'flex';
+                });
+            
+                // Event listener for the "Finish" button
+                document.getElementById('finish-btn').addEventListener('click', function() {
+                    let cardNumber = document.getElementById('card-number').value;
+                    let expirationDate = document.getElementById('expiration-date').value;
+                    let cvv = document.getElementById('cvv').value;
+            
+                    if (validatePayment(cardNumber, expirationDate, cvv)) {
+                        document.getElementById('payment-info-popup').style.display = 'none';
+                        document.getElementById('status-message').textContent = 'Payment Successful!';
+                    } else {
+                        document.getElementById('status-message').textContent = 'Payment Failed. Please try again.';
+                    }
+                    document.getElementById('payment-status').style.display = 'flex';
+                });
+            
+                // Close status popup
+                document.getElementById('close-btn').addEventListener('click', function() {
+                    document.getElementById('payment-status').style.display = 'none';
+                });
+            
+                // Basic payment validation (can be expanded)
+                function validatePayment(cardNumber, expirationDate, cvv) {
+                    return cardNumber && expirationDate && cvv;
+                }
+            });
+            </script>
+            
 </body>
 </html>
