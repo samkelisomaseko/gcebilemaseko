@@ -582,6 +582,46 @@
         .slide-in {
             animation: slideIn 0.5s ease-out;
         }
+    
+    
+    
+        #countdown {
+        font-size: 1.2rem;
+        color: var(--primary-color); /* Adjust this to match your design */
+        margin-top: 0.5rem;
+        font-weight: bold;
+    }
+
+    #countdown-timer {
+        color: var(--accent-color); /* Adjust to your preferred accent color */
+        font-weight: bold;
+    }
+
+    #ticket-info {
+        margin-top: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    #ticket-info .vip {
+        color: #FFD700; /* Gold color for VIP */
+        font-weight: bold;
+    }
+
+    #ticket-info .general {
+        color: #00FF00; /* Green color for General Admission */
+        font-weight: bold;
+    }
+
+    /* Optional: add a subtle animation for the countdown numbers */
+    #countdown-timer {
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
     </style>
 </head>
 <body>
@@ -663,28 +703,32 @@
                 <h2 class="fade-in">Upcoming Shows</h2>
                 <div class="tour-dates">
                     <div class="tour-date slide-in">
-                        <div>
-                            <h3>Manzini Mavuso Trade Fair</h3>
-                            <p>July 15, 2025</p>
-                        </div>
-                        <a href="#"class="btn" id="getTicketsBtn">Get Tickets</a>
-                    </div>
-                    <div class="tour-date slide-in">
-                        <div>
-                            <h3>Matsapha, Light of Christ </h3>
-                            <p>August 3, 2024</p>
-                        </div>
-                        <a href="#" class="btn" id="getTicketsBtn2">Get Tickets</a>
-                        
-                    </div>
-                    <div class="tour-date slide-in">
-                        <div>
-                            <h3>Zulwini ,</h3>
-                            <p>September 22, 2024</p>
-                        </div>
-                        <a href="#"class="btn" id="getTicketsBtn3">Get Tickets</a>
-                    </div>
-                </div>
+    <div>
+        <h3>Manzini Mavuso Trade Fair </h3>
+        <p>December 22, 2024</p>
+        <p id="countdown">Time left: <span id="countdown-timer"></span></p>
+        <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p> <!-- Replace with actual availability -->
+    </div>
+    <a href="#" class="btn" id="getTicketsBtn3">Get Tickets</a>
+</div>
+                   <div class="tour-date slide-in">
+    <div>
+        <h3>Matsapha Light of christ </h3>
+        <p>October 27, 2024</p>
+        <p id="countdown">Time left: <span id="countdown-timer"></span></p>
+        <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p> <!-- Replace with actual availability -->
+    </div>
+    <a href="#" class="btn" id="getTicketsBtn3">Get Tickets</a>
+</div>
+                     <div class="tour-date slide-in">
+    <div>
+        <h3>Zulwini </h3>
+        <p>February 14, 2025</p>
+        <p id="countdown">Time left: <span id="countdown-timer"></span></p>
+        <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p> <!-- Replace with actual availability -->
+    </div>
+    <a href="#" class="btn" id="getTicketsBtn3">Get Tickets</a>
+</div>
             </section>
             <section id="merch" class="section">
                 <h2 class="fade-in">Official Merchandise</h2>
@@ -2400,7 +2444,79 @@
             }
         });
     </script>
-    
-    
+
+
+<script>
+    // Countdown Timer
+    const eventDate = new Date('december 22, 2024 00:00:00').getTime();
+    const countdownTimer = document.getElementById('countdown-timer');
+
+    const updateCountdown = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownTimer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+        // If the countdown is over, display "Event started"
+        if (distance < 0) {
+            clearInterval(updateCountdown);
+            countdownTimer.innerHTML = "Event started";
+        }
+    }, 1000);
+</script>
+
+<script>
+    // Countdown Timer
+    const eventDate = new Date('october 27, 2024 00:00:00').getTime();
+    const countdownTimer = document.getElementById('countdown-timer');
+
+    const updateCountdown = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownTimer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+        // If the countdown is over, display "Event started"
+        if (distance < 0) {
+            clearInterval(updateCountdown);
+            countdownTimer.innerHTML = "Event started";
+        }
+    }, 1000);
+</script>
+
+<script>
+    // Countdown Timer
+    const eventDate = new Date('february 14, 2025 00:00:00').getTime();
+    const countdownTimer = document.getElementById('countdown-timer');
+
+    const updateCountdown = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownTimer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+        // If the countdown is over, display "Event started"
+        if (distance < 0) {
+            clearInterval(updateCountdown);
+            countdownTimer.innerHTML = "Event started";
+        }
+    }, 1000);
+</script>
+
 </body>
 </html>
