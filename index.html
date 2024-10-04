@@ -704,7 +704,7 @@
                 <div class="tour-dates">
                     <div class="tour-date slide-in">
     <div>
-        <h3>Manzini Mavuso Trade Fair </h3>
+        <h3>Manzini, Mavuso Trade Fair </h3>
         <p>December 22, 2024</p>
         <p id="countdown">Time left: <span id="countdown-timer"></span></p>
         <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p> <!-- Replace with actual availability -->
@@ -713,18 +713,18 @@
 </div>
                    <div class="tour-date slide-in">
     <div>
-        <h3>Matsapha Light of christ </h3>
-        <p>October 27, 2024</p>
-        <p id="countdown">Time left: <span id="countdown-timer"></span></p>
+        <h3>Matsapha, The Light of christ Auditorium </h3>
+        <p>January 27, 2024</p>
+        <p id="countdown">Time left: <span id="countdown-timer2"></span></p>
         <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p> <!-- Replace with actual availability -->
     </div>
     <a href="#" class="btn" id="getTicketsBtn2">Get Tickets</a>
 </div>
                      <div class="tour-date slide-in">
     <div>
-        <h3>Zulwini </h3>
+        <h3>Zulwini, </h3>
         <p>February 14, 2025</p>
-        <p id="countdown">Time left: <span id="countdown-timer"></span></p>
+        <p id="countdown">Time left: <span id="countdown-timer3"></span></p>
         <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p> <!-- Replace with actual availability -->
     </div>
     <a href="#" class="btn" id="getTicketsBtn3">Get Tickets</a>
@@ -1468,229 +1468,172 @@
   
     <script src="https://js.stripe.com/v3/"></script>
 
-<script>
-    (function() {
-        const stripe = Stripe("pk_test_51OhhvQ2M0CLjQC6F6mfQXlO3ce7MCQT4arXd3HkPtQJHs0dkbtadfrbI1p4XSZJk46kTIwiPiToBN8Du2nUpv5zL00cQDwKtTK"); // Initialize Stripe with your API key
-        let stripeClientSecret = ''; // Will store the client secret after payment intent creation
-
-        // Generate a unique identifier for each widget instance
-        const widgetInstance = `ticketWidget_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
-
-        // Create the popup container dynamically
-        const popupHtml = `
-            <div class="${widgetInstance}popup-container" id="${widgetInstance}popup" style="display: none;">
-                <div class="${widgetInstance}popup">
-                    <button class="${widgetInstance}close-btn" id="${widgetInstance}closePopup">X</button>
-                    <h3>Get Your Tickets</h3>
-                    <div id="${widgetInstance}form">
-                        <input type="text" id="${widgetInstance}name" placeholder="First and Last Name" required>
-                        <input type="email" id="${widgetInstance}email" placeholder="Email" required>
-                        <input type="tel" id="${widgetInstance}phone" placeholder="Phone Number" required>
-                        <input type="number" id="${widgetInstance}ticketQty" placeholder="Ticket Quantity" required>
-                        <select id="${widgetInstance}ticketType" required>
-                            <option value="">Select Ticket Type</option>
-                            <option value="general">General Admission</option>
-                            <option value="vip">VIP</option>
-                        </select>
-                        <button id="${widgetInstance}continueBtn">Continue</button>
+    <script>
+        (function() {
+            const stripe = Stripe("pk_test_51OhhvQ2M0CLjQC6F6mfQXlO3ce7MCQT4arXd3HkPtQJHs0dkbtadfrbI1p4XSZJk46kTIwiPiToBN8Du2nUpv5zL00cQDwKtTK");
+            let stripeClientSecret = ''; 
+    
+            const widgetInstance = `ticketWidget_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
+    
+            const popupHtml = `
+                <div class="${widgetInstance}popup-container" id="${widgetInstance}popup" style="display: none;">
+                    <div class="${widgetInstance}popup">
+                        <button class="${widgetInstance}close-btn" id="${widgetInstance}closePopup">X</button>
+                        <h3>Get Your Tickets</h3>
+                        <div id="${widgetInstance}form">
+                            <input type="text" id="${widgetInstance}name" placeholder="First and Last Name" required>
+                            <input type="email" id="${widgetInstance}email" placeholder="Email" required>
+                            <input type="tel" id="${widgetInstance}phone" placeholder="Phone Number" required>
+                            <input type="number" id="${widgetInstance}ticketQty" placeholder="Ticket Quantity" required>
+                            <select id="${widgetInstance}ticketType" required>
+                                <option value="">Select Ticket Type</option>
+                                <option value="general">General Admission</option>
+                                <option value="vip">VIP</option>
+                            </select>
+                            <button id="${widgetInstance}continueBtn">Continue</button>
+                        </div>
+                        <div id="${widgetInstance}paymentForm" style="display:none;">
+                            <input type="text" id="${widgetInstance}cardNumber" placeholder="Card Number" required pattern="\\d{16}">
+                            <input type="text" id="${widgetInstance}expiration" placeholder="Expiration Date (MM/YY)" required pattern="\\d{2}/\\d{2}">
+                            <input type="text" id="${widgetInstance}cvv" placeholder="CVV" required pattern="\\d{3}">
+                            <input type="text" id="${widgetInstance}billingAddress" placeholder="Billing Address" required>
+                            <button id="${widgetInstance}finishBtn">Finish</button>
+                        </div>
+                        <div id="${widgetInstance}message"></div>
                     </div>
-                    <div id="${widgetInstance}paymentForm" style="display:none;">
-                        <input type="text" id="${widgetInstance}cardNumber" placeholder="Card Number" required>
-                        <input type="text" id="${widgetInstance}expiration" placeholder="Expiration Date (MM/YY)" required>
-                        <input type="text" id="${widgetInstance}cvv" placeholder="CVV" required>
-                        <input type="text" id="${widgetInstance}billingAddress" placeholder="Billing Address" required>
-                        <button id="${widgetInstance}finishBtn">Finish</button>
-                    </div>
-                    <div id="${widgetInstance}message"></div>
                 </div>
-            </div>
-        `;
-
-        // Append the popup to the body
-        document.body.insertAdjacentHTML('beforeend', popupHtml);
-
-        // Add styles for this instance
-        const style = document.createElement('style');
-        style.textContent = `
-            .${widgetInstance}popup-container {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.8);
-                justify-content: center;
-                align-items: center;
-                z-index: 10000;
-            }
-            
-            .${widgetInstance}popup {
-                background: rgba(255, 255, 255, 0.1);
-                padding: 20px;
-                border-radius: 10px;
-                width: 90%;
-                max-width: 400px;
-                text-align: center;
-                color: white;
-                box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
-            }
-
-            .${widgetInstance}popup input, .${widgetInstance}popup select {
-                width: 100%;
-                padding: 10px;
-                margin: 10px 0;
-                background: black;
-                color: white;
-                border: 2px solid green;
-                border-radius: 5px;
-                font-family: 'Orbitron', sans-serif;
-            }
-
-            .${widgetInstance}popup button {
-                width: 100%;
-                padding: 10px;
-                margin: 10px 0;
-                background: green;
-                color: black;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                font-weight: 1000;
-                font-family: 'Orbitron', sans-serif;
-                transition: background 0.3s ease;
-            }
-
-            .${widgetInstance}popup button:hover {
-                background: lime;
-            }
-
-            .${widgetInstance}popup .${widgetInstance}close-btn {
-                background: red;
-                color: white;
-                padding: 5px;
-                border: none;
-                border-radius: 5px;
-                float: right;
-                cursor: pointer;
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Widget functionality
-        const popup = document.getElementById(`${widgetInstance}popup`);
-        const closePopup = document.getElementById(`${widgetInstance}closePopup`);
-        const continueBtn = document.getElementById(`${widgetInstance}continueBtn`);
-        const finishBtn = document.getElementById(`${widgetInstance}finishBtn`);
-        const form = document.getElementById(`${widgetInstance}form`);
-        const paymentForm = document.getElementById(`${widgetInstance}paymentForm`);
-        const messageDiv = document.getElementById(`${widgetInstance}message`);
-
-        // Open popup
-        const getTicketsBtn = document.getElementById('getTicketsBtn'); // Ensure button has correct ID
-        getTicketsBtn.addEventListener('click', () => {
-            popup.style.display = 'flex';
-        });
-
-        // Close popup
-        closePopup.addEventListener('click', () => {
-            popup.style.display = 'none';
-            resetForm();
-        });
-
-        // Continue to payment section
-        continueBtn.addEventListener('click', () => {
-            form.style.display = 'none';
-            paymentForm.style.display = 'block';
-
-            // Create a payment intent when moving to the payment section
-            createPaymentIntent();
-        });
-
-        // Finish and complete payment
-        finishBtn.addEventListener('click', async () => {
-            const isValid = validatePayment();
-            if (isValid) {
-                const cardElement = {
-                    cardNumber: document.getElementById(`${widgetInstance}cardNumber`).value,
-                    expiration: document.getElementById(`${widgetInstance}expiration`).value,
-                    cvv: document.getElementById(`${widgetInstance}cvv`).value,
-                    billingAddress: document.getElementById(`${widgetInstance}billingAddress`).value,
-                };
-
-                // Confirm the payment using Stripe.js
-                stripe.confirmCardPayment(stripeClientSecret, {
-                    payment_method: {
-                        card: cardElement,
-                        billing_details: {
-                            address: { line1: cardElement.billingAddress },
-                        },
-                    }
-                }).then(function(result) {
-                    if (result.error) {
-                        messageDiv.innerHTML = `<p class="error">Payment Failed: ${result.error.message}</p>`;
-                    } else if (result.paymentIntent.status === 'succeeded') {
-                        messageDiv.innerHTML = `<p class="success">Payment Successful! Thank you for your purchase.</p>`;
-                    }
-                });
-            } else {
-                messageDiv.innerHTML = `<p class="error">Payment Failed. Please try again.</p>`;
-            }
-        });
-
-        // Create a payment intent when continuing to payment
-        async function createPaymentIntent() {
-            const formData = {
-                name: document.getElementById(`${widgetInstance}name`).value,
-                email: document.getElementById(`${widgetInstance}email`).value,
-                phone: document.getElementById(`${widgetInstance}phone`).value,
-                ticketQty: document.getElementById(`${widgetInstance}ticketQty`).value,
-                ticketType: document.getElementById(`${widgetInstance}ticketType`).value,
-            };
-
-            const amount = calculateAmount(formData.ticketQty, formData.ticketType); // Calculate the total amount
-
-            // Create a payment intent on the server-side (adjust URL to match your back-end)
-            const response = await fetch('/create-payment-intent', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    amount: amount * 100, // Stripe works with cents
-                    currency: 'usd'
-                })
+            `;
+    
+            document.body.insertAdjacentHTML('beforeend', popupHtml);
+    
+            const style = document.createElement('style');
+            style.textContent = `
+                /* styling code here */
+            `;
+            document.head.appendChild(style);
+    
+            const popup = document.getElementById(`${widgetInstance}popup`);
+            const closePopup = document.getElementById(`${widgetInstance}closePopup`);
+            const continueBtn = document.getElementById(`${widgetInstance}continueBtn`);
+            const finishBtn = document.getElementById(`${widgetInstance}finishBtn`);
+            const form = document.getElementById(`${widgetInstance}form`);
+            const paymentForm = document.getElementById(`${widgetInstance}paymentForm`);
+            const messageDiv = document.getElementById(`${widgetInstance}message`);
+    
+            const getTicketsBtn = document.getElementById('getTicketsBtn'); 
+            getTicketsBtn.addEventListener('click', () => {
+                popup.style.display = 'flex';
             });
-
-            const data = await response.json();
-            stripeClientSecret = data.clientSecret; // Store the client secret for payment confirmation
-        }
-
-        // Reset form
-        function resetForm() {
-            form.style.display = 'block';
-            paymentForm.style.display = 'none';
-            messageDiv.innerHTML = '';
-        }
-
-        function validatePayment() {
-            const cardNumber = document.getElementById(`${widgetInstance}cardNumber`).value;
-            const expiration = document.getElementById(`${widgetInstance}expiration`).value;
-            const cvv = document.getElementById(`${widgetInstance}cvv`).value;
-            const billingAddress = document.getElementById(`${widgetInstance}billingAddress`).value;
-            return cardNumber && expiration && cvv && billingAddress;
-        }
-
-        function calculateAmount(qty, type) {
-            const prices = {
-                general: 50,
-                vip: 100
-            };
-            return qty * prices[type];
-        }
-    })();
-</script>
-
+    
+            closePopup.addEventListener('click', () => {
+                popup.style.display = 'none';
+                resetForm();
+            });
+    
+            continueBtn.addEventListener('click', () => {
+                if (!validateForm()) {
+                    messageDiv.innerHTML = `<p class="error">Please fill in all required fields correctly.</p>`;
+                    return;
+                }
+                form.style.display = 'none';
+                paymentForm.style.display = 'block';
+                createPaymentIntent();
+            });
+    
+            finishBtn.addEventListener('click', async () => {
+                const isValid = validatePayment();
+                if (isValid) {
+                    const cardElement = {
+                        cardNumber: document.getElementById(`${widgetInstance}cardNumber`).value,
+                        expiration: document.getElementById(`${widgetInstance}expiration`).value,
+                        cvv: document.getElementById(`${widgetInstance}cvv`).value,
+                        billingAddress: document.getElementById(`${widgetInstance}billingAddress`).value,
+                    };
+    
+                    stripe.confirmCardPayment(stripeClientSecret, {
+                        payment_method: {
+                            card: cardElement,
+                            billing_details: {
+                                address: { line1: cardElement.billingAddress },
+                            },
+                        }
+                    }).then(function(result) {
+                        if (result.error) {
+                            messageDiv.innerHTML = `<p class="error">Payment Failed: ${result.error.message}</p>`;
+                        } else if (result.paymentIntent.status === 'succeeded') {
+                            messageDiv.innerHTML = `<p class="success">Payment Successful! Thank you for your purchase.</p>`;
+                        }
+                    });
+                } else {
+                    messageDiv.innerHTML = `<p class="error">Payment Failed. Please try again.</p>`;
+                }
+            });
+    
+            async function createPaymentIntent() {
+                const formData = {
+                    name: document.getElementById(`${widgetInstance}name`).value,
+                    email: document.getElementById(`${widgetInstance}email`).value,
+                    phone: document.getElementById(`${widgetInstance}phone`).value,
+                    ticketQty: document.getElementById(`${widgetInstance}ticketQty`).value,
+                    ticketType: document.getElementById(`${widgetInstance}ticketType`).value,
+                };
+    
+                const amount = calculateAmount(formData.ticketQty, formData.ticketType);
+    
+                const response = await fetch('/create-payment-intent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        amount: amount * 100,
+                        currency: 'usd'
+                    })
+                });
+    
+                const data = await response.json();
+                stripeClientSecret = data.clientSecret;
+            }
+    
+            function validateForm() {
+                const name = document.getElementById(`${widgetInstance}name`).value.trim();
+                const email = document.getElementById(`${widgetInstance}email`).value.trim();
+                const phone = document.getElementById(`${widgetInstance}phone`).value.trim();
+                const ticketQty = document.getElementById(`${widgetInstance}ticketQty`).value;
+                const ticketType = document.getElementById(`${widgetInstance}ticketType`).value;
+    
+                const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                const isPhoneValid = /^\d{10}$/.test(phone);
+    
+                return name && isEmailValid && isPhoneValid && ticketQty && ticketType;
+            }
+    
+            function validatePayment() {
+                const cardNumber = document.getElementById(`${widgetInstance}cardNumber`).value;
+                const expiration = document.getElementById(`${widgetInstance}expiration`).value;
+                const cvv = document.getElementById(`${widgetInstance}cvv`).value;
+                const billingAddress = document.getElementById(`${widgetInstance}billingAddress`).value;
+    
+                return cardNumber && expiration && cvv && billingAddress;
+            }
+    
+            function calculateAmount(qty, type) {
+                const prices = {
+                    general: 50,
+                    vip: 100
+                };
+                return qty * prices[type];
+            }
+    
+            function resetForm() {
+                form.style.display = 'block';
+                paymentForm.style.display = 'none';
+                messageDiv.innerHTML = '';
+            }
+        })();
+    </script>
+     
+    
 
 
     
@@ -1775,8 +1718,8 @@
                 width: 100%;
                 padding: 10px;
                 margin: 10px 0;
-                background: green;
-                color: black;
+                background-color: var(--primary-color);
+            color: var(--background-color);
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
@@ -1786,7 +1729,9 @@
             }
 
             .${widgetId}popup button:hover {
-                background: lime;
+               background-color: var(--text-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
             }
 
             .${widgetId}popup .${widgetId}close-btn {
@@ -1995,8 +1940,8 @@
                 width: 100%;
                 padding: 10px;
                 margin: 10px 0;
-                background: green;
-                color: black;
+                background-color: var(--primary-color);
+            color: var(--background-color);
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
@@ -2006,7 +1951,9 @@
             }
 
             .${widgetId}popup button:hover {
-                background: lime;
+               background-color: var(--text-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
             }
 
             .${widgetId}popup .${widgetId}close-btn {
@@ -2657,8 +2604,8 @@
 
 <script>
     // Countdown Timer
-    const eventDate = new Date('october 27, 2024 00:00:00').getTime();
-    const countdownTimer = document.getElementById('countdown-timer');
+    const eventDate = new Date('january 27, 2024 00:00:00').getTime();
+    const countdownTimer = document.getElementById('countdown-timer2');
 
     const updateCountdown = setInterval(function() {
         const now = new Date().getTime();
@@ -2681,27 +2628,34 @@
 
 <script>
     // Countdown Timer
-    const eventDate = new Date('february 14, 2025 00:00:00').getTime();
-    const countdownTimer = document.getElementById('countdown-timer');
+    const eventDate = new Date('February 14, 2025 00:00:00').getTime();
+    const countdownTimer = document.getElementById('countdown-timer3');
 
-    const updateCountdown = setInterval(function() {
-        const now = new Date().getTime();
-        const distance = eventDate - now;
+    if (countdownTimer) {
+        const updateCountdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Time calculations
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        countdownTimer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            // Display result
+            countdownTimer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-        // If the countdown is over, display "Event started"
-        if (distance < 0) {
-            clearInterval(updateCountdown);
-            countdownTimer.innerHTML = "Event started";
-        }
-    }, 1000);
+            // If the countdown is over
+            if (distance < 0) {
+                clearInterval(updateCountdown);
+                countdownTimer.innerHTML = "Event started";
+            }
+        }, 1000);
+    } else {
+        console.error('Element with ID "countdown-timer3" not found.');
+    }
 </script>
+
 
 </body>
 </html>
