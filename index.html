@@ -596,6 +596,14 @@
         color: var(--accent-color); /* Adjust to your preferred accent color */
         font-weight: bold;
     }
+    #countdown-timer2 {
+        color: var(--accent-color); /* Adjust to your preferred accent color */
+        font-weight: bold;
+    }
+    #countdown-timer3 {
+        color: var(--accent-color); /* Adjust to your preferred accent color */
+        font-weight: bold;
+    }
 
     #ticket-info {
         margin-top: 0.5rem;
@@ -713,8 +721,8 @@
 </div>
                    <div class="tour-date slide-in">
     <div>
-        <h3>Matsapha, The Light of christ Auditorium </h3>
-        <p>January 27, 2024</p>
+        <h3>Matsapha, The Light Of Christ Auditorium </h3>
+        <p>January 27, 2025</p>
         <p id="countdown">Time left: <span id="countdown-timer2"></span></p>
         <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p> <!-- Replace with actual availability -->
     </div>
@@ -2690,76 +2698,78 @@
 
 
 <script>
-    // Countdown Timer
-    const eventDate = new Date('december 22, 2024 00:00:00').getTime();
-    const countdownTimer = document.getElementById('countdown-timer');
+    // Countdown Timer 1 (for December 22, 2024)
+    const eventDate1 = new Date('December 22, 2024 00:00:00').getTime();
+    const countdownTimer1 = document.getElementById('countdown-timer');
 
-    const updateCountdown = setInterval(function() {
-        const now = new Date().getTime();
-        const distance = eventDate - now;
+    const updateCountdown1 = setInterval(function() {
+        const now1 = new Date().getTime();
+        const distance1 = eventDate1 - now1;
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const days1 = Math.floor(distance1 / (1000 * 60 * 60 * 24));
+        const hours1 = Math.floor((distance1 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes1 = Math.floor((distance1 % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds1 = Math.floor((distance1 % (1000 * 60)) / 1000);
 
-        countdownTimer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        countdownTimer1.innerHTML = `${days1}d ${hours1}h ${minutes1}m ${seconds1}s`;
 
         // If the countdown is over, display "Event started"
-        if (distance < 0) {
-            clearInterval(updateCountdown);
-            countdownTimer.innerHTML = "Event started";
+        if (distance1 < 0) {
+            clearInterval(updateCountdown1);
+            countdownTimer1.innerHTML = "Event started";
         }
     }, 1000);
 </script>
 
 <script>
-    // Countdown Timer
-    const eventDate = new Date('january 27, 2024 00:00:00').getTime();
-    const countdownTimer = document.getElementById('countdown-timer2');
+    // Countdown Timer 2 (for January 27, 2025, at 00:00)
+    const eventDate2 = new Date('January 27, 2025 00:00:00').getTime();
+    const countdownTimer2 = document.getElementById('countdown-timer2');
 
-    const updateCountdown = setInterval(function() {
-        const now = new Date().getTime();
-        const distance = eventDate - now;
+    const updateCountdown2 = setInterval(function() {
+        const now2 = new Date().getTime();
+        const distance2 = eventDate2 - now2;
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const days2 = Math.floor(distance2 / (1000 * 60 * 60 * 24));
+        const hours2 = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
 
-        countdownTimer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        countdownTimer2.innerHTML = `${days2}d ${hours2}h ${minutes2}m ${seconds2}s`;
+
+        // Debugging info
+        console.log("Time until event:", distance2, "milliseconds");
 
         // If the countdown is over, display "Event started"
-        if (distance < 0) {
-            clearInterval(updateCountdown);
-            countdownTimer.innerHTML = "Event started";
+        if (distance2 < 0) {
+            clearInterval(updateCountdown2);
+            countdownTimer2.innerHTML = "Event started";
         }
     }, 1000);
 </script>
 
+
 <script>
-    // Countdown Timer
-    const eventDate = new Date('February 14, 2025 00:00:00').getTime();
-    const countdownTimer = document.getElementById('countdown-timer3');
+    // Countdown Timer 3 (for February 14, 2025)
+    const eventDate3 = new Date('February 14, 2025 00:00:00').getTime();
+    const countdownTimer3 = document.getElementById('countdown-timer3');
 
-    if (countdownTimer) {
-        const updateCountdown = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = eventDate - now;
+    if (countdownTimer3) {
+        const updateCountdown3 = setInterval(function() {
+            const now3 = new Date().getTime();
+            const distance3 = eventDate3 - now3;
 
-            // Time calculations
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const days3 = Math.floor(distance3 / (1000 * 60 * 60 * 24));
+            const hours3 = Math.floor((distance3 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes3 = Math.floor((distance3 % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds3 = Math.floor((distance3 % (1000 * 60)) / 1000);
 
-            // Display result
-            countdownTimer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            countdownTimer3.innerHTML = `${days3}d ${hours3}h ${minutes3}m ${seconds3}s`;
 
-            // If the countdown is over
-            if (distance < 0) {
-                clearInterval(updateCountdown);
-                countdownTimer.innerHTML = "Event started";
+            // If the countdown is over, display "Event started"
+            if (distance3 < 0) {
+                clearInterval(updateCountdown3);
+                countdownTimer3.innerHTML = "Event started";
             }
         }, 1000);
     } else {
