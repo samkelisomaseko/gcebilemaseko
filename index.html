@@ -1470,11 +1470,11 @@
 
     <script>
         (function() {
-            const stripe = Stripe("pk_test_51OhhvQ2M0CLjQC6F6mfQXlO3ce7MCQT4arXd3HkPtQJHs0dkbtadfrbI1p4XSZJk46kTIwiPiToBN8Du2nUpv5zL00cQDwKtTK");
-            let stripeClientSecret = ''; 
-    
+            const stripe = Stripe("pk_test_51OhhvQ2M0CLjQC6F6mfQXlO3ce7MCQT4arXd3HkPtQJHs0dkbtadfrbI1p4XSZJk46kTIwiPiToBN8Du2nUpv5zL00cQDwKtTK"); // Initialize Stripe with your API key
+            let stripeClientSecret = ''; // Will store the client secret after payment intent creation
+        
             const widgetInstance = `ticketWidget_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
-    
+        
             const popupHtml = `
                 <div class="${widgetInstance}popup-container" id="${widgetInstance}popup" style="display: none;">
                     <div class="${widgetInstance}popup">
@@ -1493,9 +1493,9 @@
                             <button id="${widgetInstance}continueBtn">Continue</button>
                         </div>
                         <div id="${widgetInstance}paymentForm" style="display:none;">
-                            <input type="text" id="${widgetInstance}cardNumber" placeholder="Card Number" required pattern="\\d{16}">
-                            <input type="text" id="${widgetInstance}expiration" placeholder="Expiration Date (MM/YY)" required pattern="\\d{2}/\\d{2}">
-                            <input type="text" id="${widgetInstance}cvv" placeholder="CVV" required pattern="\\d{3}">
+                            <input type="text" id="${widgetInstance}cardNumber" placeholder="Card Number" required>
+                            <input type="text" id="${widgetInstance}expiration" placeholder="Expiration Date (MM/YY)" required>
+                            <input type="text" id="${widgetInstance}cvv" placeholder="CVV" required>
                             <input type="text" id="${widgetInstance}billingAddress" placeholder="Billing Address" required>
                             <button id="${widgetInstance}finishBtn">Finish</button>
                         </div>
@@ -1503,15 +1503,9 @@
                     </div>
                 </div>
             `;
-    
+        
             document.body.insertAdjacentHTML('beforeend', popupHtml);
-    
-            const style = document.createElement('style');
-            style.textContent = `
-                /* styling code here */
-            `;
-            document.head.appendChild(style);
-    
+        
             const popup = document.getElementById(`${widgetInstance}popup`);
             const closePopup = document.getElementById(`${widgetInstance}closePopup`);
             const continueBtn = document.getElementById(`${widgetInstance}continueBtn`);
@@ -1519,27 +1513,27 @@
             const form = document.getElementById(`${widgetInstance}form`);
             const paymentForm = document.getElementById(`${widgetInstance}paymentForm`);
             const messageDiv = document.getElementById(`${widgetInstance}message`);
-    
-            const getTicketsBtn = document.getElementById('getTicketsBtn'); 
+        
+            const getTicketsBtn = document.getElementById('getTicketsBtn');
             getTicketsBtn.addEventListener('click', () => {
                 popup.style.display = 'flex';
             });
-    
+        
             closePopup.addEventListener('click', () => {
                 popup.style.display = 'none';
                 resetForm();
             });
-    
+        
             continueBtn.addEventListener('click', () => {
-                if (!validateForm()) {
-                    messageDiv.innerHTML = `<p class="error">Please fill in all required fields correctly.</p>`;
-                    return;
+                if (validateForm()) {
+                    form.style.display = 'none';
+                    paymentForm.style.display = 'block';
+                    createPaymentIntent();
+                } else {
+                    messageDiv.innerHTML = `<p class="error">Please fill all required fields correctly.</p>`;
                 }
-                form.style.display = 'none';
-                paymentForm.style.display = 'block';
-                createPaymentIntent();
             });
-    
+        
             finishBtn.addEventListener('click', async () => {
                 const isValid = validatePayment();
                 if (isValid) {
@@ -1549,7 +1543,7 @@
                         cvv: document.getElementById(`${widgetInstance}cvv`).value,
                         billingAddress: document.getElementById(`${widgetInstance}billingAddress`).value,
                     };
-    
+        
                     stripe.confirmCardPayment(stripeClientSecret, {
                         payment_method: {
                             card: cardElement,
@@ -1565,10 +1559,44 @@
                         }
                     });
                 } else {
-                    messageDiv.innerHTML = `<p class="error">Payment Failed. Please try again.</p>`;
+                    messageDiv.innerHTML = `<p class="error">Invalid payment details. Please try again.</p>`;
                 }
             });
-    
+        
+            function validateForm() {
+                const name = document.getElementById(`${widgetInstance}name`).value;
+                const email = document.getElementById(`${widgetInstance}email`).value;
+                const phone = document.getElementById(`${widgetInstance}phone`).value;
+                const ticketQty = document.getElementById(`${widgetInstance}ticketQty`).value;
+                const ticketType = document.getElementById(`${widgetInstance}ticketType`).value;
+        
+                if (!name || !email || !phone || !ticketQty || !ticketType) {
+                    return false;
+                }
+        
+                const emailPattern = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+                const phonePattern = /^\d{10}$/;
+        
+                return emailPattern.test(email) && phonePattern.test(phone);
+            }
+        
+            function validatePayment() {
+                const cardNumber = document.getElementById(`${widgetInstance}cardNumber`).value;
+                const expiration = document.getElementById(`${widgetInstance}expiration`).value;
+                const cvv = document.getElementById(`${widgetInstance}cvv`).value;
+                const billingAddress = document.getElementById(`${widgetInstance}billingAddress`).value;
+        
+                if (!cardNumber || !expiration || !cvv || !billingAddress) {
+                    return false;
+                }
+        
+                const cardPattern = /^\d{16}$/;
+                const expirationPattern = /^(0[1-9]|1[0-2])\/\d{2}$/;
+                const cvvPattern = /^\d{3,4}$/;
+        
+                return cardPattern.test(cardNumber) && expirationPattern.test(expiration) && cvvPattern.test(cvv);
+            }
+        
             async function createPaymentIntent() {
                 const formData = {
                     name: document.getElementById(`${widgetInstance}name`).value,
@@ -1577,46 +1605,31 @@
                     ticketQty: document.getElementById(`${widgetInstance}ticketQty`).value,
                     ticketType: document.getElementById(`${widgetInstance}ticketType`).value,
                 };
-    
+        
                 const amount = calculateAmount(formData.ticketQty, formData.ticketType);
-    
+        
                 const response = await fetch('/create-payment-intent', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': 'YOUR_CSRF_TOKEN_HERE'
                     },
                     body: JSON.stringify({
-                        amount: amount * 100,
+                        amount: amount * 100, // Stripe works with cents
                         currency: 'usd'
                     })
                 });
-    
+        
                 const data = await response.json();
                 stripeClientSecret = data.clientSecret;
             }
-    
-            function validateForm() {
-                const name = document.getElementById(`${widgetInstance}name`).value.trim();
-                const email = document.getElementById(`${widgetInstance}email`).value.trim();
-                const phone = document.getElementById(`${widgetInstance}phone`).value.trim();
-                const ticketQty = document.getElementById(`${widgetInstance}ticketQty`).value;
-                const ticketType = document.getElementById(`${widgetInstance}ticketType`).value;
-    
-                const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-                const isPhoneValid = /^\d{10}$/.test(phone);
-    
-                return name && isEmailValid && isPhoneValid && ticketQty && ticketType;
+        
+            function resetForm() {
+                form.style.display = 'block';
+                paymentForm.style.display = 'none';
+                messageDiv.innerHTML = '';
             }
-    
-            function validatePayment() {
-                const cardNumber = document.getElementById(`${widgetInstance}cardNumber`).value;
-                const expiration = document.getElementById(`${widgetInstance}expiration`).value;
-                const cvv = document.getElementById(`${widgetInstance}cvv`).value;
-                const billingAddress = document.getElementById(`${widgetInstance}billingAddress`).value;
-    
-                return cardNumber && expiration && cvv && billingAddress;
-            }
-    
+        
             function calculateAmount(qty, type) {
                 const prices = {
                     general: 50,
@@ -1624,17 +1637,10 @@
                 };
                 return qty * prices[type];
             }
-    
-            function resetForm() {
-                form.style.display = 'block';
-                paymentForm.style.display = 'none';
-                messageDiv.innerHTML = '';
-            }
         })();
-    </script>
-     
-    
-
+        </script>
+        
+        
 
     
    
