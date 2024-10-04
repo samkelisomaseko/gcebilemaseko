@@ -1683,7 +1683,7 @@
                 const ticketType = document.getElementById(`${widgetInstance}ticketType`).value;
                 
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                const phoneRegex = /^\d{10}$/;
+                const phoneRegex = /^\d{8}$/;
     
                 if (!name || !email || !emailRegex.test(email) || !phone || !phoneRegex.test(phone) || ticketQty <= 0 || ticketType === '') {
                     return false;
