@@ -1472,9 +1472,11 @@
         (function() {
             const stripe = Stripe("pk_test_51OhhvQ2M0CLjQC6F6mfQXlO3ce7MCQT4arXd3HkPtQJHs0dkbtadfrbI1p4XSZJk46kTIwiPiToBN8Du2nUpv5zL00cQDwKtTK"); // Initialize Stripe with your API key
             let stripeClientSecret = ''; // Will store the client secret after payment intent creation
-        
+    
+            // Generate a unique identifier for each widget instance
             const widgetInstance = `ticketWidget_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
-        
+    
+            // Create the popup container dynamically
             const popupHtml = `
                 <div class="${widgetInstance}popup-container" id="${widgetInstance}popup" style="display: none;">
                     <div class="${widgetInstance}popup">
@@ -1483,8 +1485,8 @@
                         <div id="${widgetInstance}form">
                             <input type="text" id="${widgetInstance}name" placeholder="First and Last Name" required>
                             <input type="email" id="${widgetInstance}email" placeholder="Email" required>
-                            <input type="tel" id="${widgetInstance}phone" placeholder="Phone Number" required>
-                            <input type="number" id="${widgetInstance}ticketQty" placeholder="Ticket Quantity" required>
+                            <input type="tel" id="${widgetInstance}phone" placeholder="Phone Number" required pattern="\\d{10}">
+                            <input type="number" id="${widgetInstance}ticketQty" placeholder="Ticket Quantity" required min="1">
                             <select id="${widgetInstance}ticketType" required>
                                 <option value="">Select Ticket Type</option>
                                 <option value="general">General Admission</option>
@@ -1503,9 +1505,79 @@
                     </div>
                 </div>
             `;
-        
+    
+            // Append the popup to the body
             document.body.insertAdjacentHTML('beforeend', popupHtml);
-        
+    
+            // Add styles for this instance
+            const style = document.createElement('style');
+            style.textContent = `
+                .${widgetInstance}popup-container {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 10000;
+                }
+                
+                .${widgetInstance}popup {
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 20px;
+                    border-radius: 10px;
+                    width: 90%;
+                    max-width: 400px;
+                    text-align: center;
+                    color: white;
+                    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+                }
+    
+                .${widgetInstance}popup input, .${widgetInstance}popup select {
+                    width: 100%;
+                    padding: 10px;
+                    margin: 10px 0;
+                    background: black;
+                    color: white;
+                    border: 2px solid green;
+                    border-radius: 5px;
+                    font-family: 'Orbitron', sans-serif;
+                }
+    
+                .${widgetInstance}popup button {
+                    width: 100%;
+                    padding: 10px;
+                    margin: 10px 0;
+                    background: green;
+                    color: black;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-weight: 1000;
+                    font-family: 'Orbitron', sans-serif;
+                    transition: background 0.3s ease;
+                }
+    
+                .${widgetInstance}popup button:hover {
+                    background: lime;
+                }
+    
+                .${widgetInstance}popup .${widgetInstance}close-btn {
+                    background: red;
+                    color: white;
+                    padding: 5px;
+                    border: none;
+                    border-radius: 5px;
+                    float: right;
+                    cursor: pointer;
+                }
+            `;
+            document.head.appendChild(style);
+    
+            // Widget functionality
             const popup = document.getElementById(`${widgetInstance}popup`);
             const closePopup = document.getElementById(`${widgetInstance}closePopup`);
             const continueBtn = document.getElementById(`${widgetInstance}continueBtn`);
@@ -1513,27 +1585,31 @@
             const form = document.getElementById(`${widgetInstance}form`);
             const paymentForm = document.getElementById(`${widgetInstance}paymentForm`);
             const messageDiv = document.getElementById(`${widgetInstance}message`);
-        
-            const getTicketsBtn = document.getElementById('getTicketsBtn');
+    
+            // Open popup
+            const getTicketsBtn = document.getElementById('getTicketsBtn'); // Ensure button has correct ID
             getTicketsBtn.addEventListener('click', () => {
                 popup.style.display = 'flex';
             });
-        
+    
+            // Close popup
             closePopup.addEventListener('click', () => {
                 popup.style.display = 'none';
                 resetForm();
             });
-        
+    
+            // Validate form before continuing to payment
             continueBtn.addEventListener('click', () => {
                 if (validateForm()) {
                     form.style.display = 'none';
                     paymentForm.style.display = 'block';
                     createPaymentIntent();
                 } else {
-                    messageDiv.innerHTML = `<p class="error">Please fill all required fields correctly.</p>`;
+                    messageDiv.innerHTML = `<p class="error">Please complete all fields correctly before proceeding.</p>`;
                 }
             });
-        
+    
+            // Finish and complete payment
             finishBtn.addEventListener('click', async () => {
                 const isValid = validatePayment();
                 if (isValid) {
@@ -1543,7 +1619,8 @@
                         cvv: document.getElementById(`${widgetInstance}cvv`).value,
                         billingAddress: document.getElementById(`${widgetInstance}billingAddress`).value,
                     };
-        
+    
+                    // Confirm the payment using Stripe.js
                     stripe.confirmCardPayment(stripeClientSecret, {
                         payment_method: {
                             card: cardElement,
@@ -1559,44 +1636,11 @@
                         }
                     });
                 } else {
-                    messageDiv.innerHTML = `<p class="error">Invalid payment details. Please try again.</p>`;
+                    messageDiv.innerHTML = `<p class="error">Payment Failed. Please check your payment details.</p>`;
                 }
             });
-        
-            function validateForm() {
-                const name = document.getElementById(`${widgetInstance}name`).value;
-                const email = document.getElementById(`${widgetInstance}email`).value;
-                const phone = document.getElementById(`${widgetInstance}phone`).value;
-                const ticketQty = document.getElementById(`${widgetInstance}ticketQty`).value;
-                const ticketType = document.getElementById(`${widgetInstance}ticketType`).value;
-        
-                if (!name || !email || !phone || !ticketQty || !ticketType) {
-                    return false;
-                }
-        
-                const emailPattern = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
-                const phonePattern = /^\d{10}$/;
-        
-                return emailPattern.test(email) && phonePattern.test(phone);
-            }
-        
-            function validatePayment() {
-                const cardNumber = document.getElementById(`${widgetInstance}cardNumber`).value;
-                const expiration = document.getElementById(`${widgetInstance}expiration`).value;
-                const cvv = document.getElementById(`${widgetInstance}cvv`).value;
-                const billingAddress = document.getElementById(`${widgetInstance}billingAddress`).value;
-        
-                if (!cardNumber || !expiration || !cvv || !billingAddress) {
-                    return false;
-                }
-        
-                const cardPattern = /^\d{16}$/;
-                const expirationPattern = /^(0[1-9]|1[0-2])\/\d{2}$/;
-                const cvvPattern = /^\d{3,4}$/;
-        
-                return cardPattern.test(cardNumber) && expirationPattern.test(expiration) && cvvPattern.test(cvv);
-            }
-        
+    
+            // Create a payment intent when continuing to payment
             async function createPaymentIntent() {
                 const formData = {
                     name: document.getElementById(`${widgetInstance}name`).value,
@@ -1605,31 +1649,91 @@
                     ticketQty: document.getElementById(`${widgetInstance}ticketQty`).value,
                     ticketType: document.getElementById(`${widgetInstance}ticketType`).value,
                 };
-        
-                const amount = calculateAmount(formData.ticketQty, formData.ticketType);
-        
+    
+                const amount = calculateAmount(formData.ticketQty, formData.ticketType); // Calculate the total amount
+    
                 const response = await fetch('/create-payment-intent', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-Token': 'YOUR_CSRF_TOKEN_HERE'
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         amount: amount * 100, // Stripe works with cents
                         currency: 'usd'
                     })
                 });
-        
+    
                 const data = await response.json();
-                stripeClientSecret = data.clientSecret;
+                stripeClientSecret = data.clientSecret; // Store the client secret for payment confirmation
             }
-        
+    
+            // Reset form
             function resetForm() {
                 form.style.display = 'block';
                 paymentForm.style.display = 'none';
                 messageDiv.innerHTML = '';
             }
-        
+    
+            // Validate the form inputs
+            function validateForm() {
+                const name = document.getElementById(`${widgetInstance}name`).value.trim();
+                const email = document.getElementById(`${widgetInstance}email`).value.trim();
+                const phone = document.getElementById(`${widgetInstance}phone`).value.trim();
+                const ticketQty = document.getElementById(`${widgetInstance}ticketQty`).value;
+                const ticketType = document.getElementById(`${widgetInstance}ticketType`).value;
+                
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const phoneRegex = /^\d{10}$/;
+    
+                if (!name || !email || !emailRegex.test(email) || !phone || !phoneRegex.test(phone) || ticketQty <= 0 || ticketType === '') {
+                    return false;
+                }
+                return true;
+            }
+    
+            // Validate the payment details
+            function validatePayment() {
+                const cardNumber = document.getElementById(`${widgetInstance}cardNumber`).value;
+                const expiration = document.getElementById(`${widgetInstance}expiration`).value;
+                const cvv = document.getElementById(`${widgetInstance}cvv`).value;
+                const billingAddress = document.getElementById(`${widgetInstance}billingAddress`).value;
+    
+                // Basic checks for empty fields
+                if (!cardNumber || !expiration || !cvv || !billingAddress) {
+                    return false;
+                }
+    
+                // Luhn Algorithm to check for valid card number
+                if (!validateCardNumber(cardNumber)) {
+                    return false;
+                }
+    
+                // Check expiration date format (MM/YY)
+                const expRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+                if (!expRegex.test(expiration)) {
+                    return false;
+                }
+    
+                return true;
+            }
+    
+            // Luhn algorithm to validate card number
+            function validateCardNumber(number) {
+                let sum = 0;
+                let shouldDouble = false;
+                for (let i = number.length - 1; i >= 0; i--) {
+                    let digit = parseInt(number.charAt(i), 10);
+    
+                    if (shouldDouble) {
+                        if ((digit *= 2) > 9) digit -= 9;
+                    }
+    
+                    sum += digit;
+                    shouldDouble = !shouldDouble;
+                }
+                return (sum % 10) === 0;
+            }
+    
             function calculateAmount(qty, type) {
                 const prices = {
                     general: 50,
@@ -1638,7 +1742,8 @@
                 return qty * prices[type];
             }
         })();
-        </script>
+    </script>
+    
         
         
 
