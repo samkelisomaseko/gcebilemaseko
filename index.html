@@ -209,60 +209,7 @@ nav {
             box-shadow: 0 0 20px var(--primary-color);
         }
 
-        .music-player {
-            width: 100%;
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            border-radius: 10px;
-            margin-top: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .music-player img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-        }
-
-        .song-details {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .song-details h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .song-details p {
-            font-size: 0.9rem;
-            color: var(--primary-color);
-        }
-
-        .music-controls {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-top: 1rem;
-        }
-
-        .music-controls button {
-            background: none;
-            border: none;
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .music-controls button:hover {
-            color: var(--text-color);
-            text-shadow: 0 0 10px var(--primary-color);
-        }
-
+        
         .progress-bar {
             width: 100%;
             height: 5px;
@@ -421,57 +368,96 @@ nav {
             color: var(--accent-color);
         }
 
-        footer {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 2rem;
-            text-align: center;
-            position: sticky;
-            bottom: 0;
-            width: 100%;
-            transition: transform 0.3s ease-in-out;
-        }
+       footer {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2rem;
+    text-align: center;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    transition: transform 0.3s ease-in-out;
+}
 
-        footer p {
-            font-size: .7rem;
-        }
+footer p a{
+    font-size: 0.9rem; /* Increased for better readability */
+    color: #fff;
+}
 
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem; /* Slightly increased gap */
+    margin-bottom: 1rem;
+}
 
-        .social-links a {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
+.social-links a {
+    color: var(--primary-color);
+    font-size: 1.6rem; /* Increased size for larger screens */
+    transition: all 0.3s ease;
+}
 
-        .social-links a:hover {
-            color: var(--text-color);
-            text-shadow: 0 0 10px var(--primary-color);
-        }
+.social-links a:hover {
+    color: var(--text-color);
+    text-shadow: 0 0 10px var(--primary-color);
+}
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem; /* Slightly increased gap */
+    margin-top: 1rem;
+}
 
-        .footer-links a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-size: 0.7rem;
-            transition: all 0.3s ease;
-        }
+.footer-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.8rem; /* Increased size */
+    transition: all 0.3s ease;
+}
 
-        .footer-links a:hover {
-            color: var(--text-color);
-            text-shadow: 0 0 10px var(--primary-color);
-        }
-    
+.footer-links a:hover {
+    color: var(--text-color);
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+footer p a{
+text-decoration: none;
+}
+footer p a:hover{
+color: var(--primary-color);
+}
+/* Media Queries for Enhanced Responsiveness */
+@media (max-width: 768px) {
+    footer p a{
+        font-size: 0.8rem; /* Slightly increased size */
+    }
+
+    .social-links a {
+        font-size: 1.4rem; /* Increased size */
+    }
+
+    .footer-links a {
+        font-size: 0.75rem; /* Increased size */
+    }
+}
+
+@media (max-width: 480px) {
+    footer {
+        padding: 1.5rem; /* Maintain padding */
+    }
+
+    footer p a{
+        font-size: 0.75rem; /* Slightly increased size */
+    }
+
+    .social-links {
+        gap: 1rem; /* Adjust gap for smaller screens */
+    }
+
+    .footer-links {
+        gap: 1rem; /* Adjust gap for smaller screens */
+    }
+}
 
 
         @media (max-width: 768px) {
@@ -507,12 +493,7 @@ nav {
                 margin-top: 1rem;
             }
 
-            .album-player {
-                width: 100%;
-                left: 0;
-                bottom: 0;
-                border-radius: 10px 10px 0 0;
-            }
+            
         }
 
         @keyframes fadeIn {
@@ -584,28 +565,15 @@ nav {
 
 <style>
    
-    .popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    }
-
+    
     .music-player {
         background: rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
+        border-radius: 10px;
         padding: 20px;
         max-width: 350px;
         width: 100%;
         position: relative;
         text-align: center;
-        box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
         transform: translateZ(0);
         transition: transform 0.3s ease;
 
@@ -615,37 +583,13 @@ nav {
         transform: translateZ(20px);
     }
 
-    .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background-color: var(--accent-color);
-        color: var(--background-color);
-        font-size: 1.2rem;
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .close-btn:hover {
-        background-color: var(--primary-color);
-        box-shadow: var(--neon-glow);
-        transform: translateY(-2px);
-    }
+ 
 
     .music-player img {
-        width: 150px;
-        height: 150px;
-        border-radius: 10px;
+        width: 250px;
+        height: auto;
+        border-radius: 5px;
         margin-bottom: 15px;
-        box-shadow: 0 0 20px rgba(0, 255, 136, 0.7);
         object-fit: cover;
     }
 
@@ -659,158 +603,19 @@ nav {
         color: var(--primary-color);
     }
 
-    .progress-container {
-        width: 100%;
-        height: 5px;
-        background-color: rgba(255, 255, 255, 0.1);
-        margin-top: 20px;
-        cursor: pointer;
-        border-radius: 5px;
-        position: relative;
-    }
-
-    .progress-bar {
-        height: 100%;
-        background-color: var(--primary-color);
-        width: 0;
-        border-radius: 5px;
-        transition: width 0.1s linear;
-    }
-
-    .progress-handle {
-        width: 12px;
-        height: 12px;
-        background-color: var(--primary-color);
-        border-radius: 50%;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        box-shadow: 0 0 10px var(--primary-color);
-        cursor: pointer;
-    }
-
-    .time-display {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 5px;
-        font-size: 0.8rem;
-        color: var(--secondary-color);
-    }
-
-    .music-controls {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        margin-top: 15px;
-    }
-
-    .music-controls button {
-        background: none;
-        border: none;
-        color: var(--primary-color);
-        font-size: 1.8rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        transform: translateZ(0);
-        padding: 10px;
-        border-radius: 50%;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .music-controls button:hover {
-        color: var(--accent-color);
-        text-shadow: var(--neon-glow);
-        transform: translateZ(10px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .music-controls button:active {
-        transform: translateZ(5px);
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .shuffle-repeat {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 20px;
-    }
-
-    .shuffle-repeat button {
-        background-color: var(--secondary-color);
-        color: var(--background-color);
-        padding: 10px;
-        border-radius: 50%;
-        font-size: 1rem;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: var(--neon-glow);
-    }
-
-    .shuffle-repeat button:hover, .shuffle-repeat button.active {
-        background-color: var(--accent-color);
-        box-shadow: 0 0 20px var(--accent-color);
-        transform: translateY(-2px);
-    }
-
-    .playlist {
-        margin-top: 20px;
-        text-align: left;
-        max-height: 120px;
-        overflow-y: auto;
-    }
-
-    .playlist-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 11px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 5px;
-        margin-bottom: 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        overflow-x:hidden;
-    }
-
-    .playlist-item:hover {
-        background-color: rgba(0, 255, 136, 0.2);
-        transform: scale(1.05);
-    }
-
-    .playlist-item.active {
-        background-color: var(--primary-color);
-        color: var(--background-color);
-    }
+    
 
     /* Media Queries for responsiveness */
     @media (max-width: 600px) {
-        .music-player {
-            max-width: 90%;
-            padding: 10px;
-        }
-
-        .music-controls button {
-            font-size: 1.5rem;
-        }
-
-        .song-details h3 {
-            font-size: 1rem;
-        }
-
-        .song-details p {
-            font-size: 0.8rem;
-        }
-
-        .progress-container {
-            height: 4px;
-        }
-
-        .progress-handle {
-            width: 10px;
-            height: 10px;
-        }
+        
+       
     }
+
+    .response-message {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
 </style>
 
 
@@ -1325,23 +1130,25 @@ nav {
                 </div>
             </section>
             <section id="contact" class="section">
-                <h2 class="fade-in">Get in Touch</h2>
-                <form class="contact-form slide-in">
-                    <div class="form-group">
-                        <input type="text" id="name" name="name" placeholder=" " required>
-                        <label for="name">Name</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" placeholder=" " required>
-                        <label for="email">Email</label>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="message" name="message" placeholder=" " rows="4" required></textarea>
-                        <label for="message">Message</label>
-                    </div>
-                    <button type="submit" class="btn">Send Message</button>
-                </form>
-            </section>
+    <h2 class="fade-in">Get in Touch</h2>
+    <form class="contact-form slide-in" id="contact-form">
+        <div class="form-group">
+            <input type="text" id="name" name="name" placeholder=" " required>
+            <label for="name">Name</label>
+        </div>
+        <div class="form-group">
+            <input type="email" id="email" name="email" placeholder=" " required>
+            <label for="email">Email</label>
+        </div>
+        <div class="form-group">
+            <textarea id="message" name="message" placeholder=" " rows="4" required></textarea>
+            <label for="message">Message</label>
+        </div>
+        <button type="submit" class="btn">Send Message</button>
+        <div id="response-message" class="response-message"></div> <!-- Response Message Area -->
+    </form>
+</section>
+
         </div>
     </div>
     <div class="grass"></div>
@@ -1357,8 +1164,8 @@ nav {
             <a href="#" target="_blank"><i class="fab fa-amazon"></i></a>
             <a href="#" target="_blank"><i class="fab fa-tidal"></i></a>
         </div>
-        <p>&copy; 2024 Gcebile Maseko. All rights reserved.</p>
-        <p>Web developed by Shamase</p>
+        
+        <p><a href="https://shamase.co">&copy; 2024 Gcebile Maseko. All rights reserved. Web developed by Shamase</a></p>
         <div class="footer-links">
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Use</a>
@@ -1555,6 +1362,44 @@ nav {
             observer.observe(el);
         });
     });
+
+
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData(this); // Create a FormData object from the form
+    const responseMessage = document.getElementById('response-message'); // Response message area
+
+    // Web3Forms API endpoint
+    const webhookUrl = 'https://api.web3forms.com/submit'; // Replace this with your endpoint
+    const yourApiKey = 'your_api_key'; // Replace with your Web3Forms API key
+
+    // Submit the form data
+    fetch(webhookUrl, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': yourApiKey // Include the API key in the header
+        }
+    })
+    .then(response => response.json()) // Parse the JSON from the response
+    .then(data => {
+        if (data.success) {
+            // If submission is successful
+            responseMessage.innerHTML = `<p style="color: green;">${data.message}</p>`;
+            this.reset(); // Optionally reset the form fields
+        } else {
+            // If submission fails
+            responseMessage.innerHTML = `<p style="color: red;">${data.message || 'An error occurred, please try again.'}</p>`;
+        }
+    })
+    .catch(error => {
+        // Handle any errors that occurred during the fetch
+        responseMessage.innerHTML = `<p style="color: red;">An error occurred: ${error.message}</p>`;
+    });
+});
+
 </script>
 
 
@@ -3327,9 +3172,7 @@ nav {
         gcmLoadSong(gcmCurrentSongIndex);
     })();
 </script>
-
-
-    
+ 
 
 </body>
 </html>
