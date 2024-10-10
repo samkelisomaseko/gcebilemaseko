@@ -1,0 +1,3368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gcebile Maseko - Official Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta property="og:image" content="grace.jpg">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #0f0;
+            --secondary-color: #00f;
+            --background-color: #000;
+            --text-color: #fff;
+            --accent-color: #f0f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .parallax-container {
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            perspective: 10px;
+        }
+
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            transform-style: preserve-3d;
+            z-index: -1;
+        }
+
+        .background, .foreground {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.5);
+        }
+
+        .background {
+            transform: translateZ(-10px) scale(2);
+        }
+
+        .foreground {
+            transform: translateZ(-5px) scale(1.5);
+        }
+.title {
+    font-size: clamp(3rem, 10vw, 7rem);
+    color: var(--primary-color);
+    transform: translateZ(-1px) scale(1.1);
+    text-align: center;
+    position: relative;
+    perspective: 1000px; /* Adds a 3D perspective */
+}
+
+.title::before {
+    content: attr(data-text); /* Duplicate text for the 3D effect */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--secondary-color); /* Slightly different color for depth */
+    transform: translateZ(-10px); /* Adjust depth here */
+    z-index: -1;
+    opacity: 0.6; /* Optional: Gives a subtle look to the depth layer */
+}
+
+nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        nav.hidden {
+            transform: translateY(-100%);
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 3px 0;
+            transition: 0.4s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .content {
+            background-color: var(--background-color);
+            padding: 2rem;
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            
+        }
+
+        .section h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .grass {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/svg" viewBox="0 0 1440 320"><path fill="%230f0" fill-opacity="1" d="M0,32L48,37.3C96,43,192,53,288,80C384,107,480,149,576,154.7C672,160,768,128,864,112C960,96,1056,96,1152,106.7C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            animation: wave 10s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1440px; }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            border: none;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn:hover {
+            background-color: var(--text-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        .music-player {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-player img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .song-details {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .song-details h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .song-details p {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+        }
+
+        .music-controls {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .music-controls button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .music-controls button:hover {
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-top: 1rem;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress {
+            width: 0;
+            height: 100%;
+            background-color: var(--primary-color);
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: width 0.1s linear;
+        }
+
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 2rem;
+        }
+
+        .album-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .album-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .album-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .album-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .album-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 1rem;
+            display: none;
+            z-index: 1000;
+        }
+
+        
+
+        .tour-dates {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 2rem;
+        }
+
+        .tour-date {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 2rem;
+        }
+
+        .merch-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .merch-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: none;
+            border-bottom: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-bottom-color: var(--accent-color);
+        }
+
+        .form-group input:focus + label,
+        .form-group textarea:focus + label,
+        .form-group input:not(:placeholder-shown) + label,
+        .form-group textarea:not(:placeholder-shown) + label {
+            transform: translateY(-1.5rem) scale(0.8);
+            color: var(--accent-color);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            text-align: center;
+            position: sticky;
+            bottom: 0;
+            width: 100%;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        footer p {
+            font-size: .7rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+    
+
+
+        @media (max-width: 768px) {
+            nav {
+                justify-content: space-between;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .tour-date {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .tour-date .btn {
+                margin-top: 1rem;
+            }
+
+            .album-player {
+                width: 100%;
+                left: 0;
+                bottom: 0;
+                border-radius: 10px 10px 0 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); }
+            to { transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+    
+    
+    
+        #countdown {
+        font-size: 1.2rem;
+        color: var(--primary-color); /* Adjust this to match your design */
+        margin-top: 0.5rem;
+        font-weight: bold;
+    }
+
+    #countdown-timer {
+        color: var(--accent-color); /* Adjust to your preferred accent color */
+        font-weight: bold;
+    }
+    #countdown-timer2 {
+        color: var(--accent-color); /* Adjust to your preferred accent color */
+        font-weight: bold;
+    }
+    #countdown-timer3 {
+        color: var(--accent-color); /* Adjust to your preferred accent color */
+        font-weight: bold;
+    }
+
+    #ticket-info {
+        margin-top: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    #ticket-info .vip {
+        color: #FFD700; /* Gold color for VIP */
+        font-weight: bold;
+    }
+
+    #ticket-info .general {
+        color: #00FF00; /* Green color for General Admission */
+        font-weight: bold;
+    }
+
+    /* Optional: add a subtle animation for the countdown numbers */
+    #countdown-timer {
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+    </style>
+
+<style>
+   
+    .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .music-player {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 20px;
+        max-width: 350px;
+        width: 100%;
+        position: relative;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+        transform: translateZ(0);
+        transition: transform 0.3s ease;
+
+    }
+
+    .music-player:hover {
+        transform: translateZ(20px);
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: var(--accent-color);
+        color: var(--background-color);
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .close-btn:hover {
+        background-color: var(--primary-color);
+        box-shadow: var(--neon-glow);
+        transform: translateY(-2px);
+    }
+
+    .music-player img {
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0 0 20px rgba(0, 255, 136, 0.7);
+        object-fit: cover;
+    }
+
+    .song-details h3 {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+
+    .song-details p {
+        font-size: 0.9rem;
+        color: var(--primary-color);
+    }
+
+    .progress-container {
+        width: 100%;
+        height: 5px;
+        background-color: rgba(255, 255, 255, 0.1);
+        margin-top: 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        position: relative;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background-color: var(--primary-color);
+        width: 0;
+        border-radius: 5px;
+        transition: width 0.1s linear;
+    }
+
+    .progress-handle {
+        width: 12px;
+        height: 12px;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: 0 0 10px var(--primary-color);
+        cursor: pointer;
+    }
+
+    .time-display {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+        font-size: 0.8rem;
+        color: var(--secondary-color);
+    }
+
+    .music-controls {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    .music-controls button {
+        background: none;
+        border: none;
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        transform: translateZ(0);
+        padding: 10px;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .music-controls button:hover {
+        color: var(--accent-color);
+        text-shadow: var(--neon-glow);
+        transform: translateZ(10px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .music-controls button:active {
+        transform: translateZ(5px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .shuffle-repeat {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+    .shuffle-repeat button {
+        background-color: var(--secondary-color);
+        color: var(--background-color);
+        padding: 10px;
+        border-radius: 50%;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: var(--neon-glow);
+    }
+
+    .shuffle-repeat button:hover, .shuffle-repeat button.active {
+        background-color: var(--accent-color);
+        box-shadow: 0 0 20px var(--accent-color);
+        transform: translateY(-2px);
+    }
+
+    .playlist {
+        margin-top: 20px;
+        text-align: left;
+        max-height: 120px;
+        overflow-y: auto;
+    }
+
+    .playlist-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 11px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        overflow-x:hidden;
+    }
+
+    .playlist-item:hover {
+        background-color: rgba(0, 255, 136, 0.2);
+        transform: scale(1.05);
+    }
+
+    .playlist-item.active {
+        background-color: var(--primary-color);
+        color: var(--background-color);
+    }
+
+    /* Media Queries for responsiveness */
+    @media (max-width: 600px) {
+        .music-player {
+            max-width: 90%;
+            padding: 10px;
+        }
+
+        .music-controls button {
+            font-size: 1.5rem;
+        }
+
+        .song-details h3 {
+            font-size: 1rem;
+        }
+
+        .song-details p {
+            font-size: 0.8rem;
+        }
+
+        .progress-container {
+            height: 4px;
+        }
+
+        .progress-handle {
+            width: 10px;
+            height: 10px;
+        }
+    }
+</style>
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+    .gcm-player-root {
+        --primary-color: #0f0;
+        --secondary-color: #fff;
+        --background-color: #000;
+        --text-color: #fff;
+        --accent-color: #f0f;
+    }
+
+    .gcm-player-root * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .gcm-player-body {
+        font-family: 'Orbitron', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden;
+    }
+
+    .gcm-cyberpunk-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            linear-gradient(45deg, #ff00ff 25%, transparent 25%),
+            linear-gradient(-45deg, #ff00ff 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, #ff00ff 75%),
+            linear-gradient(-45deg, transparent 75%, #ff00ff 75%);
+        background-size: 20px 20px;
+        opacity: 0.05;
+        z-index: -1;
+        animation: gcmBackgroundMove 20s linear infinite;
+    }
+
+    @keyframes gcmBackgroundMove {
+        0% { background-position: 0 0; }
+        100% { background-position: 40px 40px; }
+    }
+
+    .gcm-popup-trigger {
+        background-color: var(--primary-color);
+        color: var(--background-color);
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .gcm-popup-trigger::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(from 0deg, transparent, var(--accent-color), transparent 30%);
+        animation: gcmRotate 4s linear infinite;
+    }
+
+    .gcm-popup-trigger::after {
+        content: 'Launch Cyberpunk Player';
+        position: absolute;
+        inset: 3px;
+        background: var(--primary-color);
+        color: var(--background-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-radius: 3px;
+    }
+
+    @keyframes gcmRotate {
+        100% { transform: rotate(1turn); }
+    }
+
+    .gcm-popup-trigger:hover::after {
+        background-color: var(--accent-color);
+    }
+
+    .gcm-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 17, 0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        animation: gcmFadeIn 0.3s ease-out;
+    }
+
+    @keyframes gcmFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .gcm-music-player {
+        background: rgba(0, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 30px;
+        max-width: 400px;
+        width: 90%;
+        position: relative;
+        text-align: center;
+        box-shadow: 0 0 20px var(--primary-color);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--primary-color);
+        transform: translateY(50px);
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+
+    .gcm-popup.active .gcm-music-player {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .gcm-close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: var(--accent-color);
+        color: var(--background-color);
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 0 10px var(--accent-color);
+    }
+
+    .gcm-close-btn:hover {
+        background-color: var(--primary-color);
+        transform: rotate(90deg);
+    }
+
+    .gcm-music-player img {
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .gcm-music-player img:hover {
+        transform: scale(1.05);
+    }
+
+    .gcm-song-details h3 {
+        font-size: 1.4rem;
+        margin-bottom: 5px;
+        color: var(--primary-color);
+        perspective: 1000px; /* Adds a 3D perspective */
+    }
+
+    .gcm-song-details p {
+        font-size: 1rem;
+        color: #fff;
+    }
+
+    .gcm-progress-container {
+        width: 100%;
+        height: 5px;
+        background-color: rgba(255, 255, 255, 0.1);
+        margin-top: 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .gcm-progress-bar {
+        height: 100%;
+        background-color: var(--primary-color);
+        width: 0;
+        border-radius: 5px;
+        transition: width 0.1s linear;
+        position: relative;
+    }
+
+    .gcm-progress-bar::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 10px;
+        height: 100%;
+        background-color: var(--accent-color);
+        box-shadow: 0 0 10px var(--accent-color);
+    }
+
+    .gcm-time-display {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+        font-size: 0.8rem;
+        color: #fff;
+    }
+
+    .gcm-music-controls {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .gcm-music-controls button {
+        background: none;
+        border: none;
+        color: var(--primary-color);
+        font-size: 2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 10px;
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--primary-color);
+    }
+
+    .gcm-music-controls button:hover {
+        color: var(--accent-color);
+        transform: scale(1.1);
+        box-shadow: 0 0 20px var(--accent-color);
+    }
+
+    .gcm-shuffle-repeat {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+    .gcm-shuffle-repeat button {
+        background-color: #fff;
+        color: var(--background-color);
+        padding: 10px;
+        border-radius: 50%;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 10px var(--secondary-color);
+    }
+
+    .gcm-shuffle-repeat button:hover,
+    .gcm-shuffle-repeat button.active {
+        background-color: var(--accent-color);
+        box-shadow: 0 0 20px var(--accent-color);
+        transform: scale(1.1);
+    }
+
+    .gcm-playlist {
+        margin-top: 20px;
+        text-align: left;
+        max-height: 150px;
+        overflow-y: auto;
+        padding-right: 10px;
+        color:#fff;
+    }
+
+    .gcm-playlist::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .gcm-playlist::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color);
+        border-radius: 5px;
+    }
+
+    .gcm-playlist-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: rgba(0, 255, 255, 0.1);
+        border-radius: 5px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .gcm-playlist-item.active {
+        background-color: var(--primary-color);
+        color: var(--background-color);
+    }
+
+    .gcm-playlist-item:hover {
+        background-color: rgba(0, 255, 255, 0.2);
+        transform: translateX(5px);
+        color: #fff;
+    }
+
+    @media (max-width: 600px) {
+        .gcm-music-player {
+            padding: 20px;
+        }
+
+        .gcm-music-player img {
+            width: 150px;
+            height: 150px;
+        }
+
+        .gcm-music-controls button {
+            font-size: 1.5rem;
+        }
+
+        .gcm-song-details h3 {
+            font-size: 1.2rem;
+        }
+
+        .gcm-song-details p {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .gcm-music-player {
+            padding: 15px;
+        }
+
+        .gcm-music-player img {
+            width: 120px;
+            height: 120px;
+        }
+
+        .gcm-music-controls button {
+            font-size: 1.2rem;
+        }
+
+        .gcm-song-details h3 {
+            font-size: 1rem;
+        }
+
+        .gcm-song-details p {
+            font-size: 0.8rem;
+        }
+    }
+</style>
+
+
+</head>
+<body>
+
+    
+    <div class="popup" id="music-popup">
+        <div class="music-player">
+            <button class="close-btn" id="close-popup-btn"><i class="fas fa-times"></i></button>
+            
+            <img src="/placeholder.svg?height=150&width=150" alt="Album Cover" id="album-cover">
+            <div class="song-details">
+                <h3 id="song-title">Song Title</h3>
+                <p id="song-artist">Artist Name</p>
+            </div>
+    
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-handle" id="progress-handle"></div>
+            </div>
+            <div class="time-display">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+    
+            <div class="music-controls">
+                <button id="prev-btn"><i class="fas fa-step-backward"></i></button>
+                <button id="play-btn"><i class="fas fa-play"></i></button>
+                <button id="next-btn"><i class="fas fa-step-forward"></i></button>
+            </div>
+    
+            <div class="shuffle-repeat">
+                <button id="shuffle-btn"><i class="fas fa-random"></i></button>
+                <button id="repeat-btn"><i class="fas fa-redo"></i></button>
+            </div>
+    
+            <div class="playlist" id="playlist">
+                <h4>Playlist</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax-container">
+        <header>
+            <img src="" alt="Background" class="background">
+            <img src="Gcebile.jpg" alt="Foreground" class="foreground">
+            <h1 class="title">Gcebile Maseko</h1>
+        </header>
+        <nav id="main-nav">
+            <a href="#home" class="logo">GM</a>
+            <div class="nav-links" id="nav-links">
+                <a href="#home">Home</a>
+                <a href="#music">Music</a>
+                <a href="#tour">Tour</a>
+                <a href="#merch">Merch</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="hamburger" onclick="toggleNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+        
+
+        <div class="content">
+            <section id="home" class="section">
+                <h2 class="fade-in">Welcome to the Season Of Grace</h2>
+                <p class="slide-in">Be Transformed & Renewed by the electrifying music of Gcebile Maseko</p>
+                <a href="#music" class="btn slide-in">Explore Now</a>
+            </section>
+            
+            <section id="music" class="section">
+                <h2 class="fade-in">Latest Releases</h2>
+                <div class="music-player slide-in">
+                    <img src="banner.jpg" alt="Album Cover" id="album-cover">
+                    <div class="song-details">
+                        <h3 id="song-title">Nomanini Lizovela</h3>
+                        <p id="song-artist">Gcebile Maseko</p>
+                        <button class="btn"onclick="openMusicPlayer({
+    albumArt: 'path/to/your/album-art.jpg',
+    songTitle: 'Your Song Title',
+    services: [
+        { name: 'Spotify', icon: 'spotify', url: 'your-spotify-url' },
+        { name: 'Apple Music', icon: 'apple', url: 'your-apple-music-url' }
+    ]
+})">Listen <i class="fas fa-headphones"></i></button></button>
+                    </div>
+                    
+                    
+                    <div class="visualizer" id="visualizer"></div>
+                </div>
+                <h3 class="fade-in" style="margin-top: 2rem;">Featured Album</h3>
+                <div class="album-grid">
+                    <div class="album-card slide-in" onclick="openAlbumPlayer('Neon Dreams', 'Nomanini_lizovela.mp3', 1)">
+                        <img src="banner.jpg" alt="Neon Dreams Album">
+                        <h3>Nomanini Lizovela</h3>
+                        <!-- Trigger Button (Outside the Widget) -->
+
+
+<button  id="gcm-open-popup-btn" class="btn">Listen <i class="fas fa-headphones"></i></button>
+
+
+
+
+                    </div>
+                   <!--
+                    <div class="album-card slide-in" onclick="openAlbumPlayer('Cyber Serenade', 'Nomanini_lizovela.mp3', 2)">
+                        <img src="banner.jpg" alt="Cyber Serenade Album">
+                        <h3>Nomanini Lizovela</h3>
+                        <button class="btn">Listen <i class="fas fa-headphones"></i></button>
+                    </div>
+
+                    
+                    <div class="album-card slide-in" onclick="openAlbumPlayer('Quantum Beats', 'Nomanini_lizovela.mp3', 3)">
+                        <img src="banner.jpg" alt="Quantum Beats Album">
+                        <h3>Nomanini Lizovela</h3>
+                        <button class="btn">Listen <i class="fas fa-headphones"></i></button>
+                    </div>
+                    
+                    <div class="album-card slide-in" onclick="openAlbumPlayer('Digital Horizon', 'Nomanini_lizovela.mp3', 4)">
+                        <img src="banner.jpg" alt="Digital Horizon Album">
+                        <h3>Nomanini Lizovela</h3>
+                        <button class="btn">Listen <i class="fas fa-headphones"></i></button>
+                    </div>
+                </div>
+                -->
+            </section>
+            <section id="tour" class="section">
+                <h2 class="fade-in">Upcoming Shows</h2>
+                <div class="tour-dates">
+                    <div class="tour-date slide-in">
+    <div>
+        <h3>Manzini, Mavuso Trade Fair </h3>
+        <p>December 22, 2024</p>
+        <p id="countdown">Time left: <span id="countdown-timer"></span></p>
+        <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p> <!-- Replace with actual availability -->
+    </div>
+    <a href="#" class="btn" id="getTicketsBtn">Get Tickets</a>
+</div>
+                   <div class="tour-date slide-in">
+    <div>
+        <h3>Matsapha, The Light Of Christ Auditorium </h3>
+        <p>January 27, 2025</p>
+        <p id="countdown">Time left: <span id="countdown-timer2"></span></p>
+        <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p> <!-- Replace with actual availability -->
+    </div>
+    <a href="#" class="btn" id="getTicketsBtn2">Get Tickets</a>
+</div>
+                     <div class="tour-date slide-in">
+    <div>
+        <h3>Zulwini, </h3>
+        <p>February 14, 2025</p>
+        <p id="countdown">Time left: <span id="countdown-timer3"></span></p>
+        <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p> <!-- Replace with actual availability -->
+    </div>
+    <a href="#" class="btn" id="getTicketsBtn3">Get Tickets</a>
+</div>
+            </section>
+            <section id="merch" class="section">
+                <h2 class="fade-in">Official Merchandise</h2>
+                <div class="merch-grid">
+                    <div class="merch-item slide-in">
+                        <img src="Merch.jpg" alt="T-Shirt">
+                        <h3>Season Of Gcace T-Shirt</h3>
+                        <p>E109.99</p>
+                        <a href="#" class="btn" id="buy-now-btn" >Buy Now</a>
+                    </div>
+                    <div class="merch-item slide-in">
+                        <img src="Merch.jpg" alt="Cap">
+                        <h3>Season Of Gcace Cap</h3>
+                        <p>E24.99</p>
+                        <a href="#" class="btn" id="buy-now-btn2" >Buy Now</a>
+                    </div>
+                    <div class="merch-item slide-in">
+                        <img src="Merch.jpg" alt="Poster">
+                        <h3>Season Of Gcace Poster</h3>
+                        <p>E19.99</p>
+                        <a href="#" class="btn" id="buy-now-btn3" >Buy Now</a>
+                    </div>
+                </div>
+            </section>
+            <section id="contact" class="section">
+                <h2 class="fade-in">Get in Touch</h2>
+                <form class="contact-form slide-in">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder=" " required>
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder=" " required>
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder=" " rows="4" required></textarea>
+                        <label for="message">Message</label>
+                    </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </section>
+        </div>
+    </div>
+    <div class="grass"></div>
+    <footer>
+       <div class="social-links">
+            <a href="#" target="_blank"><i class="fab fa-spotify"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-soundcloud"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-apple"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-amazon"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-tidal"></i></a>
+        </div>
+        <p>&copy; 2024 Gcebile Maseko. All rights reserved.</p>
+        <p>Web developed by Shamase</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">Cookie Policy</a>
+        </div>
+
+        
+    </footer>
+
+    
+
+    <div class="gcm-popup" id="gcm-music-popup">
+        <div class="gcm-music-player">
+            <button class="gcm-close-btn" id="gcm-close-popup-btn">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <img src="/api/placeholder/200/200" alt="Album Cover" id="gcm-album-cover">
+            <div class="gcm-song-details">
+                <h3 id="gcm-song-title">Neon Nights</h3>
+                <p id="gcm-song-artist">Cyber Synth</p>
+            </div>
+
+            <div class="gcm-progress-container" id="gcm-progress-container">
+                <div class="gcm-progress-bar" id="gcm-progress-bar"></div>
+            </div>
+            <div class="gcm-time-display">
+                <span id="gcm-current-time">0:00</span>
+                <span id="gcm-duration">0:00</span>
+            </div>
+
+            <div class="gcm-music-controls">
+                <button id="gcm-prev-btn"><i class="fas fa-step-backward"></i></button>
+                <button id="gcm-play-btn"><i class="fas fa-play"></i></button>
+                <button id="gcm-next-btn"><i class="fas fa-step-forward"></i></button>
+            </div>
+
+            <div class="gcm-shuffle-repeat">
+                <button id="gcm-shuffle-btn"><i class="fas fa-random"></i></button>
+                <button id="gcm-repeat-btn"><i class="fas fa-redo"></i></button>
+            </div>
+
+            <div class="gcm-playlist" id="gcm-playlist">
+                <h4>Playlist</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+   <script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const parallaxContainer = document.querySelector('.parallax-container');
+    const title = document.querySelector('.title');
+    const grass = document.querySelector('.grass');
+    const footer = document.querySelector('footer');
+    const nav = document.getElementById('main-nav');
+    const navLinks = nav.querySelector('.nav-links'); // Assuming links are within a .nav-links container
+    const hamburger = document.querySelector('.hamburger');
+    let lastScrollTop = 0;
+    let isNavVisible = false;
+
+    // Parallax effect and scroll-based nav visibility
+    parallaxContainer.addEventListener('scroll', () => {
+        const scrollY = parallaxContainer.scrollTop;
+        title.style.transform = `translateY(${scrollY * 0.7}px) scale(${1 - scrollY * 0.001})`;
+        grass.style.transform = `translateY(${scrollY * 0.1}px)`;
+
+        // Footer visibility
+        footer.style.transform = scrollY > lastScrollTop ? 'translateY(100%)' : 'translateY(0)';
+
+        // Nav visibility management
+        if (!nav.classList.contains('nav-open')) {
+            if (scrollY > lastScrollTop && isNavVisible && scrollY > 100) {
+                hideNav();
+            } else if (scrollY < lastScrollTop && !isNavVisible) {
+                showNav();
+            }
+        }
+
+        lastScrollTop = Math.max(scrollY, 0);
+    });
+
+    function hideNav() {
+        nav.style.transform = 'translateY(-100%)'; // Hide nav
+        navLinks.style.display = 'none'; // Hide nav links
+        isNavVisible = false; // Update visibility state
+    }
+
+    function showNav() {
+        nav.style.transform = 'translateY(0)'; // Show nav
+        navLinks.style.display = 'flex'; // Ensure nav links are visible
+        isNavVisible = true; // Update visibility state
+    }
+
+    // Hamburger menu functionality
+    hamburger.addEventListener('click', toggleNav);
+
+    function toggleNav() {
+        nav.classList.toggle('nav-open'); // Toggle 'nav-open' class
+
+        if (nav.classList.contains('nav-open')) {
+            showNav(); // Show nav
+            hamburger.classList.add('is-active'); // Add active state to hamburger
+        } else {
+            hideNav(); // Hide nav
+            hamburger.classList.remove('is-active'); // Remove active state from hamburger
+        }
+    }
+
+    // Grass morph animation
+    const morphGrass = () => {
+        const path = document.querySelector('.grass path');
+        if (path) {
+            const newPath = generateRandomPath();
+            path.setAttribute('d', newPath);
+        }
+    };
+
+    const generateRandomPath = () => {
+        let path = 'M0,32';
+        for (let i = 0; i <= 30; i++) {
+            const x = (i / 30) * 1440;
+            const y = Math.random() * 100 + 220;
+            path += `L${x},${y}`;
+        }
+        path += 'L1440,320L1440,320L0,320Z';
+        return path;
+    };
+
+    setInterval(morphGrass, 5000);
+
+    // Futuristic text animation
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    
+    document.querySelectorAll("h2").forEach(h2 => {
+        h2.dataset.value = h2.innerText;
+        h2.addEventListener('mouseover', event => {
+            let iteration = 0;
+            
+            clearInterval(event.target.interval);
+            
+            event.target.interval = setInterval(() => {
+                event.target.innerText = event.target.innerText
+                    .split("")
+                    .map((letter, index) => {
+                        if(index < iteration) {
+                            return event.target.dataset.value[index];
+                        }
+                        
+                        return letters[Math.floor(Math.random() * 26)];
+                    })
+                    .join("");
+                
+                if(iteration >= event.target.dataset.value.length) { 
+                    clearInterval(event.target.interval);
+                }
+                
+                iteration += 1 / 3;
+            }, 30);
+        });
+    });
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in, .slide-in').forEach(el => {
+        observer.observe(el);
+    });
+});
+</script>
+
+
+    
+   <script>
+    (function() {
+        const WIDGET_ID = 'music_player_widget_' + Math.random().toString(36).substr(2, 9);
+        
+        window[WIDGET_ID] = {
+            init: function(config = {}) {
+                this.config = {
+                    albumArt: config.albumArt || 'Gce.jpg',
+                    songTitle: config.songTitle || 'season Of grace',
+                    services: config.services || [
+                        { name: 'Amazon Music', icon: this.amazonIcon(), url: '#' },
+                        { name: 'Spotify', icon: this.spotifyIcon(), url: '#' },
+                        { name: 'Apple Music', icon: this.appleMusicIcon(), url: '#' },
+                        { name: 'YouTube', icon: this.youtubeIcon(), url: '#' },
+                        { name: 'Tidal', icon: this.tidalIcon(), url: '#' },
+                        { name: 'SoundCloud', icon: this.soundcloudIcon(), url: '#' }
+                    ]
+                };
+                this.injectStyles();
+                this.createMarkup();
+                this.attachEventListeners();
+            },
+
+            injectStyles: function() {
+                if (document.getElementById(`${WIDGET_ID}-styles`)) return;
+                
+                const styleSheet = document.createElement("style");
+                styleSheet.id = `${WIDGET_ID}-styles`;
+                styleSheet.textContent = `
+                    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
+    
+                    #${WIDGET_ID}-popup {
+                        display: none;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100% !important;
+                        height: 100% !important;
+                        background: rgba(0, 0, 0, 0.8) !important;
+                        backdrop-filter: blur(10px);
+                        z-index: 2147483647 !important;
+                        opacity: 0;
+                        transition: opacity 0.5s ease;
+                    }
+    
+                    #${WIDGET_ID}-popup.active {
+                        opacity: 1 !important;
+                    }
+    
+                    #${WIDGET_ID}-popup * {
+                        all: revert;
+                        box-sizing: border-box !important;
+                        font-family: 'Orbitron', sans-serif !important;
+                    }
+    
+                    #${WIDGET_ID}-content {
+                        background: rgba(255, 255, 255, 0.1) !important;
+                        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                        border-radius: 20px !important;
+                        width: 340px !important;
+                        position: absolute !important;
+                        top: 50% !important;
+                        left: 50% !important;
+                        transform: translate(-50%, -50%) !important;
+                        padding: 20px !important;
+                        color: white !important;
+                        text-align: center !important;
+                        backdrop-filter: blur(10px);
+                        box-shadow: 0 0 40px rgba(0, 255, 136, 0.3) !important;
+                    }
+    
+                    #${WIDGET_ID}-album-art {
+                        width: 180px !important;
+                        height: 180px !important;
+                        border-radius: 12px !important;
+                        margin: 0 auto 15px !important;
+                        display: block !important;
+                        box-shadow: 0 0 30px rgba(102, 0, 255, 0.5) !important;
+                    }
+    
+                    #${WIDGET_ID}-title {
+                        font-size: 20px !important;
+                        margin: 10px 0 !important;
+                        background: linear-gradient(45deg, #00ff88, #6600ff);
+                        -webkit-background-clip: text !important;
+                        -webkit-text-fill-color: transparent !important;
+                        text-transform: uppercase !important;
+                    }
+    
+                    #${WIDGET_ID}-subtitle {
+                        font-size: 14px !important;
+                        margin-bottom: 15px !important;
+                        color: rgba(255, 255, 255, 0.8) !important;
+                    }
+    
+                    #${WIDGET_ID}-service-list {
+                        display: grid !important;
+                        grid-template-columns: 1fr 1fr !important;
+                        gap: 10px !important;
+                    }
+    
+                    .${WIDGET_ID}-service-btn {
+                        background: rgba(255, 255, 255, 0.1) !important;
+                        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                        color: white !important;
+                        padding: 8px 12px !important;
+                        border-radius: 8px !important;
+                        cursor: pointer !important;
+                        transition: all 0.3s ease !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        gap: 8px !important;
+                        font-size: 14px !important;
+                    }
+    
+                    .${WIDGET_ID}-service-btn:hover {
+                        background: rgba(255, 255, 255, 0.2) !important;
+                        transform: translateY(-2px) !important;
+                        box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3) !important;
+                    }
+    
+                    #${WIDGET_ID}-close {
+                        position: absolute !important;
+                        top: 10px !important;
+                        right: 10px !important;
+                        background: rgba(255, 0, 0, 0.3) !important;
+                        border: none !important;
+                        color: white !important;
+                        width: 30px !important;
+                        height: 30px !important;
+                        border-radius: 50% !important;
+                        cursor: pointer !important;
+                        transition: all 0.3s ease !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        padding: 0 !important;
+                        font-size: 14px !important;
+                    }
+    
+                    #${WIDGET_ID}-close:hover {
+                        background: rgba(255, 0, 0, 0.5) !important;
+                        transform: rotate(90deg) !important;
+                    }
+    
+                    @media (max-width: 380px) {
+                        #${WIDGET_ID}-content {
+                            width: 90% !important;
+                            padding: 15px !important;
+                        }
+    
+                        #${WIDGET_ID}-album-art {
+                            width: 140px !important;
+                            height: 140px !important;
+                        }
+    
+                        #${WIDGET_ID}-service-list {
+                            grid-template-columns: 1fr !important;
+                        }
+                    }
+                `;
+                document.head.appendChild(styleSheet);
+            },
+
+            createMarkup: function() {
+                if (document.getElementById(`${WIDGET_ID}-popup`)) return;
+                
+                const popup = document.createElement('div');
+                popup.id = `${WIDGET_ID}-popup`;
+                
+                const serviceButtons = this.config.services.map(service => `
+                    <button class="${WIDGET_ID}-service-btn" onclick="window.open('${service.url}', '_blank')">
+                        ${service.icon} ${service.name} <!-- Include svg icon here -->
+                    </button>
+                `).join('');
+    
+                popup.innerHTML = `
+                    <div id="${WIDGET_ID}-content">
+                        <img src="${this.config.albumArt}" alt="Album Art" id="${WIDGET_ID}-album-art">
+                        <h2 id="${WIDGET_ID}-title">${this.config.songTitle}</h2>
+                        <p id="${WIDGET_ID}-subtitle">Choose your music service</p>
+                        <div id="${WIDGET_ID}-service-list">
+                            ${serviceButtons}
+                        </div>
+                        <button id="${WIDGET_ID}-close">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" fill="white">
+                                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.707 13.707a1 1 0 01-1.414 0L12 13.414l-2.293 2.293a1 1 0 01-1.414-1.414L10.586 12 8.293 9.707a1 1 0 011.414-1.414L12 10.586l2.293-2.293a1 1 0 111.414 1.414L13.414 12l2.293 2.293a1 1 0 010 1.414z"/>
+                            </svg>
+                        </button>
+                    </div>
+                `;
+                
+                document.body.appendChild(popup);
+            },
+
+            attachEventListeners: function() {
+                const popup = document.getElementById(`${WIDGET_ID}-popup`);
+                const closeBtn = document.getElementById(`${WIDGET_ID}-close`);
+                
+                popup.addEventListener('click', (e) => {
+                    if (e.target === popup) {
+                        this.close();
+                    }
+                });
+                
+                closeBtn.addEventListener('click', () => this.close());
+            },
+
+            open: function() {
+                const popup = document.getElementById(`${WIDGET_ID}-popup`);
+                popup.style.display = 'block';
+                setTimeout(() => popup.classList.add('active'), 10);
+            },
+
+            close: function() {
+                const popup = document.getElementById(`${WIDGET_ID}-popup`);
+                popup.classList.remove('active');
+                setTimeout(() => popup.style.display = 'none', 500);
+            },
+
+            amazonIcon: function() {
+                return this.generateSvgIcon(`
+                    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1.69 14.652c-2.006 0-3.717-.714-5.205-2.004a.938.938 0 011.312-1.335 5.567 5.567 0 004.004 1.55c.81 0 1.385-.343 1.385-.924 0-.343-.203-.596-.688-.837l-.723-.333c-.965-.438-1.63-.987-1.63-2.063 0-1.273 1.07-2.207 2.56-2.207 1.588 0 2.634.842 3.016 1.755a.936.936 0 01-1.76.71c-.206-.51-.724-.844-1.306-.844-.623 0-1.09.36-1.09.857 0 .364.203.577.743.844l.58.275c1.192.56 1.844 1.204 1.844 2.312 0 1.355-1.18 2.292-2.945 2.292z"/>
+                `);
+            },
+
+            spotifyIcon: function() {
+                return this.generateSvgIcon(`
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.41 14.68c-.19.3-.56.4-.86.22-2.36-1.43-5.34-1.76-8.85-.98a.667.667 0 11-.29-1.31c3.83-.85 7.13-.49 9.71 1.1.3.18.39.57.21.87zm1.11-2.78c-.23.36-.7.48-1.07.25-2.7-1.66-6.82-2.14-10-.99a.75.75 0 01-.53-1.41c3.56-1.18 7.21-.62 10.25 1.14.36.22.48.69.25 1.01zM17 10.5c-.26.42-.81.56-1.25.31-3.06-1.87-8.19-2.03-11.05-.94a.87.87 0 01-1.11-.54c-.18-.48.07-1.02.55-1.19 3.27-1.2 8.91-1.03 12.41 1.15.43.25.56.8.31 1.21z"/>
+                `);
+            },
+
+            appleMusicIcon: function() {
+                return this.generateSvgIcon(`
+                    <path d="M16.76 13.73c-.19-.01-.43.1-.73.31-.26.18-.44.27-.51.27-.13 0-.33-.09-.61-.26a.582.582 0 00-.55 0c-.19.12-.3.31-.3.58v1.95c0 .35.11.64.33.88.24.23.53.35.86.35.35 0 .64-.13.87-.4.23-.27.35-.62.35-1.03v-1.92c.01-.3-.05-.53-.17-.7a.496.496 0 00-.37-.33zm-5.26-2.65c-.56 0-1.02.19-1.36.57-.34.39-.51.89-.51 1.52v1.92c0 .35.11.65.32.88.22.24.51.36.88.36.36 0 .65-.13.87-.4.23-.27.35-.62.35-1.04v-1.92c0-.62-.16-1.11-.48-1.48-.33-.36-.77-.54-1.37-.54z"/>
+                `);
+            },
+
+            youtubeIcon: function() {
+                return this.generateSvgIcon(`
+                    <path d="M19.8 8.001c-.147-.55-.577-.982-1.126-1.132-1.025-.271-5.13-.271-5.13-.271s-4.106 0-5.13.271a1.358 1.358 0 00-1.126 1.132C7 9.025 7 12 7 12s0 2.975.289 3.999c.147.55.577.982 1.126 1.132 1.025.271 5.13.271 5.13.271s4.106 0 5.13-.271a1.358 1.358 0 001.126-1.132C21 14.975 21 12 21 12s0-2.975-.289-3.999zM10 14.605V9.395L14.83 12 10 14.605z"/>
+                `);
+            },
+
+            tidalIcon: function() {
+                return this.generateSvgIcon(`
+                    <path d="M12 8.768L15.466 12 12 15.232 8.534 12 12 8.768zm-8.534 3.232L0 8.768 3.466 12 0 15.232l3.466 3.232 3.534-3.232L3.466 12zm16 0L16 8.768l3.466 3.232L16 15.232l3.466 3.232L23 15.232 19.466 12z"/>
+                `);
+            },
+
+            soundcloudIcon: function() {
+                return this.generateSvgIcon(`
+                    <path d="M20.872 13.111c-.472 0-.936.052-1.387.151-.364-2.835-2.567-5.031-5.43-5.235-.167-.324-.477-.529-.835-.529-.53 0-.96.429-.96.958V19h8.612c1.178 0 2.136-.958 2.136-2.136s-.958-2.137-2.136-2.137zm-10.87-4.682c-.53 0-.96.429-.96.96V19h1.919V9.388c0-.53-.429-.959-.96-.959zm-3.837 2.401c-.53 0-.959.429-.959.96V19h1.918v-7.822c0-.53-.429-.96-.959-.96zm-3.835 2.404c-.53 0-.96.429-.96.96V19h1.918v-4.293c0-.53-.429-.961-.96-.961zm-3.838 2.408c-.529 0-.959.43-.959.96V19h1.918v-1.408c0-.53-.429-.96-.959-.96z"/>
+                `);
+            },
+
+            // Helper function to generate complete icon SVG
+            generateSvgIcon: function(svgPath) {
+                return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" fill="white">${svgPath}</svg>`;
+            }
+        };
+
+        // Create a global function to open the widget
+        window.openMusicPlayer = function(config) {
+            if (config) {
+                window[WIDGET_ID].init(config);
+            }
+            window[WIDGET_ID].open();
+        };
+
+        // Initialize widget when script loads
+        window[WIDGET_ID].init();
+    })();
+</script>
+
+
+
+  
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+        (function() {
+            const stripe = Stripe("pk_test_51OhhvQ2M0CLjQC6F6mfQXlO3ce7MCQT4arXd3HkPtQJHs0dkbtadfrbI1p4XSZJk46kTIwiPiToBN8Du2nUpv5zL00cQDwKtTK"); // Initialize Stripe with your API key
+            let stripeClientSecret = ''; // Will store the client secret after payment intent creation
+    
+            // Generate a unique identifier for each widget instance
+            const widgetInstance = `ticketWidget_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
+    
+            // Create the popup container dynamically
+            const popupHtml = `
+                <div class="${widgetInstance}popup-container" id="${widgetInstance}popup" style="display: none;">
+                    <div class="${widgetInstance}popup">
+                        <button class="${widgetInstance}close-btn" id="${widgetInstance}closePopup">X</button>
+                        <h3>Get Your Tickets</h3>
+                        <div id="${widgetInstance}form">
+                            <input type="text" id="${widgetInstance}name" placeholder="First and Last Name" required>
+                            <input type="email" id="${widgetInstance}email" placeholder="Email" required>
+                            <input type="tel" id="${widgetInstance}phone" placeholder="Phone Number" required pattern="\\d{10}">
+                            <input type="number" id="${widgetInstance}ticketQty" placeholder="Ticket Quantity" required min="1">
+                            <select id="${widgetInstance}ticketType" required>
+                                <option value="">Select Ticket Type</option>
+                                <option value="general">General Admission</option>
+                                <option value="vip">VIP</option>
+                            </select>
+                            <button id="${widgetInstance}continueBtn">Continue</button>
+                        </div>
+                        <div id="${widgetInstance}paymentForm" style="display:none;">
+                            <input type="text" id="${widgetInstance}cardNumber" placeholder="Card Number" required>
+                            <input type="text" id="${widgetInstance}expiration" placeholder="Expiration Date (MM/YY)" required>
+                            <input type="text" id="${widgetInstance}cvv" placeholder="CVV" required>
+                            <input type="text" id="${widgetInstance}billingAddress" placeholder="Billing Address" required>
+                            <button id="${widgetInstance}finishBtn">Finish</button>
+                        </div>
+                        <div id="${widgetInstance}message"></div>
+                    </div>
+                </div>
+            `;
+    
+            // Append the popup to the body
+            document.body.insertAdjacentHTML('beforeend', popupHtml);
+    
+            // Add styles for this instance
+            const style = document.createElement('style');
+            style.textContent = `
+                .${widgetInstance}popup-container {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 10000;
+                }
+                
+                .${widgetInstance}popup {
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 20px;
+                    border-radius: 10px;
+                    width: 90%;
+                    max-width: 400px;
+                    text-align: center;
+                    color: white;
+                    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+                }
+    
+                .${widgetInstance}popup input, .${widgetInstance}popup select {
+                    width: 100%;
+                    padding: 10px;
+                    margin: 10px 0;
+                    background: black;
+                    color: white;
+                    border: 2px solid green;
+                    border-radius: 5px;
+                    font-family: 'Orbitron', sans-serif;
+                }
+    
+                .${widgetInstance}popup button {
+                    width: 100%;
+                    padding: 10px;
+                    margin: 10px 0;
+                    background-color: var(--primary-color);
+            color: var(--background-color);
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-weight: 1000;
+                    font-family: 'Orbitron', sans-serif;
+                    transition: background 0.3s ease;
+                }
+    
+                .${widgetInstance}popup button:hover {
+                    background-color: var(--text-color);
+            color: var(--primary-color);
+                }
+    
+                .${widgetInstance}popup .${widgetInstance}close-btn {
+                    background: red;
+                    color: white;
+                    padding: 5px;
+                    border: none;
+                    border-radius: 5px;
+                    float: right;
+                    cursor: pointer;
+                }
+            `;
+            document.head.appendChild(style);
+    
+            // Widget functionality
+            const popup = document.getElementById(`${widgetInstance}popup`);
+            const closePopup = document.getElementById(`${widgetInstance}closePopup`);
+            const continueBtn = document.getElementById(`${widgetInstance}continueBtn`);
+            const finishBtn = document.getElementById(`${widgetInstance}finishBtn`);
+            const form = document.getElementById(`${widgetInstance}form`);
+            const paymentForm = document.getElementById(`${widgetInstance}paymentForm`);
+            const messageDiv = document.getElementById(`${widgetInstance}message`);
+    
+            // Open popup
+            const getTicketsBtn = document.getElementById('getTicketsBtn'); // Ensure button has correct ID
+            getTicketsBtn.addEventListener('click', () => {
+                popup.style.display = 'flex';
+            });
+    
+            // Close popup
+            closePopup.addEventListener('click', () => {
+                popup.style.display = 'none';
+                resetForm();
+            });
+    
+            // Validate form before continuing to payment
+            continueBtn.addEventListener('click', () => {
+                if (validateForm()) {
+                    form.style.display = 'none';
+                    paymentForm.style.display = 'block';
+                    createPaymentIntent();
+                } else {
+                    messageDiv.innerHTML = `<p class="error">Please complete all fields correctly before proceeding.</p>`;
+                }
+            });
+    
+            // Finish and complete payment
+            finishBtn.addEventListener('click', async () => {
+                const isValid = validatePayment();
+                if (isValid) {
+                    const cardElement = {
+                        cardNumber: document.getElementById(`${widgetInstance}cardNumber`).value,
+                        expiration: document.getElementById(`${widgetInstance}expiration`).value,
+                        cvv: document.getElementById(`${widgetInstance}cvv`).value,
+                        billingAddress: document.getElementById(`${widgetInstance}billingAddress`).value,
+                    };
+    
+                    // Confirm the payment using Stripe.js
+                    stripe.confirmCardPayment(stripeClientSecret, {
+                        payment_method: {
+                            card: cardElement,
+                            billing_details: {
+                                address: { line1: cardElement.billingAddress },
+                            },
+                        }
+                    }).then(function(result) {
+                        if (result.error) {
+                            messageDiv.innerHTML = `<p class="error">Payment Failed: ${result.error.message}</p>`;
+                        } else if (result.paymentIntent.status === 'succeeded') {
+                            messageDiv.innerHTML = `<p class="success">Payment Successful! Thank you for your purchase.</p>`;
+                        }
+                    });
+                } else {
+                    messageDiv.innerHTML = `<p class="error">Payment Failed. Please check your payment details.</p>`;
+                }
+            });
+    
+            // Create a payment intent when continuing to payment
+            async function createPaymentIntent() {
+                const formData = {
+                    name: document.getElementById(`${widgetInstance}name`).value,
+                    email: document.getElementById(`${widgetInstance}email`).value,
+                    phone: document.getElementById(`${widgetInstance}phone`).value,
+                    ticketQty: document.getElementById(`${widgetInstance}ticketQty`).value,
+                    ticketType: document.getElementById(`${widgetInstance}ticketType`).value,
+                };
+    
+                const amount = calculateAmount(formData.ticketQty, formData.ticketType); // Calculate the total amount
+    
+                const response = await fetch('/create-payment-intent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        amount: amount * 100, // Stripe works with cents
+                        currency: 'usd'
+                    })
+                });
+    
+                const data = await response.json();
+                stripeClientSecret = data.clientSecret; // Store the client secret for payment confirmation
+            }
+    
+            // Reset form
+            function resetForm() {
+                form.style.display = 'block';
+                paymentForm.style.display = 'none';
+                messageDiv.innerHTML = '';
+            }
+    
+            // Validate the form inputs
+            function validateForm() {
+                const name = document.getElementById(`${widgetInstance}name`).value.trim();
+                const email = document.getElementById(`${widgetInstance}email`).value.trim();
+                const phone = document.getElementById(`${widgetInstance}phone`).value.trim();
+                const ticketQty = document.getElementById(`${widgetInstance}ticketQty`).value;
+                const ticketType = document.getElementById(`${widgetInstance}ticketType`).value;
+                
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const phoneRegex = /^\d{8}$/;
+    
+                if (!name || !email || !emailRegex.test(email) || !phone || !phoneRegex.test(phone) || ticketQty <= 0 || ticketType === '') {
+                    return false;
+                }
+                return true;
+            }
+    
+            // Validate the payment details
+            function validatePayment() {
+                const cardNumber = document.getElementById(`${widgetInstance}cardNumber`).value;
+                const expiration = document.getElementById(`${widgetInstance}expiration`).value;
+                const cvv = document.getElementById(`${widgetInstance}cvv`).value;
+                const billingAddress = document.getElementById(`${widgetInstance}billingAddress`).value;
+    
+                // Basic checks for empty fields
+                if (!cardNumber || !expiration || !cvv || !billingAddress) {
+                    return false;
+                }
+    
+                // Luhn Algorithm to check for valid card number
+                if (!validateCardNumber(cardNumber)) {
+                    return false;
+                }
+    
+                // Check expiration date format (MM/YY)
+                const expRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+                if (!expRegex.test(expiration)) {
+                    return false;
+                }
+    
+                return true;
+            }
+    
+            // Luhn algorithm to validate card number
+            function validateCardNumber(number) {
+                let sum = 0;
+                let shouldDouble = false;
+                for (let i = number.length - 1; i >= 0; i--) {
+                    let digit = parseInt(number.charAt(i), 10);
+    
+                    if (shouldDouble) {
+                        if ((digit *= 2) > 9) digit -= 9;
+                    }
+    
+                    sum += digit;
+                    shouldDouble = !shouldDouble;
+                }
+                return (sum % 10) === 0;
+            }
+    
+            function calculateAmount(qty, type) {
+                const prices = {
+                    general: 50,
+                    vip: 100
+                };
+                return qty * prices[type];
+            }
+        })();
+    </script>
+    
+        
+        
+
+    
+   
+   <script>
+    (function() {
+        // Generate a unique identifier for each instance of the widget
+        const widgetId = `ticketWidget_${Math.random().toString(36).substr(2, 9)}`;
+
+        // Create the popup container dynamically
+        const popupHtml = `
+            <div class="${widgetId}popup-container" id="${widgetId}popup" style="display: none;">
+                <div class="${widgetId}popup">
+                    <button class="${widgetId}close-btn" id="${widgetId}closePopup">X</button>
+                    <h3>Get Your Tickets</h3>
+                    <div id="${widgetId}form">
+                        <input type="text" id="${widgetId}name" placeholder="First and Last Name" required>
+                        <input type="email" id="${widgetId}email" placeholder="Email" required>
+                        <input type="tel" id="${widgetId}phone" placeholder="Phone Number" required>
+                        <input type="number" id="${widgetId}ticketQty" placeholder="Ticket Quantity" required>
+                        <select id="${widgetId}ticketType" required>
+                            <option value="">Select Ticket Type</option>
+                            <option value="general">General Admission</option>
+                            <option value="vip">VIP</option>
+                        </select>
+                        <button id="${widgetId}continueBtn">Continue</button>
+                    </div>
+                    <div id="${widgetId}paymentForm" style="display:none;">
+                        <input type="text" id="${widgetId}cardNumber" placeholder="Card Number" required>
+                        <input type="text" id="${widgetId}expiration" placeholder="Expiration Date (MM/YY)" required>
+                        <input type="text" id="${widgetId}cvv" placeholder="CVV" required>
+                        <input type="text" id="${widgetId}billingAddress" placeholder="Billing Address" required>
+                        <button id="${widgetId}finishBtn">Finish</button>
+                    </div>
+                    <div id="${widgetId}message"></div>
+                </div>
+            </div>
+        `;
+
+        // Append popup to the body
+        document.body.insertAdjacentHTML('beforeend', popupHtml);
+
+        // Add the styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .${widgetId}popup-container {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+            }
+            
+            .${widgetId}popup {
+                background: rgba(255, 255, 255, 0.1);
+                padding: 20px;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 400px;
+                text-align: center;
+                color: white;
+                box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            }
+
+            .${widgetId}popup input, .${widgetId}popup select {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                background: black;
+                color: white;
+                border: 2px solid green;
+                border-radius: 5px;
+                font-family: 'Orbitron', sans-serif;
+            }
+
+            .${widgetId}popup button {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                background-color: var(--primary-color);
+            color: var(--background-color);
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: 1000;
+                font-family: 'Orbitron', sans-serif;
+                transition: background 0.3s ease;
+            }
+
+            .${widgetId}popup button:hover {
+               background-color: var(--text-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
+            }
+
+            .${widgetId}popup .${widgetId}close-btn {
+                background: red;
+                color: white;
+                padding: 5px;
+                border: none;
+                border-radius: 5px;
+                float: right;
+                cursor: pointer;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Widget functionality
+        const popup = document.getElementById(`${widgetId}popup`);
+        const closePopup = document.getElementById(`${widgetId}closePopup`);
+        const continueBtn = document.getElementById(`${widgetId}continueBtn`);
+        const finishBtn = document.getElementById(`${widgetId}finishBtn`);
+        const form = document.getElementById(`${widgetId}form`);
+        const paymentForm = document.getElementById(`${widgetId}paymentForm`);
+        const messageDiv = document.getElementById(`${widgetId}message`);
+
+        // Open popup
+        const getTicketsBtn = document.getElementById('getTicketsBtn2');
+        getTicketsBtn.addEventListener('click', () => {
+            popup.style.display = 'flex';
+        });
+
+        // Close popup
+        closePopup.addEventListener('click', () => {
+            popup.style.display = 'none';
+            resetForm();
+        });
+
+        // Continue to payment section
+        continueBtn.addEventListener('click', () => {
+            form.style.display = 'none';
+            paymentForm.style.display = 'block';
+        });
+
+        // Finish and show result
+        finishBtn.addEventListener('click', async () => {
+            const isValid = validatePayment();
+            if (isValid) {
+                // Form submission to Web3Forms API
+                const formData = {
+                    name: document.getElementById(`${widgetId}name`).value,
+                    email: document.getElementById(`${widgetId}email`).value,
+                    phone: document.getElementById(`${widgetId}phone`).value,
+                    ticketQty: document.getElementById(`${widgetId}ticketQty`).value,
+                    ticketType: document.getElementById(`${widgetId}ticketType`).value,
+                };
+
+                try {
+                    const response = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer d16a8ad5-fb13-4109-845b-06cdaae7751f'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        // Trigger secure payment process (e.g., using Stripe)
+                        const paymentData = {
+                            cardNumber: document.getElementById(`${widgetId}cardNumber`).value,
+                            expiration: document.getElementById(`${widgetId}expiration`).value,
+                            cvv: document.getElementById(`${widgetId}cvv`).value,
+                            billingAddress: document.getElementById(`${widgetId}billingAddress`).value,
+                            amount: calculateAmount(formData.ticketQty, formData.ticketType)
+                        };
+
+                        processPayment(paymentData).then(paymentResponse => {
+                            if (paymentResponse.success) {
+                                messageDiv.innerHTML = `<p class="success">Payment Successful! Thank you for your purchase.</p>`;
+                            } else {
+                                messageDiv.innerHTML = `<p class="error">Payment Failed. Please try again.</p>`;
+                            }
+                        }).catch(error => {
+                            messageDiv.innerHTML = `<p class="error">Payment Failed. Error: ${error.message}</p>`;
+                        });
+                    } else {
+                        messageDiv.innerHTML = `<p class="error">Form Submission Failed. Please try again.</p>`;
+                    }
+                } catch (error) {
+                    messageDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+                }
+            } else {
+                messageDiv.innerHTML = `<p class="error">Payment Failed. Please try again.</p>`;
+            }
+        });
+
+        // Reset form
+        function resetForm() {
+            form.style.display = 'block';
+            paymentForm.style.display = 'none';
+            messageDiv.innerHTML = '';
+        }
+
+        function validatePayment() {
+            const cardNumber = document.getElementById(`${widgetId}cardNumber`).value;
+            const expiration = document.getElementById(`${widgetId}expiration`).value;
+            const cvv = document.getElementById(`${widgetId}cvv`).value;
+            const billingAddress = document.getElementById(`${widgetId}billingAddress}`).value;
+            return cardNumber && expiration && cvv && billingAddress;
+        }
+
+        async function processPayment(paymentData) {
+            return {
+                success: true,
+            };
+        }
+
+        function calculateAmount(qty, type) {
+            const prices = {
+                general: 50,
+                vip: 100
+            };
+            return qty * prices[type];
+        }
+    })();
+</script>
+
+
+        
+        <script>
+    (function() {
+        // Generate a unique identifier for each instance of the widget
+        const widgetId = `ticketForm_${Math.random().toString(36).substr(2, 9)}`;
+
+        // Create the popup container dynamically
+        const popupHtml = `
+            <div class="${widgetId}popup-container" id="${widgetId}popup" style="display: none;">
+                <div class="${widgetId}popup">
+                    <button class="${widgetId}close-btn" id="${widgetId}closePopup">X</button>
+                    <h3>Get Your Tickets</h3>
+                    <div id="${widgetId}form">
+                        <input type="text" id="${widgetId}name" placeholder="First and Last Name" required>
+                        <input type="email" id="${widgetId}email" placeholder="Email" required>
+                        <input type="tel" id="${widgetId}phone" placeholder="Phone Number" required>
+                        <input type="number" id="${widgetId}ticketQty" placeholder="Ticket Quantity" required>
+                        <select id="${widgetId}ticketType" required>
+                            <option value="">Select Ticket Type</option>
+                            <option value="general">General Admission</option>
+                            <option value="vip">VIP</option>
+                        </select>
+                        <button id="${widgetId}continueBtn">Continue</button>
+                    </div>
+                    <div id="${widgetId}paymentForm" style="display:none;">
+                        <input type="text" id="${widgetId}cardNumber" placeholder="Card Number" required>
+                        <input type="text" id="${widgetId}expiration" placeholder="Expiration Date (MM/YY)" required>
+                        <input type="text" id="${widgetId}cvv" placeholder="CVV" required>
+                        <input type="text" id="${widgetId}billingAddress" placeholder="Billing Address" required>
+                        <button id="${widgetId}finishBtn">Finish</button>
+                    </div>
+                    <div id="${widgetId}message"></div>
+                </div>
+            </div>
+        `;
+
+        // Append popup to the body
+        document.body.insertAdjacentHTML('beforeend', popupHtml);
+
+        // Add the styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .${widgetId}popup-container {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+            }
+            
+            .${widgetId}popup {
+                background: rgba(255, 255, 255, 0.1);
+                padding: 20px;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 400px;
+                text-align: center;
+                color: white;
+                box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            }
+
+            .${widgetId}popup input, .${widgetId}popup select {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                background: black;
+                color: white;
+                border: 2px solid green;
+                border-radius: 5px;
+                font-family: 'Orbitron', sans-serif;
+            }
+
+            .${widgetId}popup button {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                background-color: var(--primary-color);
+            color: var(--background-color);
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: 1000;
+                font-family: 'Orbitron', sans-serif;
+                transition: background 0.3s ease;
+            }
+
+            .${widgetId}popup button:hover {
+               background-color: var(--text-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
+            }
+
+            .${widgetId}popup .${widgetId}close-btn {
+                background: red;
+                color: white;
+                padding: 5px;
+                border: none;
+                border-radius: 5px;
+                float: right;
+                cursor: pointer;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Widget functionality
+        const popup = document.getElementById(`${widgetId}popup`);
+        const closePopup = document.getElementById(`${widgetId}closePopup`);
+        const continueBtn = document.getElementById(`${widgetId}continueBtn`);
+        const finishBtn = document.getElementById(`${widgetId}finishBtn`);
+        const form = document.getElementById(`${widgetId}form`);
+        const paymentForm = document.getElementById(`${widgetId}paymentForm`);
+        const messageDiv = document.getElementById(`${widgetId}message`);
+
+        // Open popup
+        const getTicketsBtn = document.getElementById('getTicketsBtn3');
+        getTicketsBtn.addEventListener('click', () => {
+            popup.style.display = 'flex';
+        });
+
+        // Close popup
+        closePopup.addEventListener('click', () => {
+            popup.style.display = 'none';
+            resetForm();
+        });
+
+        // Continue to payment section
+        continueBtn.addEventListener('click', () => {
+            form.style.display = 'none';
+            paymentForm.style.display = 'block';
+        });
+
+        // Finish and show result
+        finishBtn.addEventListener('click', async () => {
+            const isValid = validatePayment();
+            if (isValid) {
+                const formData = {
+                    name: document.getElementById(`${widgetId}name`).value,
+                    email: document.getElementById(`${widgetId}email`).value,
+                    phone: document.getElementById(`${widgetId}phone`).value,
+                    ticketQty: document.getElementById(`${widgetId}ticketQty`).value,
+                    ticketType: document.getElementById(`${widgetId}ticketType`).value,
+                };
+
+                try {
+                    const response = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer d16a8ad5-fb13-4109-845b-06cdaae7751f'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        const paymentData = {
+                            cardNumber: document.getElementById(`${widgetId}cardNumber`).value,
+                            expiration: document.getElementById(`${widgetId}expiration`).value,
+                            cvv: document.getElementById(`${widgetId}cvv`).value,
+                            billingAddress: document.getElementById(`${widgetId}billingAddress`).value,
+                            amount: calculateAmount(formData.ticketQty, formData.ticketType)
+                        };
+
+                        processPayment(paymentData).then(paymentResponse => {
+                            if (paymentResponse.success) {
+                                messageDiv.innerHTML = `<p class="success">Payment Successful! Thank you for your purchase.</p>`;
+                            } else {
+                                messageDiv.innerHTML = `<p class="error">Payment Failed. Please try again.</p>`;
+                            }
+                        }).catch(error => {
+                            messageDiv.innerHTML = `<p class="error">Payment Failed. Error: ${error.message}</p>`;
+                        });
+                    } else {
+                        messageDiv.innerHTML = `<p class="error">Form Submission Failed. Please try again.</p>`;
+                    }
+                } catch (error) {
+                    messageDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+                }
+            } else {
+                messageDiv.innerHTML = `<p class="error">Payment Failed. Please try again.</p>`;
+            }
+        });
+
+        // Reset form
+        function resetForm() {
+            form.style.display = 'block';
+            paymentForm.style.display = 'none';
+            messageDiv.innerHTML = '';
+        }
+
+        function validatePayment() {
+            const cardNumber = document.getElementById(`${widgetId}cardNumber`).value;
+            const expiration = document.getElementById(`${widgetId}expiration`).value;
+            const cvv = document.getElementById(`${widgetId}cvv`).value;
+            const billingAddress = document.getElementById(`${widgetId}billingAddress`).value;
+            return cardNumber && expiration && cvv && billingAddress;
+        }
+
+        async function processPayment(paymentData) {
+            return {
+                success: true,
+            };
+        }
+
+        function calculateAmount(qty, type) {
+            const prices = {
+                general: 50,
+                vip: 100
+            };
+            return qty * prices[type];
+        }
+    })();
+</script>
+
+            
+         
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Create popup structure for Customer Info
+                    const popupHTML = `
+                    <div id="customer-info-popup" class="popup-container" style="display:none;">
+                      <div class="popup-content">
+                        <button class="close-popup-btn" id="close-customer-popup">&times;</button>
+                        <h3>Customer Information</h3>
+                        <form id="customer-info-form">
+                          <input type="text" id="full-name" placeholder="Full Name" required>
+                          <input type="email" id="email" placeholder="Email Address" required>
+                          <input type="text" id="shipping-address" placeholder="Shipping Address" required>
+                          <input type="text" id="billing-address" placeholder="Billing Address (if different)">
+                          <input type="tel" id="phone-number" placeholder="Phone Number" required>
+                          <button type="button" id="continue-btn" class="btn">Continue</button>
+                        </form>
+                      </div>
+                    </div>
+                    
+                    <div id="payment-info-popup" class="popup-container" style="display:none;">
+                      <div class="popup-content">
+                        <button class="close-popup-btn" id="close-payment-popup">&times;</button>
+                        <h3>Payment Information</h3>
+                        <form id="payment-info-form">
+                          <select id="payment-method" required>
+                            <option value="visa">Visa</option>
+                            <option value="mastercard">Mastercard</option>
+                            <option value="amex">American Express</option>
+                            <option value="paypal">PayPal</option>
+                          </select>
+                          <input type="text" id="card-number" placeholder="Card Number" required>
+                          <input type="text" id="expiration-date" placeholder="Expiration Date (MM/YY)" required>
+                          <input type="text" id="cvv" placeholder="CVV/CVC" required>
+                          <input type="text" id="billing-zip" placeholder="Billing Zip Code" required>
+                          <button type="button" id="finish-btn" class="btn">Finish</button>
+                        </form>
+                      </div>
+                    </div>
+                    
+                    <div id="payment-status" class="popup-container" style="display:none;">
+                      <div class="popup-content">
+                        <h3 id="status-message"></h3>
+                        <button type="button" id="close-btn" class="btn">Close</button>
+                      </div>
+                    </div>
+                    `;
+                    
+                    document.body.insertAdjacentHTML('beforeend', popupHTML);
+                    
+                    // Add CSS styles for the popups and close button
+                    const style = document.createElement('style');
+                    style.textContent = `
+                      .popup-container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.8);
+                        z-index: 1000;
+                      }
+            
+                      .popup-content {
+                        background: rgba(255, 255, 255, 0.1);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        border-radius: 10px;
+                        padding: 20px;
+                        width: 300px;
+                        text-align: center;
+                        color: white;
+                        font-family: 'Orbitron', sans-serif;
+                        position: relative;
+                      }
+            
+                      .close-popup-btn {
+                        background: red;
+                        color: white;
+                        padding: 5px;
+                        border: none;
+                        border-radius: 5px;
+                        float: right;
+                        cursor: pointer;
+                        margin-bottom:20px;
+                      }
+            
+                      input, select {
+                        width: 100%;
+                        padding: 10px;
+                        margin: 10px 0;
+                        background: black;
+                        color: white;
+                        border: 2px solid green;
+                        border-radius: 5px;
+                        font-family: 'Orbitron', sans-serif;
+                      }
+            
+                      .btn {
+                        padding: 10px;
+                        background-color: var(--primary-color);
+                        color: var(--background-color);
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-weight: bold;
+                        font-family: 'Orbitron', sans-serif;
+                      }
+            
+                      .btn:hover {
+                        background-color: var(--text-color);
+                        color: var(--primary-color);
+                        box-shadow: 0 0 20px var(--primary-color);
+                      }
+                    `;
+                    document.head.appendChild(style);
+                
+                    // Event listener for the "Buy Now" button
+                    document.getElementById('buy-now-btn').addEventListener('click', function() {
+                        document.getElementById('customer-info-popup').style.display = 'flex';
+                    });
+                
+                    // Event listener for the "Continue" button
+                    document.getElementById('continue-btn').addEventListener('click', function() {
+                        document.getElementById('customer-info-popup').style.display = 'none';
+                        document.getElementById('payment-info-popup').style.display = 'flex';
+                    });
+                
+                    // Event listener for the "Finish" button
+                    document.getElementById('finish-btn').addEventListener('click', function() {
+                        let cardNumber = document.getElementById('card-number').value;
+                        let expirationDate = document.getElementById('expiration-date').value;
+                        let cvv = document.getElementById('cvv').value;
+                
+                        if (validatePayment(cardNumber, expirationDate, cvv)) {
+                            document.getElementById('payment-info-popup').style.display = 'none';
+                            document.getElementById('status-message').textContent = 'Payment Successful!';
+                        } else {
+                            document.getElementById('status-message').textContent = 'Payment Failed. Please try again.';
+                        }
+                        document.getElementById('payment-status').style.display = 'flex';
+                    });
+                
+                    // Event listener for the close buttons (Customer Info and Payment Info)
+                    document.getElementById('close-customer-popup').addEventListener('click', function() {
+                        document.getElementById('customer-info-popup').style.display = 'none';
+                    });
+            
+                    document.getElementById('close-payment-popup').addEventListener('click', function() {
+                        document.getElementById('payment-info-popup').style.display = 'none';
+                    });
+            
+                    // Close status popup
+                    document.getElementById('close-btn').addEventListener('click', function() {
+                        document.getElementById('payment-status').style.display = 'none';
+                    });
+                
+                    // Basic payment validation (can be expanded)
+                    function validatePayment(cardNumber, expirationDate, cvv) {
+                        return cardNumber && expirationDate && cvv;
+                    }
+                });
+            </script>
+            
+            
+     
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create popup structure for Customer Info
+            const popupHTML = `
+            <div id="customer-info-popup" class="popup-container" style="display:none;">
+              <div class="popup-content">
+                <button class="close-popup-btn" id="close-customer-popup">&times;</button>
+                <h3>Customer Information</h3>
+                <form id="customer-info-form">
+                  <input type="text" id="full-name" placeholder="Full Name" required>
+                  <input type="email" id="email" placeholder="Email Address" required>
+                  <input type="text" id="shipping-address" placeholder="Shipping Address" required>
+                  <input type="text" id="billing-address" placeholder="Billing Address (if different)">
+                  <input type="tel" id="phone-number" placeholder="Phone Number" required>
+                  <button type="button" id="continue-btn" class="btn">Continue</button>
+                </form>
+              </div>
+            </div>
+            
+            <div id="payment-info-popup" class="popup-container" style="display:none;">
+              <div class="popup-content">
+                <button class="close-popup-btn" id="close-payment-popup">&times;</button>
+                <h3>Payment Information</h3>
+                <form id="payment-info-form">
+                  <select id="payment-method" required>
+                    <option value="visa">Visa</option>
+                    <option value="mastercard">Mastercard</option>
+                    <option value="amex">American Express</option>
+                    <option value="paypal">PayPal</option>
+                  </select>
+                  <input type="text" id="card-number" placeholder="Card Number" required>
+                  <input type="text" id="expiration-date" placeholder="Expiration Date (MM/YY)" required>
+                  <input type="text" id="cvv" placeholder="CVV/CVC" required>
+                  <input type="text" id="billing-zip" placeholder="Billing Zip Code" required>
+                  <button type="button" id="finish-btn" class="btn">Finish</button>
+                </form>
+              </div>
+            </div>
+            
+            <div id="payment-status" class="popup-container" style="display:none;">
+              <div class="popup-content">
+                <h3 id="status-message"></h3>
+                <button type="button" id="close-btn" class="btn">Close</button>
+              </div>
+            </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', popupHTML);
+            
+            // Add CSS styles for the popups and close button
+            const style = document.createElement('style');
+            style.textContent = `
+              .popup-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 1000;
+              }
+    
+              .popup-content {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 10px;
+                padding: 20px;
+                width: 300px;
+                text-align: center;
+                color: white;
+                font-family: 'Orbitron', sans-serif;
+                position: relative;
+              }
+    
+              .close-popup-btn {
+                background: red;
+                        color: white;
+                        padding: 5px;
+                        border: none;
+                        border-radius: 5px;
+                        float: right;
+                        cursor: pointer;
+              }
+    
+              input, select {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                background: black;
+                color: white;
+                border: 2px solid green;
+                border-radius: 5px;
+                font-family: 'Orbitron', sans-serif;
+              }
+    
+              .btn {
+                padding: 10px;
+                background-color: var(--primary-color);
+                color: var(--background-color);
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                font-family: 'Orbitron', sans-serif;
+              }
+    
+              .btn:hover {
+                background-color: var(--text-color);
+                color: var(--primary-color);
+                box-shadow: 0 0 20px var(--primary-color);
+              }
+            `;
+            document.head.appendChild(style);
+        
+            // Event listener for the "Buy Now" button
+            document.getElementById('buy-now-btn2').addEventListener('click', function() {
+                document.getElementById('customer-info-popup').style.display = 'flex';
+            });
+        
+            // Event listener for the "Continue" button
+            document.getElementById('continue-btn').addEventListener('click', function() {
+                document.getElementById('customer-info-popup').style.display = 'none';
+                document.getElementById('payment-info-popup').style.display = 'flex';
+            });
+        
+            // Event listener for the "Finish" button
+            document.getElementById('finish-btn').addEventListener('click', function() {
+                let cardNumber = document.getElementById('card-number').value;
+                let expirationDate = document.getElementById('expiration-date').value;
+                let cvv = document.getElementById('cvv').value;
+        
+                if (validatePayment(cardNumber, expirationDate, cvv)) {
+                    document.getElementById('payment-info-popup').style.display = 'none';
+                    document.getElementById('status-message').textContent = 'Payment Successful!';
+                } else {
+                    document.getElementById('status-message').textContent = 'Payment Failed. Please try again.';
+                }
+                document.getElementById('payment-status').style.display = 'flex';
+            });
+        
+            // Event listener for the close buttons (Customer Info and Payment Info)
+            document.getElementById('close-customer-popup').addEventListener('click', function() {
+                document.getElementById('customer-info-popup').style.display = 'none';
+            });
+    
+            document.getElementById('close-payment-popup').addEventListener('click', function() {
+                document.getElementById('payment-info-popup').style.display = 'none';
+            });
+    
+            // Close status popup
+            document.getElementById('close-btn').addEventListener('click', function() {
+                document.getElementById('payment-status').style.display = 'none';
+            });
+        
+            // Basic payment validation (can be expanded)
+            function validatePayment(cardNumber, expirationDate, cvv) {
+                return cardNumber && expirationDate && cvv;
+            }
+        });
+    </script>
+    
+    
+        
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create popup structure for Customer Info
+            const popupHTML = `
+            <div id="customer-info-popup" class="popup-container" style="display:none;">
+              <div class="popup-content">
+                <button class="close-popup-btn" id="close-customer-popup">&times;</button>
+                <h3>Customer Information</h3>
+                <form id="customer-info-form">
+                  <input type="text" id="full-name" placeholder="Full Name" required>
+                  <input type="email" id="email" placeholder="Email Address" required>
+                  <input type="text" id="shipping-address" placeholder="Shipping Address" required>
+                  <input type="text" id="billing-address" placeholder="Billing Address (if different)">
+                  <input type="tel" id="phone-number" placeholder="Phone Number" required>
+                  <button type="button" id="continue-btn" class="btn">Continue</button>
+                </form>
+              </div>
+            </div>
+            
+            <div id="payment-info-popup" class="popup-container" style="display:none;">
+              <div class="popup-content">
+                <button class="close-popup-btn" id="close-payment-popup">&times;</button>
+                <h3>Payment Information</h3>
+                <form id="payment-info-form">
+                  <select id="payment-method" required>
+                    <option value="visa">Visa</option>
+                    <option value="mastercard">Mastercard</option>
+                    <option value="amex">American Express</option>
+                    <option value="paypal">PayPal</option>
+                  </select>
+                  <input type="text" id="card-number" placeholder="Card Number" required>
+                  <input type="text" id="expiration-date" placeholder="Expiration Date (MM/YY)" required>
+                  <input type="text" id="cvv" placeholder="CVV/CVC" required>
+                  <input type="text" id="billing-zip" placeholder="Billing Zip Code" required>
+                  <button type="button" id="finish-btn" class="btn">Finish</button>
+                </form>
+              </div>
+            </div>
+            
+            <div id="payment-status" class="popup-container" style="display:none;">
+              <div class="popup-content">
+                <h3 id="status-message"></h3>
+                <button type="button" id="close-btn" class="btn">Close</button>
+              </div>
+            </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', popupHTML);
+            
+            // Add CSS styles for the popups and close button
+            const style = document.createElement('style');
+            style.textContent = `
+              .popup-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 1000;
+              }
+    
+              .popup-content {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 10px;
+                padding: 20px;
+                width: 300px;
+                text-align: center;
+                color: white;
+                font-family: 'Orbitron', sans-serif;
+                position: relative;
+              }
+    
+              .close-popup-btn {
+               background: red;
+                        color: white;
+                        padding: 5px;
+                        border: none;
+                        border-radius: 5px;
+                        float: right;
+                        cursor: pointer;
+              }
+    
+              input, select {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                background: black;
+                color: white;
+                border: 2px solid green;
+                border-radius: 5px;
+                font-family: 'Orbitron', sans-serif;
+              }
+    
+              .btn {
+                padding: 10px;
+                background-color: var(--primary-color);
+                color: var(--background-color);
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                font-family: 'Orbitron', sans-serif;
+              }
+    
+              .btn:hover {
+                background-color: var(--text-color);
+                color: var(--primary-color);
+                box-shadow: 0 0 20px var(--primary-color);
+              }
+            `;
+            document.head.appendChild(style);
+        
+            // Event listener for the "Buy Now" button
+            document.getElementById('buy-now-btn3').addEventListener('click', function() {
+                document.getElementById('customer-info-popup').style.display = 'flex';
+            });
+        
+            // Event listener for the "Continue" button
+            document.getElementById('continue-btn').addEventListener('click', function() {
+                document.getElementById('customer-info-popup').style.display = 'none';
+                document.getElementById('payment-info-popup').style.display = 'flex';
+            });
+        
+            // Event listener for the "Finish" button
+            document.getElementById('finish-btn').addEventListener('click', function() {
+                let cardNumber = document.getElementById('card-number').value;
+                let expirationDate = document.getElementById('expiration-date').value;
+                let cvv = document.getElementById('cvv').value;
+        
+                if (validatePayment(cardNumber, expirationDate, cvv)) {
+                    document.getElementById('payment-info-popup').style.display = 'none';
+                    document.getElementById('status-message').textContent = 'Payment Successful!';
+                } else {
+                    document.getElementById('status-message').textContent = 'Payment Failed. Please try again.';
+                }
+                document.getElementById('payment-status').style.display = 'flex';
+            });
+        
+            // Event listener for the close buttons (Customer Info and Payment Info)
+            document.getElementById('close-customer-popup').addEventListener('click', function() {
+                document.getElementById('customer-info-popup').style.display = 'none';
+            });
+    
+            document.getElementById('close-payment-popup').addEventListener('click', function() {
+                document.getElementById('payment-info-popup').style.display = 'none';
+            });
+    
+            // Close status popup
+            document.getElementById('close-btn').addEventListener('click', function() {
+                document.getElementById('payment-status').style.display = 'none';
+            });
+        
+            // Basic payment validation (can be expanded)
+            function validatePayment(cardNumber, expirationDate, cvv) {
+                return cardNumber && expirationDate && cvv;
+            }
+        });
+    </script>
+
+
+<script>
+    // Countdown Timer 1 (for December 22, 2024)
+    const eventDate1 = new Date('December 22, 2024 00:00:00').getTime();
+    const countdownTimer1 = document.getElementById('countdown-timer');
+
+    const updateCountdown1 = setInterval(function() {
+        const now1 = new Date().getTime();
+        const distance1 = eventDate1 - now1;
+
+        const days1 = Math.floor(distance1 / (1000 * 60 * 60 * 24));
+        const hours1 = Math.floor((distance1 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes1 = Math.floor((distance1 % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds1 = Math.floor((distance1 % (1000 * 60)) / 1000);
+
+        countdownTimer1.innerHTML = `${days1}d ${hours1}h ${minutes1}m ${seconds1}s`;
+
+        // If the countdown is over, display "Event started"
+        if (distance1 < 0) {
+            clearInterval(updateCountdown1);
+            countdownTimer1.innerHTML = "Event started";
+        }
+    }, 1000);
+</script>
+
+<script>
+    // Countdown Timer 2 (for January 27, 2025, at 00:00)
+    const eventDate2 = new Date('January 27, 2025 00:00:00').getTime();
+    const countdownTimer2 = document.getElementById('countdown-timer2');
+
+    const updateCountdown2 = setInterval(function() {
+        const now2 = new Date().getTime();
+        const distance2 = eventDate2 - now2;
+
+        const days2 = Math.floor(distance2 / (1000 * 60 * 60 * 24));
+        const hours2 = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
+
+        countdownTimer2.innerHTML = `${days2}d ${hours2}h ${minutes2}m ${seconds2}s`;
+
+        // Debugging info
+        console.log("Time until event:", distance2, "milliseconds");
+
+        // If the countdown is over, display "Event started"
+        if (distance2 < 0) {
+            clearInterval(updateCountdown2);
+            countdownTimer2.innerHTML = "Event started";
+        }
+    }, 1000);
+</script>
+
+
+<script>
+    // Countdown Timer 3 (for February 14, 2025)
+    const eventDate3 = new Date('February 14, 2025 00:00:00').getTime();
+    const countdownTimer3 = document.getElementById('countdown-timer3');
+
+    if (countdownTimer3) {
+        const updateCountdown3 = setInterval(function() {
+            const now3 = new Date().getTime();
+            const distance3 = eventDate3 - now3;
+
+            const days3 = Math.floor(distance3 / (1000 * 60 * 60 * 24));
+            const hours3 = Math.floor((distance3 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes3 = Math.floor((distance3 % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds3 = Math.floor((distance3 % (1000 * 60)) / 1000);
+
+            countdownTimer3.innerHTML = `${days3}d ${hours3}h ${minutes3}m ${seconds3}s`;
+
+            // If the countdown is over, display "Event started"
+            if (distance3 < 0) {
+                clearInterval(updateCountdown3);
+                countdownTimer3.innerHTML = "Event started";
+            }
+        }, 1000);
+    } else {
+        console.error('Element with ID "countdown-timer3" not found.');
+    }
+</script>
+
+
+<script>
+    (function() {
+        const gcmSongs = [
+            { title: "Nomanini Lizovela", artist: "Gcebile Maseko", src: "Nomanini_lizovela.mp3", cover: "banner.jpg" },
+            { title: "Season Of Grace", artist: "Gcebile Maseko", src: "Loreen_-_Tattoo__Official_Audio_(256k).mp3", cover: "banner.jpg" },
+            { title: "Singaba Yini", artist: "Gcebile Maseko", src: "Singaba_yini_Nkosi.mp3", cover: "banner.jpg" },
+        ];
+
+        const gcmElements = {
+            playBtn: document.getElementById('gcm-play-btn'),
+            prevBtn: document.getElementById('gcm-prev-btn'),
+            nextBtn: document.getElementById('gcm-next-btn'),
+            shuffleBtn: document.getElementById('gcm-shuffle-btn'),
+            repeatBtn: document.getElementById('gcm-repeat-btn'),
+            progressContainer: document.getElementById('gcm-progress-container'),
+            progressBar: document.getElementById('gcm-progress-bar'),
+            currentTimeEl: document.getElementById('gcm-current-time'),
+            durationEl: document.getElementById('gcm-duration'),
+            albumCover: document.getElementById('gcm-album-cover'),
+            songTitle: document.getElementById('gcm-song-title'),
+            songArtist: document.getElementById('gcm-song-artist'),
+            playlist: document.getElementById('gcm-playlist'),
+            popup: document.getElementById('gcm-music-popup'),
+            openPopupBtn: document.getElementById('gcm-open-popup-btn'),
+            closePopupBtn: document.getElementById('gcm-close-popup-btn')
+        };
+
+        const gcmAudio = new Audio();
+        let gcmCurrentSongIndex = 0;
+        let gcmIsPlaying = false;
+        let gcmIsShuffling = false;
+        let gcmIsRepeating = false;
+
+        function gcmLoadSong(index) {
+            const song = gcmSongs[index];
+            gcmAudio.src = song.src;
+            gcmElements.albumCover.src = song.cover;
+            gcmElements.songTitle.textContent = song.title;
+            gcmElements.songArtist.textContent = song.artist;
+            gcmUpdatePlaylistHighlight();
+        }
+
+        function gcmTogglePlay() {
+            if (gcmIsPlaying) {
+                gcmAudio.pause();
+                gcmElements.playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                gcmAudio.play();
+                gcmElements.playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            gcmIsPlaying = !gcmIsPlaying;
+            gcmUpdatePlaylistIcons();
+        }
+
+        function gcmNextSong() {
+            if (gcmIsShuffling) {
+                let nextIndex;
+                do {
+                    nextIndex = Math.floor(Math.random() * gcmSongs.length);
+                } while (nextIndex === gcmCurrentSongIndex);
+                gcmCurrentSongIndex = nextIndex;
+            } else {
+                gcmCurrentSongIndex = (gcmCurrentSongIndex + 1) % gcmSongs.length;
+            }
+            gcmLoadSong(gcmCurrentSongIndex);
+            if (gcmIsPlaying) gcmAudio.play();
+        }
+
+        function gcmPrevSong() {
+            gcmCurrentSongIndex = (gcmCurrentSongIndex - 1 + gcmSongs.length) % gcmSongs.length;
+            gcmLoadSong(gcmCurrentSongIndex);
+            if (gcmIsPlaying) gcmAudio.play();
+        }
+
+        function gcmUpdateProgress(e) {
+            const { duration, currentTime } = e.srcElement;
+            const progressPercent = (currentTime / duration) * 100;
+            gcmElements.progressBar.style.width = `${progressPercent}%`;
+            gcmElements.currentTimeEl.textContent = gcmFormatTime(currentTime);
+            gcmElements.durationEl.textContent = gcmFormatTime(duration);
+        }
+
+        function gcmSetProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = gcmAudio.duration;
+            gcmAudio.currentTime = (clickX / width) * duration;
+        }
+
+        function gcmFormatTime(time) {
+            if (isNaN(time)) return '0:00';
+            const minutes = Math.floor(time / 60);
+            const seconds = Math.floor(time % 60);
+            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        function gcmToggleShuffle() {
+            gcmIsShuffling = !gcmIsShuffling;
+            gcmElements.shuffleBtn.classList.toggle('active');
+        }
+
+        function gcmToggleRepeat() {
+            gcmIsRepeating = !gcmIsRepeating;
+            gcmElements.repeatBtn.classList.toggle('active');
+        }
+
+        function gcmUpdatePlaylistHighlight() {
+            const items = gcmElements.playlist.getElementsByClassName('gcm-playlist-item');
+            for (let i = 0; i < items.length; i++) {
+                items[i].classList.remove('active');
+            }
+            items[gcmCurrentSongIndex].classList.add('active');
+        }
+
+        function gcmUpdatePlaylistIcons() {
+            const items = gcmElements.playlist.getElementsByClassName('gcm-playlist-item');
+            for (let i = 0; i < items.length; i++) {
+                const icon = items[i].querySelector('i');
+                if (i === gcmCurrentSongIndex && gcmIsPlaying) {
+                    icon.classList.remove('fa-play');
+                    icon.classList.add('fa-pause');
+                } else {
+                    icon.classList.remove('fa-pause');
+                    icon.classList.add('fa-play');
+                }
+            }
+        }
+
+        // Event Listeners
+        gcmElements.playBtn.addEventListener('click', gcmTogglePlay);
+        gcmElements.prevBtn.addEventListener('click', gcmPrevSong);
+        gcmElements.nextBtn.addEventListener('click', gcmNextSong);
+        gcmElements.shuffleBtn.addEventListener('click', gcmToggleShuffle);
+        gcmElements.repeatBtn.addEventListener('click', gcmToggleRepeat);
+        gcmElements.progressContainer.addEventListener('click', gcmSetProgress);
+
+        gcmAudio.addEventListener('timeupdate', gcmUpdateProgress);
+        gcmAudio.addEventListener('ended', () => {
+            if (gcmIsRepeating) {
+                gcmAudio.currentTime = 0;
+                gcmAudio.play();
+            } else {
+                gcmNextSong();
+            }
+        });
+
+        // Popup control
+        gcmElements.openPopupBtn.addEventListener('click', () => {
+            gcmElements.popup.style.display = 'flex';
+            setTimeout(() => {
+                gcmElements.popup.classList.add('active');
+            }, 10);
+        });
+
+        gcmElements.closePopupBtn.addEventListener('click', () => {
+            gcmElements.popup.classList.remove('active');
+            setTimeout(() => {
+                gcmElements.popup.style.display = 'none';
+            }, 300);
+        });
+
+        // Populate playlist
+        gcmElements.playlist.innerHTML = '<h4>Playlist</h4>';
+        gcmSongs.forEach((song, index) => {
+            const item = document.createElement('div');
+            item.classList.add('gcm-playlist-item');
+            if (index === 0) item.classList.add('active');
+            item.innerHTML = `
+                <span>${song.title}</span>
+                <i class="fas fa-play"></i>
+            `;
+            item.addEventListener('click', () => {
+                gcmCurrentSongIndex = index;
+                gcmLoadSong(gcmCurrentSongIndex);
+                gcmTogglePlay();
+            });
+            gcmElements.playlist.appendChild(item);
+        });
+
+        // Initial load
+        gcmLoadSong(gcmCurrentSongIndex);
+    })();
+</script>
+
+
+    
+
+</body>
+</html>
