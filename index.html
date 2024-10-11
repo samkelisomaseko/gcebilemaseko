@@ -4,8 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gcebile Maseko - Official Website</title>
+    <meta name="description" content="Experience the power of soulful gospel music from Eswatini. Be transformed with music that is a blend of heartfelt lyrics and uplifting melodies." />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Gcebile Maseko" />
+    <meta property="og:description" content="Experience the power of soulful gospel music from Eswatini. Be transformed with music that is a blend of heartfelt lyrics and uplifting melodies." />
+    <meta property="og:url" content="" />
+    <meta property="og:site_name" content="Gcebile Maseko - Official Website" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta property="og:image" content="grace.jpg">
+    <link rel="icon" href="gm-icon.png" sizes="32x32" />
+    <link rel="icon" href="gm-icon.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="gm-icon.png" />
+    <meta name="msapplication-TileImage" content="gm-icon.png" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -1152,7 +1163,9 @@
                 <button id="gcm-shuffle-btn"><i class="fas fa-random"></i></button>
                 <button id="gcm-repeat-btn"><i class="fas fa-redo"></i></button>
             </div>
-
+<!-- Ensure these divs are positioned correctly in your layout -->
+<div id="gcm-shuffle-message-box" style="display:none; position:absolute; bottom:10px; left:10px; background-color:rgba(0, 0, 0, 0.7); color:white; padding:5px; border-radius:5px;"></div>
+<div id="gcm-repeat-message-box" style="display:none; position:absolute; bottom:10px; left:120px; background-color:rgba(0, 0, 0, 0.7); color:white; padding:5px; border-radius:5px;"></div>
             <div class="gcm-playlist" id="gcm-playlist">
                 <h4>Playlist</h4>
             </div>
@@ -2927,7 +2940,9 @@
             playlist: document.getElementById('gcm-playlist'),
             popup: document.getElementById('gcm-music-popup'),
             openPopupBtn: document.getElementById('gcm-open-popup-btn'),
-            closePopupBtn: document.getElementById('gcm-close-popup-btn')
+            closePopupBtn: document.getElementById('gcm-close-popup-btn'),
+            shuffleMessageBox: document.getElementById('gcm-shuffle-message-box'),
+            repeatMessageBox: document.getElementById('gcm-repeat-message-box')
         };
 
         const gcmAudio = new Audio();
@@ -3002,11 +3017,21 @@
         function gcmToggleShuffle() {
             gcmIsShuffling = !gcmIsShuffling;
             gcmElements.shuffleBtn.classList.toggle('active');
+            showMessage(gcmIsShuffling ? "shuttle on" : "shuttle off", gcmElements.shuffleMessageBox);
         }
 
         function gcmToggleRepeat() {
             gcmIsRepeating = !gcmIsRepeating;
             gcmElements.repeatBtn.classList.toggle('active');
+            showMessage(gcmIsRepeating ? "repeat on" : "repeat off", gcmElements.repeatMessageBox);
+        }
+
+        function showMessage(message, messageBox) {
+            messageBox.textContent = message;
+            messageBox.style.display = 'block';
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, 1000);
         }
 
         function gcmUpdatePlaylistHighlight() {
@@ -3086,5 +3111,10 @@
         gcmLoadSong(gcmCurrentSongIndex);
     })();
 </script>
+
+
+
+
+
 </body>
 </html>
