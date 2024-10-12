@@ -33,6 +33,21 @@
             padding: 0;
             box-sizing: border-box;
         }
+        @keyframes appear{
+            from{
+                opacity: 0;
+                scale: 0.5;
+            }
+            to{
+                opacity: 1;
+                scale: 1;
+            }
+        }
+        .section{
+            animation: appear linear;
+            animation-timeline: view();
+            animation-range: entry  0% cover 40%;
+        }
 
         body {
             font-family: 'Orbitron', sans-serif;
@@ -191,7 +206,7 @@
         }
 
         .btn {
-            display: inline-block;
+             display: inline-block;
             padding: 0.8rem 1.5rem;
             background-color: var(--primary-color);
             color: var(--background-color);
@@ -209,9 +224,9 @@
         }
 
         .btn:hover {
-            background-color: var(--text-color);
-            color: var(--primary-color);
-            box-shadow: 0 0 20px var(--primary-color);
+            transform: translateZ(20px) scale(1.1);
+        box-shadow: 0 20px 30px rgba(0, 255, 0, 0.7);
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
         }
 
         .progress-bar {
@@ -398,6 +413,8 @@
         }
 
         .social-links a:hover {
+            transform: rotate3d(0, 1, 0, 15deg) scale(1.2);
+        transition: transform 0.4s ease;
             color: var(--text-color);
             text-shadow: 0 0 10px var(--primary-color);
         }
@@ -1986,9 +2003,9 @@
             }
 
             .${widgetId}popup button:hover {
-               background-color: var(--text-color);
-            color: var(--primary-color);
-            box-shadow: 0 0 20px var(--primary-color);
+                transform: translateZ(20px) scale(1.2);
+        box-shadow: 0 20px 30px rgba(0, 255, 0, 0.7);
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
             }
 
             .${widgetId}popup .${widgetId}close-btn {
@@ -2208,9 +2225,9 @@
             }
 
             .${widgetId}popup button:hover {
-               background-color: var(--text-color);
-            color: var(--primary-color);
-            box-shadow: 0 0 20px var(--primary-color);
+               transform: translateZ(20px) scale(1.2);
+        box-shadow: 0 20px 30px rgba(0, 255, 0, 0.7);
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
             }
 
             .${widgetId}popup .${widgetId}close-btn {
@@ -2448,9 +2465,9 @@
                       }
             
                       .btn:hover {
-                        background-color: var(--text-color);
-                        color: var(--primary-color);
-                        box-shadow: 0 0 20px var(--primary-color);
+                        transform: translateZ(20px) scale(1.1);
+        box-shadow: 0 20px 30px rgba(0, 255, 0, 0.7);
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
                       }
                     `;
                     document.head.appendChild(style);
@@ -2614,9 +2631,9 @@
               }
     
               .btn:hover {
-                background-color: var(--text-color);
-                color: var(--primary-color);
-                box-shadow: 0 0 20px var(--primary-color);
+                 transform: translateZ(20px) scale(1.1);
+        box-shadow: 0 20px 30px rgba(0, 255, 0, 0.7);
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
               }
             `;
             document.head.appendChild(style);
@@ -2780,9 +2797,9 @@
               }
     
               .btn:hover {
-                background-color: var(--text-color);
-                color: var(--primary-color);
-                box-shadow: 0 0 20px var(--primary-color);
+                 transform: translateZ(20px) scale(1.1);
+        box-shadow: 0 20px 30px rgba(0, 255, 0, 0.7);
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
               }
             `;
             document.head.appendChild(style);
