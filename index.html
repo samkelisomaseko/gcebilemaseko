@@ -1151,6 +1151,73 @@
                 font-size: 0.8rem;
             }
         }
+    
+    /* Styling the video section */
+.video-section {
+    padding: 50px 0;
+    text-align: center;
+    position: relative;
+    perspective: 1000px; /* Creates 3D effect */
+}
+
+.video-section h2 {
+    color: var(--text-color);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    margin-bottom: 30px;
+    font-size: 2.1rem;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    transform-style: preserve-3d;
+}
+
+.video-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 255, 0, 0.5);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    cursor: pointer;
+    perspective: 1000px;
+    width: 45%;
+    max-width: 500px;
+}
+
+.video-box:hover {
+    transform: translateZ(30px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 255, 0, 0.8);
+}
+
+.video-box h3 {
+    margin-top: 15px;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+}
+
+.responsive-video {
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* Maintain 16:9 aspect ratio */
+    border: none;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .video-box {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-box {
+        width: 90%;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -1210,6 +1277,37 @@
                     </div>
                 </div>
             </section>
+            
+           <section id="video-section" class="video-section" class="section glassmorphism">
+    <h2 class="fade-in">Latest Music Videos</h2>
+    <div class="video-container">
+        <!-- First Video -->
+        <div class="video-box">
+            <iframe class="responsive-video" 
+    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+    title="Test Video" frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+            </iframe>
+            <h3 class="video-title">Nomanini Lizovela</h3>
+        </div>
+        
+        <!-- Second Video -->
+        <div class="video-box">
+            <iframe class="responsive-video" 
+                src="https://www.youtube.com/embed/rEcBoEDCGt8" 
+                title="Singaba Yini" frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+            <h3 class="video-title">Singaba Yini</h3>
+        </div>
+    </div>
+</section>
+
+
+
+
             <section id="tour" class="section glassmorphism">
                 <h2 class="fade-in">Upcoming Shows</h2>
                 <div class="tour-dates">
@@ -1269,7 +1367,7 @@
                 <h2 class="fade-in">Get in Touch</h2>
                 <form action="https://api.web3forms.com/submit" method="POST" class="contact-form slide-in" id="contact-form">
                     <div class="form-group">
-                        <input type="hidden" name="access_key" value="b5b2b646-a83c-4184-be7a-1b6210fdc995">
+                        <input type="hidden" name="access_key" value="7383462f-966a-4e54-85e4-fb29e602a378">
                         <input type="text" id="name" name="name" placeholder=" " required>
                         <label for="name">Name</label>
                     </div>
@@ -1316,8 +1414,8 @@
             
             <img src="/api/placeholder/200/200" alt="Album Cover" id="gcm-album-cover">
             <div class="gcm-song-details">
-                <h3 id="gcm-song-title">Neon Nights</h3>
-                <p id="gcm-song-artist">Cyber Synth</p>
+                <h3 id="gcm-song-title">Gcebile Maseko</h3>
+                <p id="gcm-song-artist">Nomanini Lizovela</p>
             </div>
 
             <div class="gcm-progress-container" id="gcm-progress-container">
@@ -1478,7 +1576,7 @@
 
             // Web3Forms API endpoint
             const webhookUrl = 'https://api.web3forms.com/submit'; // Replace this with your endpoint
-            const yourApiKey = 'b5b2b646-a83c-4184-be7a-1b6210fdc995'; // Replace with your Web3Forms API key
+            const yourApiKey = '7383462f-966a-4e54-85e4-fb29e602a378'; // Replace with your Web3Forms API key
 
             // Submit the form data
             fetch(webhookUrl, {
@@ -1505,6 +1603,20 @@
                 responseMessage.innerHTML = `<p style="color: red;">An error occurred: ${error.message}</p>`;
             });
         });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const videoBoxes = document.querySelectorAll('.video-box');
+
+    videoBoxes.forEach(box => {
+        box.addEventListener('mouseenter', () => {
+            box.style.transform = 'translateZ(30px) scale(1.05)';
+        });
+        box.addEventListener('mouseleave', () => {
+            box.style.transform = 'translateZ(0) scale(1)';
+        });
+    });
+});
+
     </script>
 
 <script>
