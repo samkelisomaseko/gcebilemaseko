@@ -3601,6 +3601,8 @@ function moveSlide3(direction) {
                 gcmNextSong();
             }
         });
+        
+        
 
         // Popup control
         gcmElements.openPopupBtn.addEventListener('click', () => {
@@ -3638,6 +3640,59 @@ function moveSlide3(direction) {
         // Initial load
         gcmLoadSong(gcmCurrentSongIndex);
     })();
+
+// Media Session API Setup for Song 1 - Nomanini Lizovela
+if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: 'Nomanini Lizovela',
+        artist: 'Gcebile Maseko',
+        album: 'Season Of Grace',
+        artwork: [
+            { src: 'banner.jpg', sizes: '512x512', type: 'image/jpeg' }
+        ]
+    });
+
+    // Set action handlers for play, pause, next, and previous track
+    navigator.mediaSession.setActionHandler('play', playSong);
+    navigator.mediaSession.setActionHandler('pause', pauseSong);
+    navigator.mediaSession.setActionHandler('previoustrack', playPrevious);
+    navigator.mediaSession.setActionHandler('nexttrack', playNext);
+}
+
+// Media Session API Setup for Song 2 - Season Of Grace
+if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: 'Season Of Grace',
+        artist: 'Gcebile Maseko',
+        album: 'Season Of Grace',
+        artwork: [
+            { src: 'banner.jpg', sizes: '512x512', type: 'image/jpeg' }
+        ]
+    });
+
+    navigator.mediaSession.setActionHandler('play', playSong);
+    navigator.mediaSession.setActionHandler('pause', pauseSong);
+    navigator.mediaSession.setActionHandler('previoustrack', playPrevious);
+    navigator.mediaSession.setActionHandler('nexttrack', playNext);
+}
+
+// Media Session API Setup for Song 3 - Singaba Yini
+if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: 'Singaba Yini',
+        artist: 'Gcebile Maseko',
+        album: 'Season Of Grace',
+        artwork: [
+            { src: 'banner.jpg', sizes: '512x512', type: 'image/jpeg' }
+        ]
+    });
+
+    navigator.mediaSession.setActionHandler('play', playSong);
+    navigator.mediaSession.setActionHandler('pause', pauseSong);
+    navigator.mediaSession.setActionHandler('previoustrack', playPrevious);
+    navigator.mediaSession.setActionHandler('nexttrack', playNext);
+}
+
 </script>
 
 
