@@ -1248,6 +1248,120 @@
     }
 }
 
+    .gallery-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    overflow: hidden;
+}
+
+.gallery {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.gallery img {
+    min-width: 100%;
+    transition: transform 0.5s ease;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+    
+    
+.gallery-container-2 {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    overflow: hidden;
+}
+
+.gallery-2 {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.gallery-2 img {
+    min-width: 100%;
+    transition: transform 0.5s ease;
+}
+
+.prev-2, .next-2 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.prev-2 {
+    left: 10px;
+}
+
+.next-2 {
+    right: 10px;
+}
+
+
+.gallery-container-3 {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    overflow: hidden;
+}
+
+.gallery-3 {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.gallery-3 img {
+    min-width: 100%;
+    transition: transform 0.5s ease;
+}
+
+.prev-3, .next-3 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.prev-3 {
+    left: 10px;
+}
+
+.next-3 {
+    right: 10px;
+}
+
 
     </style>
 </head>
@@ -1349,7 +1463,7 @@
                             <h3>Manzini, Mavuso Trade Fair</h3>
                             <p>December 22, 2024</p>
                             <p id="countdown">Time left: <span id="countdown-timer"></span></p>
-                            <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p>
+                            <p id="ticket-info"><span class="vip">VIP Tickets: E100</span> | <span class="general">General Admission Tickets: E50</span></p>
                         </div>
                         <a href="#" class="btn" id="getTicketsBtn">Get Tickets</a>
                     </div>
@@ -1358,7 +1472,7 @@
                             <h3>Matsapha, The Light Of Christ Auditorium</h3>
                             <p>January 27, 2025</p>
                             <p id="countdown">Time left: <span id="countdown-timer2"></span></p>
-                            <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p>
+                            <p id="ticket-info"><span class="vip">VIP Tickets: E100</span> | <span class="general">General Admission Tickets: E50</span></p>
                         </div>
                         <a href="#" class="btn" id="getTicketsBtn2">Get Tickets</a>
                     </div>
@@ -1367,7 +1481,7 @@
                             <h3>Zulwini, </h3>
                             <p>February 14, 2025</p>
                             <p id="countdown">Time left: <span id="countdown-timer3"></span></p>
-                            <p id="ticket-info"><span class="vip">VIP Tickets: 100</span> | <span class="general">General Admission Tickets: 50</span></p>
+                            <p id="ticket-info"><span class="vip">VIP Tickets: E100</span> | <span class="general">General Admission Tickets: E50</span></p>
                         </div>
                         <a href="#" class="btn" id="getTicketsBtn3">Get Tickets</a>
                     </div>
@@ -1376,24 +1490,57 @@
             <section id="merch" class="section glassmorphism">
                 <h2 class="fade-in">Official Merchandise</h2>
                 <div class="merch-grid">
+                  <div class="merch-item slide-in pulse">
+    <div class="gallery-container">
+        <div class="gallery">
+            <img src="Merch.jpg" alt="T-Shirt">
+            <img src="Merch2.jpg" alt="T-Shirt Back">
+            <img src="Merch3.jpg" alt="T-Shirt Design">
+            <img src="Merch4.jpg" alt="Closeup">
+            <img src="Merch5.jpg" alt="Styled T-Shirt">
+        </div>
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+    <h3>Season Of Grace T-Shirt</h3>
+    <p>E109.99</p>
+    <a href="#" class="btn" id="buy-now-btn">Buy Now</a>
+</div>
+
                     <div class="merch-item slide-in pulse">
-                        <img src="Merch.jpg" alt="T-Shirt">
-                        <h3>Season Of Grace T-Shirt</h3>
-                        <p>E109.99</p>
-                        <a href="#" class="btn" id="buy-now-btn">Buy Now</a>
-                    </div>
+    <div class="gallery-container-2">
+        <div class="gallery-2">
+            <img src="Merch.jpg" alt="T-Shirt">
+            <img src="Merch2-2.jpg" alt="T-Shirt Back">
+            <img src="Merch2-3.jpg" alt="T-Shirt Design">
+            <img src="Merch2-4.jpg" alt="Closeup">
+            <img src="Merch2-5.jpg" alt="Styled T-Shirt">
+        </div>
+        <button class="prev-2" onclick="moveSlide2(-1)">&#10094;</button>
+        <button class="next-2" onclick="moveSlide2(1)">&#10095;</button>
+    </div>
+    <h3>Season Of Grace Cap</h3>
+    <p>E24.99</p>
+    <a href="#" class="btn" id="buy-now-btn2">Buy Now</a>
+</div>
+
                     <div class="merch-item slide-in pulse">
-                        <img src="Merch.jpg" alt="Cap">
-                        <h3>Season Of Grace Cap</h3>
-                        <p>E24.99</p>
-                        <a href="#" class="btn" id="buy-now-btn2">Buy Now</a>
-                    </div>
-                    <div class="merch-item slide-in pulse">
-                        <img src="Merch.jpg" alt="Poster">
-                        <h3>Season Of Grace Poster</h3>
-                        <p>E19.99</p>
-                        <a href="#" class="btn" id="buy-now-btn3">Buy Now</a>
-                    </div>
+    <div class="gallery-container-3">
+        <div class="gallery-3">
+            <img src="Merch.jpg" alt="T-Shirt">
+            <img src="Merch3-2.jpg" alt="T-Shirt Back">
+            <img src="Merch3-3.jpg" alt="T-Shirt Design">
+            <img src="Merch3-4.jpg" alt="Closeup">
+            <img src="Merch3-5.jpg" alt="Styled T-Shirt">
+        </div>
+        <button class="prev-3" onclick="moveSlide3(-1)">&#10094;</button>
+        <button class="next-3" onclick="moveSlide3(1)">&#10095;</button>
+    </div>
+    <h3>Season Of Grace Poster</h3>
+    <p>E19.99</p>
+    <a href="#" class="btn" id="buy-now-btn3">Buy Now</a>
+</div>
+
                 </div>
             </section>
             <section id="contact" class="section glassmorphism">
@@ -1649,6 +1796,70 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+let slideIndex = 0;
+
+function moveSlide(direction) {
+    const gallery = document.querySelector('.gallery');
+    const slides = document.querySelectorAll('.gallery img');
+    const totalSlides = slides.length;
+
+    slideIndex += direction;
+    
+    if (slideIndex < 0) {
+        slideIndex = totalSlides - 1;
+    }
+    if (slideIndex >= totalSlides) {
+        slideIndex = 0;
+    }
+
+    const offset = -slideIndex * 100; // Adjusts the position for each slide
+    gallery.style.transform = `translateX(${offset}%)`;
+}
+
+
+
+let slideIndex2 = 0;
+
+function moveSlide2(direction) {
+    const gallery = document.querySelector('.gallery-2');
+    const slides = document.querySelectorAll('.gallery-2 img');
+    const totalSlides = slides.length;
+
+    slideIndex2 += direction;
+    
+    if (slideIndex2 < 0) {
+        slideIndex2 = totalSlides - 1;
+    }
+    if (slideIndex2 >= totalSlides) {
+        slideIndex2 = 0;
+    }
+
+    const offset = -slideIndex2 * 100; // Adjusts the position for each slide
+    gallery.style.transform = `translateX(${offset}%)`;
+}
+
+
+
+let slideIndex3 = 0;
+
+function moveSlide3(direction) {
+    const gallery = document.querySelector('.gallery-3');
+    const slides = document.querySelectorAll('.gallery-3 img');
+    const totalSlides = slides.length;
+
+    slideIndex3 += direction;
+    
+    if (slideIndex3 < 0) {
+        slideIndex3 = totalSlides - 1;
+    }
+    if (slideIndex3 >= totalSlides) {
+        slideIndex3 = 0;
+    }
+
+    const offset = -slideIndex3 * 100; // Adjusts the position for each slide
+    gallery.style.transform = `translateX(${offset}%)`;
+}
 
     </script>
 
