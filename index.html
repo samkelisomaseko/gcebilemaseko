@@ -1376,6 +1376,37 @@
 
 
     </style>
+    <style>
+/* Watermark styles */
+.watermark {
+    position: absolute;
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    color: pink;
+    font-size: 2rem;
+    opacity: 0.7;
+    z-index: 1000;
+}
+
+/* Positioning the watermark in three spots */
+.watermark1 {
+    top: 20%;
+    left: 30%;
+}
+
+.watermark2 {
+    top: 50%;
+    left: 60%;
+}
+
+.watermark3 {
+    top: 80%;
+    left: 40%;
+}
+
+/* Optionally include a Google font for futuristic style */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+</style>
+
 </head>
 <body>
     <div class="parallax-container">
@@ -1384,6 +1415,13 @@
             <img src="Gcebile-maseko-b.jpg" alt="Gcebile Maseko" class="foreground">
             <h1 class="title">Gcebile Maseko</h1>
         </header>
+        <!-- Container for the Easter Egg -->
+<div id="watermark-container" style="display: none;">
+    <div class="watermark watermark1">Keyla</div>
+    <div class="watermark watermark2">Keyla</div>
+    <div class="watermark watermark3">Keyla</div>
+</div>
+
         <nav id="main-nav">
             <a href="#home" class="logo">GM</a>
             <div class="nav-links" id="nav-links">
@@ -1876,11 +1914,50 @@ function moveSlide3(direction) {
 
     </script>
 <script>
-    // Select the foreground and background images
+    let tapCount = 0;
     const backgroundImage = document.querySelector('.background');
     const foregroundImage = document.querySelector('.foreground');
+    const watermarkContainer = document.getElementById('watermark-container');
+    let tapTimeout;
 
-    // Function to toggle visibility between background and foreground
+    // Function to reset the tap count
+    function resetTapCount() {
+        tapCount = 0;
+    }
+
+    // Function to show the watermark for 5 seconds and then hide it
+    function revealEasterEgg() {
+        watermarkContainer.style.display = 'block'; // Show the watermark
+        setTimeout(() => {
+            watermarkContainer.style.display = 'none'; // Hide after 5 seconds
+        }, 5000);
+    }
+
+    // Function to handle taps for Easter Egg without affecting image toggle
+    function handleTapForEasterEgg() {
+        tapCount++;
+        if (tapCount === 3) {
+            revealEasterEgg(); // Reveal Easter egg after 3 taps
+            tapCount = 0; // Reset tap count immediately after revealing
+        }
+
+        // Reset tap count after 1 second of inactivity
+        clearTimeout(tapTimeout);
+        tapTimeout = setTimeout(resetTapCount, 1000);
+    }
+
+    // Add event listeners for tap on both background and foreground images
+    // without affecting their toggle behavior
+    backgroundImage.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent image toggle code from conflicting
+        handleTapForEasterEgg();
+    });
+    foregroundImage.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent image toggle code from conflicting
+        handleTapForEasterEgg();
+    });
+
+    // Function to toggle images between background and foreground every 1 minute
     function toggleImages() {
         if (backgroundImage.style.display === 'none') {
             backgroundImage.style.display = 'block';
@@ -1898,7 +1975,6 @@ function moveSlide3(direction) {
     // Toggle the images every 1 minute (60000 ms)
     setInterval(toggleImages, 60000);
 </script>
-
 <!-- JavaScript to Handle Thumbnail Click and Play Only One Video -->
 <script>
 const videoThumbnails = document.querySelectorAll('.video-thumbnail');
