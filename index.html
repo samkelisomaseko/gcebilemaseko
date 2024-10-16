@@ -9,7 +9,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Gcebile Maseko - Official Website" />
     <meta property="og:description" content="Experience the power of soulful gospel music from Eswatini. Be transformed with music that is a blend of heartfelt lyrics and uplifting melodies." />
-    <meta property="og:url" content="" />
+    <meta property="og:url" content="https://gcebilemaseko.com/" />
     <meta property="og:site_name" content="Gcebile Maseko - Official Website" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta property="og:image" content="grace.jpg">
@@ -79,16 +79,27 @@
             z-index: -1;
         }
 
-        .background, .foreground {
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-            z-index: -1;
-            filter: brightness(0.5);
-        }
+        /* Default styles for smaller screens (mobile) */
+.background, .foreground {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(0.6);
+}
 
-        
+/* Media query for larger screens (desktops and tablets) */
+@media screen and (min-width: 768px) {
+    .background {
+        content: url('Gcebile-maseko.jpg'); /* Replace with large screen background */
+    }
+    
+    .foreground {
+        content: url('Gcebile-maseko.jpg'); /* Replace with large screen foreground */
+    }
+}
+
 
         .title {
             font-size: clamp(3rem, 10vw, 7rem);
@@ -1157,7 +1168,7 @@
             }
         }
     
-   /* Main Video Section Styling */
+/* Main Video Section Styling */
 .video-section {
     padding: 50px 0;
     text-align: center;
@@ -1169,16 +1180,7 @@
     box-shadow: 0 4px 30px rgba(0, 255, 136, 0.5);
 }
 
-/* Section Heading Styling */
-.video-section h2 {
-    color: #fff;
-    font-size: 2rem;
-    text-transform: uppercase;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-    margin-bottom: 30px;
-}
-
-/* Video Container for responsive layout */
+/* Video Container */
 .video-container {
     display: flex;
     justify-content: center;
@@ -1190,24 +1192,17 @@
 .video-box {
     position: relative;
     width: 100%;
-    max-width: 560px; /* Maximum width of the video */
+    max-width: 1200px;
     padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    height: 0; /* Set height to zero to maintain the aspect ratio */
-    overflow: hidden; /* Ensures that any overflow content is hidden */
+    height: 0;
+    overflow: hidden;
     border-radius: 15px;
-    margin-bottom:20px;
+    margin-bottom: 30px;
     box-shadow: 0 5px 15px rgba(0, 255, 0, 0.5);
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
     cursor: pointer;
 }
 
-/* 3D hover effect */
-.video-box:hover {
-    transform: translateZ(30px) scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 255, 0, 0.8);
-}
-
-/* Iframe styling to ensure video fits perfectly */
+/* Video iframe to fit perfectly */
 .video-box iframe {
     position: absolute;
     top: 0;
@@ -1215,24 +1210,38 @@
     width: 100%;
     height: 100%;
     border: none;
-    border-radius: 10px; /* Optional: for rounded corners */
+    border-radius: 10px;
+    display: none; /* Initially hidden until clicked */
 }
 
-/* Styling for video titles */
-.video-title {
-    margin-top: 10px;
-    color: #fff;
-    font-size: 1.5rem;
-    text-align: center;
-    text-transform: uppercase;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+/* Styling for video thumbnail */
+.video-thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('Gcebile-Maseko-thumbnail.png'); /* Thumbnail Image */
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    transition: opacity 0.5s ease;
+    cursor: pointer;
+    z-index: 10; /* Ensure it stays above the video */
 }
-.video-box h3 {
-    margin-top: 15px;
-    font-size: 1.3rem;
-    color: var(--primary-color);
+
+/* Hover effect to show a slight hover effect over the thumbnail */
+.video-thumbnail:hover {
+    opacity: 0.9;
 }
-/* Media Queries for Responsive Adjustments */
+
+/* Media Queries for responsive behavior */
+@media (max-width: 1024px) {
+    .video-box {
+        max-width: 800px;
+    }
+}
+
 @media (max-width: 768px) {
     .video-box {
         width: 90%;
@@ -1241,10 +1250,7 @@
 
 @media (max-width: 480px) {
     .video-box {
-        width: 90%;
-    }
-    .video-section h2{
-        font-size:1.5rem;
+        width: 92%;
     }
 }
 
@@ -1368,8 +1374,8 @@
 <body>
     <div class="parallax-container">
         <header class="glassmorphism">
-            <img src="Gce.jpg" alt="Background" class="background">
-            <img src="Gcebile.jpg" alt="Foreground" class="foreground">
+            <img src="Gcebile.jpg" alt="Gcebile Maseko" class="background">
+            <img src="Gcebile-maseko-b.jpg" alt="Gcebile Maseko" class="foreground">
             <h1 class="title">Gcebile Maseko</h1>
         </header>
         <nav id="main-nav">
@@ -1429,6 +1435,7 @@
     <div class="video-container">
         <!-- First Video -->
         <div class="video-box">
+            <div class="video-thumbnail" id="thumbnail-1"></div>
             <iframe 
                 src="https://www.youtube.com/embed/rEcBoEDCGt8" 
                 title="Season of grace" 
@@ -1441,6 +1448,7 @@
         
         <!-- Second Video -->
         <div class="video-box">
+            <div class="video-thumbnail" id="thumbnail-2"></div>
             <iframe 
                 src="https://www.youtube.com/embed/rEcBoEDCGt8" 
                 title="Season of grace" 
@@ -1858,7 +1866,67 @@ function moveSlide3(direction) {
     gallery.style.transform = `translateX(${offset}%)`;
 }
 
+
+
     </script>
+<script>
+    // Select the foreground and background images
+    const backgroundImage = document.querySelector('.background');
+    const foregroundImage = document.querySelector('.foreground');
+
+    // Function to toggle visibility between background and foreground
+    function toggleImages() {
+        if (backgroundImage.style.display === 'none') {
+            backgroundImage.style.display = 'block';
+            foregroundImage.style.display = 'none';
+        } else {
+            backgroundImage.style.display = 'none';
+            foregroundImage.style.display = 'block';
+        }
+    }
+
+    // Set initial state - display background, hide foreground
+    backgroundImage.style.display = 'block';
+    foregroundImage.style.display = 'none';
+
+    // Toggle the images every 1 minute (60000 ms)
+    setInterval(toggleImages, 60000);
+</script>
+
+<!-- JavaScript to Handle Thumbnail Click and Play Only One Video -->
+<script>
+const videoThumbnails = document.querySelectorAll('.video-thumbnail');
+const videoIframes = document.querySelectorAll('iframe');
+
+// Function to stop all other videos
+function stopAllVideos(currentVideoIframe) {
+    videoIframes.forEach(iframe => {
+        if (iframe !== currentVideoIframe) {
+            iframe.style.display = 'none'; // Hide the iframe
+            iframe.src = iframe.src.replace("?autoplay=1", ""); // Stop playing by resetting the URL
+        }
+    });
+}
+
+// Add click event listener for each thumbnail
+videoThumbnails.forEach((thumbnail, index) => {
+    thumbnail.addEventListener('click', function() {
+        // Get the corresponding video iframe
+        const videoIframe = videoIframes[index];
+        
+        // Stop all other videos
+        stopAllVideos(videoIframe);
+
+        // Hide the thumbnail and show the iframe
+        this.style.opacity = '0';
+        this.style.zIndex = '-1';
+        
+        videoIframe.style.display = 'block'; // Show the iframe
+        videoIframe.src += "?autoplay=1"; // Autoplay the video
+    });
+});
+</script>
+
 
 <script>
     (function() {
@@ -3641,60 +3709,8 @@ function moveSlide3(direction) {
         gcmLoadSong(gcmCurrentSongIndex);
     })();
 
-// Media Session API Setup for Song 1 - Nomanini Lizovela
-if ('mediaSession' in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({
-        title: 'Nomanini Lizovela',
-        artist: 'Gcebile Maseko',
-        album: 'Season Of Grace',
-        artwork: [
-            { src: 'banner.jpg', sizes: '512x512', type: 'image/jpeg' }
-        ]
-    });
-
-    // Set action handlers for play, pause, next, and previous track
-    navigator.mediaSession.setActionHandler('play', playSong);
-    navigator.mediaSession.setActionHandler('pause', pauseSong);
-    navigator.mediaSession.setActionHandler('previoustrack', playPrevious);
-    navigator.mediaSession.setActionHandler('nexttrack', playNext);
-}
-
-// Media Session API Setup for Song 2 - Season Of Grace
-if ('mediaSession' in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({
-        title: 'Season Of Grace',
-        artist: 'Gcebile Maseko',
-        album: 'Season Of Grace',
-        artwork: [
-            { src: 'banner.jpg', sizes: '512x512', type: 'image/jpeg' }
-        ]
-    });
-
-    navigator.mediaSession.setActionHandler('play', playSong);
-    navigator.mediaSession.setActionHandler('pause', pauseSong);
-    navigator.mediaSession.setActionHandler('previoustrack', playPrevious);
-    navigator.mediaSession.setActionHandler('nexttrack', playNext);
-}
-
-// Media Session API Setup for Song 3 - Singaba Yini
-if ('mediaSession' in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({
-        title: 'Singaba Yini',
-        artist: 'Gcebile Maseko',
-        album: 'Season Of Grace',
-        artwork: [
-            { src: 'banner.jpg', sizes: '512x512', type: 'image/jpeg' }
-        ]
-    });
-
-    navigator.mediaSession.setActionHandler('play', playSong);
-    navigator.mediaSession.setActionHandler('pause', pauseSong);
-    navigator.mediaSession.setActionHandler('previoustrack', playPrevious);
-    navigator.mediaSession.setActionHandler('nexttrack', playNext);
-}
 
 </script>
-
 
 <script>
     // Scroll Animation for sections
