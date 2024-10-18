@@ -1402,67 +1402,6 @@
     top: 80%;
     left: 40%;
 }
-/* Spinner container */
-.gm-spinner-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(0, 0, 0, 0.9); /* Dark background */
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999; /* Ensure it stays on top */
-    color: var(--primary-color); /* Green color from your theme */
-}
-
-/* GM Logo */
-.gm-logo {
-    font-family: 'Orbitron', sans-serif; /* Same futuristic font */
-    font-size: 6rem;
-    font-weight: bold;
-    display: flex;
-    color: var(--primary-color); /* Green color */
-    margin-bottom: 20px;
-}
-
-/* Loading text with typing effect */
-.loading-text {
-    font-family: 'Orbitron', sans-serif; /* Consistent font */
-    font-size: 1.5rem;
-    color: var(--primary-color); /* Green color */
-    overflow: hidden;
-    border-right: 2px solid var(--primary-color);
-    white-space: nowrap;
-    margin: 0 auto;
-    letter-spacing: 2px;
-    animation: typing 3.5s steps(10, end) infinite, blink-caret 0.75s step-end infinite;
-}
-
-/* Typing effect for loading text */
-@keyframes typing {
-    0% {
-        width: 0;
-    }
-    50% {
-        width: 100%;
-    }
-    100% {
-        width: 0;
-    }
-}
-
-/* Blinking caret effect */
-@keyframes blink-caret {
-    from {
-        border-right-color: var(--primary-color);
-    }
-    to {
-        border-right-color: transparent;
-    }
-}
 
 /* Optionally include a Google font for futuristic style */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
@@ -1506,15 +1445,6 @@
                 <p class="slide-in">Be Transformed & Renewed by the electrifying music of Gcebile Maseko</p>
                 <a href="#music" class="btn slide-in">Explore Now</a>
             </section>
-<div class="gm-spinner-wrapper" id="gm-spinner">
-    <div class="gm-logo">
-        <span class="g">G</span>
-        <span class="m">M</span>
-    </div>
-    <div class="loading-text">
-        Gcebile Maseko ....
-    </div>
-</div>
 
             <section id="music" class="section glassmorphism">
                 <h2 class="fade-in">Latest Releases</h2>
@@ -3885,18 +3815,6 @@ videoThumbnails.forEach((thumbnail, index) => {
             navigator.vibrate(100); // 100ms vibration for feedback
         });
     });
-
-window.addEventListener('load', function() {
-    // Hide the GM logo spinner after page load
-    const gmSpinner = document.getElementById('gm-spinner');
-    gmSpinner.style.display = 'none';
-});
-
-// Optional: Add a timeout to hide the spinner in case of slow loading
-setTimeout(function() {
-    document.getElementById('gm-spinner').style.display = 'none';
-}, 5000); // Hide after 5 seconds (adjust timing as needed)
-
 </script>
 
 
